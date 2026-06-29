@@ -1,0 +1,36 @@
+---
+interface PackageItem {
+  title: string;
+  slug: string;
+  description: string;
+  image: string;
+  alt: string;
+  priceFrom?: string;
+  duration?: string;
+  capacity?: string;
+  category?: string;
+  whatsappMessage?: string;
+}
+
+interface Props {
+  packageItem: PackageItem;
+}
+
+const { packageItem } = Astro.props;
+---
+
+<article class="overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-sm">
+  <div class="aspect-[16/10] bg-slate-100">
+    <img class="h-full w-full object-cover" src={packageItem.image} alt={packageItem.alt} loading="lazy" />
+  </div>
+  <div class="p-5">
+    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-[#c9a14a]">{packageItem.category ?? "package"}</p>
+    <h3 class="mt-2 text-lg font-semibold text-[#111317]">{packageItem.title}</h3>
+    <p class="mt-2 text-sm leading-6 text-slate-600">{packageItem.description}</p>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs font-medium text-slate-600">
+      {packageItem.priceFrom && <span class="rounded-full bg-slate-100 px-3 py-1">{packageItem.priceFrom}</span>}
+      {packageItem.duration && <span class="rounded-full bg-slate-100 px-3 py-1">{packageItem.duration}</span>}
+      {packageItem.capacity && <span class="rounded-full bg-slate-100 px-3 py-1">{packageItem.capacity}</span>}
+    </div>
+  </div>
+</article>

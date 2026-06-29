@@ -1,0 +1,22 @@
+---
+import FeatureCard from "../common/FeatureCard.astro";
+
+const features = [
+  {
+    title: "Mobile-first booking",
+    description: "Visitors can move from page to WhatsApp quickly on small screens.",
+  },
+  {
+    title: "Static-first performance",
+    description: "Astro keeps public pages fast while React is reserved for interactive islands.",
+  },
+  {
+    title: "Scalable data shape",
+    description: "Local data fields mirror future CMS/API content needs.",
+  },
+];
+---
+
+<div class="grid gap-4 md:grid-cols-3">
+  {features.map((feature) => <FeatureCard {...feature} />)}
+</div>

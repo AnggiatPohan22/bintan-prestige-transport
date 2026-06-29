@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/home/Hero.astro";
+import SectionHeader from "../components/common/SectionHeader.astro";
+import ServiceCards from "../components/home/ServiceCards.astro";
+import WhyChooseUs from "../components/home/WhyChooseUs.astro";
+import GalleryGrid from "../components/common/GalleryGrid.astro";
+import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
+import { gallery } from "../data/gallery";
+---
+
+<BaseLayout title="Home" description="Taxi and island tour frontend foundation with fast static pages and WhatsApp booking.">
+  <Hero />
+  <section class="container-page section-padding">
+    <SectionHeader eyebrow="Services" title="Taxi and tour foundations" description="Reusable placeholder sections for STEP 0 without building the full homepage detail yet." />
+    <div class="mt-8">
+      <ServiceCards />
+    </div>
+  </section>
+  <section class="bg-slate-50">
+    <div class="container-page section-padding">
+      <SectionHeader eyebrow="Why us" title="Built for mobile travel decisions" />
+      <div class="mt-8">
+        <WhyChooseUs />
+      </div>
+    </div>
+  </section>
+  <section class="container-page section-padding">
+    <SectionHeader eyebrow="Gallery" title="Visual placeholders" description="Image paths are ready for real taxi, car, tour, and destination assets." />
+    <div class="mt-8">
+      <GalleryGrid items={gallery} />
+    </div>
+  </section>
+  <WhatsAppCTA />
+</BaseLayout>

@@ -1,0 +1,8 @@
+---
+import PackageCard from "../packages/PackageCard.astro";
+import { routes } from "../../data/routes";
+---
+
+<div class="grid gap-4 md:grid-cols-2">
+  {routes.map((route) => <PackageCard packageItem={route} />)}
+</div>

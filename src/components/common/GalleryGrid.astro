@@ -1,0 +1,20 @@
+---
+import ImageCard from "./ImageCard.astro";
+
+interface GalleryItem {
+  title: string;
+  description?: string;
+  image: string;
+  alt: string;
+}
+
+interface Props {
+  items: GalleryItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  {items.map((item) => <ImageCard {...item} />)}
+</div>

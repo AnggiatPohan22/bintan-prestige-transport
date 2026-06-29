@@ -1,0 +1,26 @@
+export const routes = [
+  {
+    title: "Airport to Hotel Transfer",
+    slug: "airport-hotel-transfer",
+    description: "Private pick up and drop service from airport to resort area.",
+    image: "/images/tours/airport-transfer.jpg",
+    alt: "Taxi transfer from airport to hotel",
+    priceFrom: "IDR 250K",
+    duration: "45-90 minutes",
+    capacity: "1-4 passengers",
+    category: "pick-up-drop",
+    whatsappMessage: "Hello, I want to book an airport to hotel transfer.",
+  },
+  {
+    title: "Hotel to Ferry Terminal",
+    slug: "hotel-ferry-terminal",
+    description: "Reliable drop service from hotel to ferry terminal.",
+    image: "/images/tours/ferry-transfer.jpg",
+    alt: "Private car drop to ferry terminal",
+    priceFrom: "IDR 200K",
+    duration: "30-75 minutes",
+    capacity: "1-4 passengers",
+    category: "pick-up-drop",
+    whatsappMessage: "Hello, I want to book a hotel to ferry terminal transfer.",
+  },
+];

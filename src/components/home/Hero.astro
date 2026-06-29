@@ -1,0 +1,25 @@
+---
+import { site } from "../../data/site";
+---
+
+<section class="bg-[#111317] text-white">
+  <div class="container-page grid min-h-[560px] items-center gap-8 py-12 md:grid-cols-[1.05fr_0.95fr] md:py-16">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f4e6bd]">Taxi & Tour Service</p>
+      <h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+        Premium travel support for transfers and island tours.
+      </h1>
+      <p class="mt-5 max-w-xl text-base leading-7 text-white/72 sm:text-lg">
+        Static-first frontend foundation for a fast, mobile-first taxi and tour website with WhatsApp booking.
+      </p>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a class="inline-flex min-h-12 items-center justify-center rounded-full bg-[#c9a14a] px-5 text-sm font-semibold text-[#111317]" href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`} target="_blank" rel="noreferrer">Book via WhatsApp</a>
+        <a class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-semibold text-white" href="/packages/island-tour">View Packages</a>
+      </div>
+    </div>
+
+    <div class="aspect-[4/3] overflow-hidden rounded-[8px] bg-white/10 shadow-2xl">
+      <img class="h-full w-full object-cover" src="/images/hero/taxi-tour-hero.jpg" alt="Premium taxi and island tour hero placeholder" />
+    </div>
+  </div>
+</section>

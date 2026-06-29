@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../components/common/Breadcrumb.astro";
+import SectionHeader from "../../components/common/SectionHeader.astro";
+import PackageCard from "../../components/packages/PackageCard.astro";
+import TourItinerary from "../../components/packages/TourItinerary.astro";
+import WhatsAppCTA from "../../components/common/WhatsAppCTA.astro";
+import { tours } from "../../data/tours";
+---
+
+<BaseLayout title="Island Tour" description="Private island tour package placeholder page.">
+  <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Packages", href: "/packages/island-tour" }, { label: "Island Tour" }]} />
+  <section class="container-page section-padding">
+    <SectionHeader eyebrow="Tour Island" title="Island Tour" description="STEP 0 placeholder page for tour package cards, itinerary structure, and WhatsApp inquiry flow." />
+    <div class="mt-8 grid gap-4 md:grid-cols-2">
+      {tours.map((item) => <PackageCard packageItem={item} />)}
+    </div>
+  </section>
+  <section class="bg-slate-50">
+    <div class="container-page section-padding">
+      <SectionHeader eyebrow="Itinerary" title="Simple tour flow" />
+      <div class="mt-8">
+        <TourItinerary />
+      </div>
+    </div>
+  </section>
+  <WhatsAppCTA message="Hello, I want to ask about Island Tour packages." />
+</BaseLayout>

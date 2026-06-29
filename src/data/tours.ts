@@ -1,0 +1,26 @@
+export const tours = [
+  {
+    title: "Island Highlight Tour",
+    slug: "island-highlight-tour",
+    description: "A curated day tour covering beaches, viewpoints, and local stops.",
+    image: "/images/tours/island-highlight.jpg",
+    alt: "Island tour beach viewpoint",
+    priceFrom: "IDR 650K",
+    duration: "6 hours",
+    capacity: "1-4 passengers",
+    category: "island-tour",
+    whatsappMessage: "Hello, I want to ask about the Island Highlight Tour.",
+  },
+  {
+    title: "Culture and Beach Tour",
+    slug: "culture-beach-tour",
+    description: "Balanced route for culture, food, scenery, and relaxed beach time.",
+    image: "/images/tours/culture-beach.jpg",
+    alt: "Culture and beach island tour",
+    priceFrom: "IDR 750K",
+    duration: "8 hours",
+    capacity: "1-4 passengers",
+    category: "island-tour",
+    whatsappMessage: "Hello, I want to ask about the Culture and Beach Tour.",
+  },
+];

@@ -1,0 +1,26 @@
+---
+import { navigation } from "../../data/navigation";
+import { site } from "../../data/site";
+---
+
+<header class="sticky top-0 z-40 border-b border-white/10 bg-[#111317]/95 text-white backdrop-blur">
+  <nav class="container-page flex min-h-16 items-center justify-between gap-4 py-3">
+    <a href="/" class="flex min-w-0 flex-col">
+      <span class="text-base font-semibold tracking-wide">{site.shortName}</span>
+      <span class="text-xs text-[#f4e6bd]">{site.tagline}</span>
+    </a>
+
+    <div class="hidden items-center gap-6 text-sm font-medium text-white/80 md:flex">
+      {navigation.map((item) => <a class="transition hover:text-[#f4e6bd]" href={item.href}>{item.label}</a>)}
+    </div>
+
+    <a
+      class="inline-flex min-h-11 items-center justify-center rounded-full bg-[#c9a14a] px-4 text-sm font-semibold text-[#111317] shadow-sm transition hover:bg-[#d9b765]"
+      href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`}
+      target="_blank"
+      rel="noreferrer"
+    >
+      WhatsApp
+    </a>
+  </nav>
+</header>
