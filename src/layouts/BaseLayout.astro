@@ -3,6 +3,7 @@ import "../styles/global.css";
 import SEO from "../components/common/SEO.astro";
 import Navbar from "../components/common/Navbar.astro";
 import Footer from "../components/common/Footer.astro";
+import FloatingWhatsApp from "../components/common/FloatingWhatsApp.astro";
 
 interface Props {
   title?: string;
@@ -22,10 +23,12 @@ const { title, description, canonical, ogImage } = Astro.props;
     <SEO title={title} description={description} canonical={canonical} ogImage={ogImage} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <Navbar />
-    <main class="min-h-screen">
+    <main id="main-content" class="min-h-screen">
       <slot />
     </main>
+    <FloatingWhatsApp />
     <Footer />
   </body>
 </html>

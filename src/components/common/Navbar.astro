@@ -1,6 +1,7 @@
 ---
 import { navigation } from "../../data/navigation";
 import { site } from "../../data/site";
+import MobileNav from "./MobileNav";
 ---
 
 <header class="sticky top-0 z-40 border-b border-white/10 bg-[#0b0c10]/82 text-white shadow-[0_14px_45px_rgba(0,0,0,0.18)] backdrop-blur-xl">
@@ -14,13 +15,16 @@ import { site } from "../../data/site";
       {navigation.map((item) => <a class="transition hover:text-[#e2e8f0]" href={item.href}>{item.label}</a>)}
     </div>
 
-    <a
-      class="inline-flex min-h-11 items-center justify-center rounded-full border border-[#e2e8f0]/20 bg-[#e2e8f0] px-4 text-sm font-semibold text-[#0b0c10] shadow-[0_0_28px_rgba(226,232,240,0.16)] transition hover:bg-white"
-      href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`}
-      target="_blank"
-      rel="noreferrer"
-    >
-      WhatsApp
-    </a>
+    <div class="flex items-center gap-2">
+      <a
+        class="hidden min-h-11 items-center justify-center rounded-full border border-[#e2e8f0]/20 bg-[#e2e8f0] px-4 text-sm font-semibold text-[#0b0c10] shadow-[0_0_28px_rgba(226,232,240,0.16)] transition hover:bg-white sm:inline-flex"
+        href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        WhatsApp
+      </a>
+      <MobileNav client:load />
+    </div>
   </nav>
 </header>

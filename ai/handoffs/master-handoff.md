@@ -20,13 +20,15 @@ Astro, React, Tailwind CSS, Motion, Lucide React, TypeScript
 - STEP 3 - Pick Up & Drop Page
 - STEP 4 - Island Tour Page
 - STEP 5 - About & Contact Page
+- STEP 6 - Animation & Interaction Pass
 
 ## Current Status
 
-STEP 5 About and Contact pages are in place. The project has a refined dark
-luxury homepage, premium private transfer page, premium private island tour
-page, About brand story and trust foundation, Contact WhatsApp planning flow,
-expanded local site/contact data, and passing build/check verification.
+STEP 6 animation and interaction pass is in place. The project has a refined
+dark luxury homepage, premium package pages, About and Contact pages, mobile
+navigation, floating WhatsApp quick action, skip link, focus-visible states,
+missing hero animation keyframes, Motion refinements, and passing build/check
+verification.
 
 ## Development Rules
 
@@ -40,6 +42,5 @@ expanded local site/contact data, and passing build/check verification.
 
 ## Next Plan
 
-- STEP 6 - Animation & Interaction Pass
 - STEP 7 - SEO, Schema & Sitemap
 - STEP 8 - Performance Audit & Launch Readiness
