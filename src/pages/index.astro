@@ -7,12 +7,17 @@ import WhyChooseUs from "../components/home/WhyChooseUs.astro";
 import GalleryGrid from "../components/common/GalleryGrid.astro";
 import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
 import BentoShowcase from "../components/home/BentoShowcase.astro";
+import ConciergeFlow from "../components/home/ConciergeFlow.astro";
+import FAQPreview from "../components/home/FAQPreview.astro";
 import PremiumCarSelector from "../components/home/PremiumCarSelector";
+import RouteHighlights from "../components/home/RouteHighlights.astro";
+import LuxuryExperience from "../components/home/LuxuryExperience.astro";
 import { gallery } from "../data/gallery";
 ---
 
 <BaseLayout title="Premium Private Taxi & Island Tour Experience" description="Modern dark luxury taxi and island tour frontend foundation for premium transfers, VIP driver service, and WhatsApp booking.">
   <Hero />
+  <LuxuryExperience />
   <section class="container-page section-padding">
     <SectionHeader eyebrow="Signature services" title="Premium movement, shaped for private travel" description="Two focused service tracks for the current foundation: private transfers and island tours." />
     <div class="mt-8">
@@ -28,9 +33,23 @@ import { gallery } from "../data/gallery";
     </div>
   </section>
   <section class="container-page section-padding">
+    <SectionHeader eyebrow="Featured routes" title="Start from a transfer, evolve into a private itinerary" description="Sharper route and tour cards make the homepage feel ready for real commercial content while still using local placeholder data." />
+    <div class="mt-8">
+      <RouteHighlights />
+    </div>
+  </section>
+  <section class="container-page section-padding">
     <SectionHeader eyebrow="Fleet" title="Choose the tone of the ride" description="A lightweight React island for the premium car selector. No heavy slider dependency." />
     <div class="mt-8">
       <PremiumCarSelector client:load />
+    </div>
+  </section>
+  <section class="border-y border-white/10 bg-[#111827]/45">
+    <div class="container-page section-padding">
+      <SectionHeader eyebrow="How it works" title="A simple concierge flow from message to private ride" description="The homepage now explains the booking path without adding backend logic or a full booking engine." />
+      <div class="mt-8">
+        <ConciergeFlow />
+      </div>
     </div>
   </section>
   <section class="border-y border-white/10 bg-[#111827]/45">
@@ -45,6 +64,14 @@ import { gallery } from "../data/gallery";
     <SectionHeader eyebrow="Gallery" title="Cinematic visual placeholders" description="Image slots are ready for real fleet, route, and island destination assets." />
     <div class="mt-8">
       <GalleryGrid items={gallery} />
+    </div>
+  </section>
+  <section class="border-y border-white/10 bg-[#111827]/45">
+    <div class="container-page section-padding">
+      <SectionHeader eyebrow="FAQ" title="Answers before the first WhatsApp message" description="Short trust-building answers for booking, routing, fleet, and custom itinerary expectations." />
+      <div class="mt-8">
+        <FAQPreview />
+      </div>
     </div>
   </section>
   <WhatsAppCTA />

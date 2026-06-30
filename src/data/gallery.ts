@@ -23,4 +23,28 @@ export const gallery = [
     alt: "Premium concierge travel visual placeholder",
     category: "concierge",
   },
+  {
+    title: "Night Transfer",
+    slug: "night-transfer",
+    description: "Private evening rides for dinner and resort movement.",
+    image: "/images/gallery/night-transfer.webp",
+    alt: "Premium night transfer visual placeholder",
+    category: "night",
+  },
+  {
+    title: "Island Detail",
+    slug: "island-detail",
+    description: "Destination-ready slots for real island photography.",
+    image: "/images/gallery/island-detail.webp",
+    alt: "Luxury island destination visual placeholder",
+    category: "destination",
+  },
+  {
+    title: "Executive Cabin",
+    slug: "executive-cabin",
+    description: "Fleet-focused visual slot for cabin and comfort details.",
+    image: "/images/gallery/executive-cabin.webp",
+    alt: "Executive vehicle cabin visual placeholder",
+    category: "fleet",
+  },
 ];
