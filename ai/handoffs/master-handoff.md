@@ -17,14 +17,16 @@ Astro, React, Tailwind CSS, Motion, Lucide React, TypeScript
 - STEP 0 - Astro Project Setup & Frontend Foundation
 - STEP 1 - Modern Dark Luxury UI Foundation, Hero, Booking Form & Premium Interaction Base
 - STEP 2 - Home Page Content Sections & Luxury Visual Completion
+- STEP 3 - Pick Up & Drop Page
+- STEP 4 - Island Tour Page
 
 ## Current Status
 
-STEP 2 homepage content foundation is in place. The project has a refined dark
-luxury homepage with immersive hero, floating WhatsApp booking form, premium
-service cards, bento showcase, lightweight premium car selector React island,
-luxury story section, featured transfer and tour cards, concierge booking flow,
-FAQ preview, expanded local data, and passing build/check verification.
+STEP 4 Island Tour page is in place. The project has a refined dark luxury
+homepage, premium private transfer page, and premium private island tour page
+with tour hero, package grid, experience highlights, flexible itinerary flow,
+tour FAQ, WhatsApp CTA flow, expanded tour/gallery/FAQ data, and passing
+build/check verification.
 
 ## Development Rules
 
@@ -38,8 +40,6 @@ FAQ preview, expanded local data, and passing build/check verification.
 
 ## Next Plan
 
-- STEP 3 - Pick Up & Drop Page
-- STEP 4 - Island Tour Page
 - STEP 5 - About & Contact Page
 - STEP 6 - Animation & Interaction Pass
 - STEP 7 - SEO, Schema & Sitemap

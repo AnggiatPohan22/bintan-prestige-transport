@@ -19,18 +19,22 @@ interface Props {
 const { packageItem } = Astro.props;
 ---
 
-<article class="overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-sm">
-  <div class="aspect-[16/10] bg-slate-100">
-    <img class="h-full w-full object-cover" src={packageItem.image} alt={packageItem.alt} loading="lazy" />
+<article class="overflow-hidden rounded-[8px] border border-white/10 bg-[#111827]/72 shadow-[0_18px_55px_rgba(0,0,0,0.22)]">
+  <div
+    class="visual-placeholder aspect-[16/10] bg-cover bg-center"
+    role="img"
+    aria-label={packageItem.alt}
+    style={`background-image: linear-gradient(135deg, rgba(11,12,16,0.08), rgba(11,12,16,0.66)), url('${packageItem.image}');`}
+  >
   </div>
   <div class="p-5">
-    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-[#c9a14a]">{packageItem.category ?? "package"}</p>
-    <h3 class="mt-2 text-lg font-semibold text-[#111317]">{packageItem.title}</h3>
-    <p class="mt-2 text-sm leading-6 text-slate-600">{packageItem.description}</p>
-    <div class="mt-4 flex flex-wrap gap-2 text-xs font-medium text-slate-600">
-      {packageItem.priceFrom && <span class="rounded-full bg-slate-100 px-3 py-1">{packageItem.priceFrom}</span>}
-      {packageItem.duration && <span class="rounded-full bg-slate-100 px-3 py-1">{packageItem.duration}</span>}
-      {packageItem.capacity && <span class="rounded-full bg-slate-100 px-3 py-1">{packageItem.capacity}</span>}
+    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-[#e2e8f0]/56">{packageItem.category ?? "package"}</p>
+    <h3 class="mt-2 text-lg font-semibold text-[#e2e8f0]">{packageItem.title}</h3>
+    <p class="mt-2 text-sm leading-6 text-slate-400">{packageItem.description}</p>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs font-medium text-slate-300">
+      {packageItem.priceFrom && <span class="rounded-full bg-[#e2e8f0] px-3 py-1 text-[#0b0c10]">{packageItem.priceFrom}</span>}
+      {packageItem.duration && <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{packageItem.duration}</span>}
+      {packageItem.capacity && <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{packageItem.capacity}</span>}
     </div>
   </div>
 </article>

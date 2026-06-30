@@ -2,7 +2,7 @@ export const tours = [
   {
     title: "Island Highlight Tour",
     slug: "island-highlight-tour",
-    description: "A curated private day route covering beaches, viewpoints, and local stops.",
+    description: "A curated private day route covering beaches, viewpoints, photo stops, and relaxed local moments.",
     image: "/images/tours/island-highlight.webp",
     alt: "Island tour beach viewpoint",
     priceFrom: "IDR 750K",
@@ -14,7 +14,7 @@ export const tours = [
   {
     title: "Culture and Beach Tour",
     slug: "culture-beach-tour",
-    description: "Balanced private route for culture, food, scenery, and relaxed beach time.",
+    description: "Balanced private route for culture, food, scenery, shopping, and relaxed beach time.",
     image: "/images/tours/culture-beach.webp",
     alt: "Culture and beach island tour",
     priceFrom: "IDR 750K",
@@ -34,5 +34,17 @@ export const tours = [
     capacity: "1-4 passengers",
     category: "island-tour",
     whatsappMessage: "Hello, I want to ask about the Luxury Night Tour.",
+  },
+  {
+    title: "Custom Island Concierge",
+    slug: "custom-island-concierge",
+    description: "A flexible private tour format for guests who want to shape stops, pace, and timing.",
+    image: "/images/tours/custom-island-concierge.webp",
+    alt: "Custom private island concierge tour placeholder",
+    priceFrom: "IDR 950K",
+    duration: "Custom",
+    capacity: "1-8 passengers",
+    category: "island-tour",
+    whatsappMessage: "Hello, I want to ask about a Custom Island Concierge tour.",
   },
 ];

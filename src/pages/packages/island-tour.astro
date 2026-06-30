@@ -2,25 +2,50 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/common/Breadcrumb.astro";
 import SectionHeader from "../../components/common/SectionHeader.astro";
-import PackageCard from "../../components/packages/PackageCard.astro";
 import TourItinerary from "../../components/packages/TourItinerary.astro";
 import WhatsAppCTA from "../../components/common/WhatsAppCTA.astro";
-import { tours } from "../../data/tours";
+import TourExperience from "../../components/packages/TourExperience.astro";
+import TourFAQ from "../../components/packages/TourFAQ.astro";
+import TourHero from "../../components/packages/TourHero.astro";
+import TourPackageGrid from "../../components/packages/TourPackageGrid.astro";
+
+const itinerary = [
+  "Private hotel or villa pick up with route confirmation",
+  "Scenic drive toward beach, viewpoint, or culture-first route",
+  "Main destination stops with flexible pacing and photo time",
+  "Optional food, shopping, or sunset stop based on package timing",
+  "Private drop off at hotel, ferry terminal, dinner venue, or next destination",
+];
 ---
 
-<BaseLayout title="Island Tour" description="Private island tour package placeholder page.">
+<BaseLayout title="Island Tour" description="Premium private island tour packages for beaches, culture, scenic routes, night movement, and custom concierge itineraries.">
+  <TourHero />
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Packages", href: "/packages/island-tour" }, { label: "Island Tour" }]} />
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="Tour Island" title="Island Tour" description="STEP 0 placeholder page for tour package cards, itinerary structure, and WhatsApp inquiry flow." />
-    <div class="mt-8 grid gap-4 md:grid-cols-2">
-      {tours.map((item) => <PackageCard packageItem={item} />)}
+  <section id="tour-packages" class="container-page section-padding">
+    <SectionHeader eyebrow="Tour packages" title="Private island routes with premium pacing" description="Choose a starter route, then confirm timing, stops, vehicle fit, and guest preferences through WhatsApp." />
+    <div class="mt-8">
+      <TourPackageGrid />
     </div>
   </section>
-  <section class="bg-slate-50">
+  <section class="border-y border-white/10 bg-[#111827]/45">
     <div class="container-page section-padding">
-      <SectionHeader eyebrow="Itinerary" title="Simple tour flow" />
+      <SectionHeader eyebrow="Experience" title="Tour moments shaped for private travel" description="The page now supports beach, culture, evening, and custom concierge tour positioning without building a complex tour builder." />
       <div class="mt-8">
-        <TourItinerary />
+        <TourExperience />
+      </div>
+    </div>
+  </section>
+  <section class="container-page section-padding">
+    <SectionHeader eyebrow="Itinerary" title="A flexible tour flow guests can understand quickly" description="This foundation keeps itinerary content clear while leaving room for real stops and CMS-driven details later." />
+    <div class="mt-8">
+      <TourItinerary items={itinerary} />
+    </div>
+  </section>
+  <section class="border-y border-white/10 bg-[#111827]/45">
+    <div class="container-page section-padding">
+      <SectionHeader eyebrow="FAQ" title="Island tour questions answered early" description="Short answers for route flexibility, mixed stops, booking, and private vehicle expectations." />
+      <div class="mt-8">
+        <TourFAQ />
       </div>
     </div>
   </section>

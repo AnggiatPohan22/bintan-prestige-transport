@@ -47,4 +47,20 @@ export const gallery = [
     alt: "Executive vehicle cabin visual placeholder",
     category: "fleet",
   },
+  {
+    title: "Private Beach Stop",
+    slug: "private-beach-stop",
+    description: "Tour-ready visual slot for premium beach route moments.",
+    image: "/images/gallery/private-beach-stop.webp",
+    alt: "Private beach stop island tour visual placeholder",
+    category: "tour",
+  },
+  {
+    title: "Culture Route",
+    slug: "culture-route",
+    description: "Visual slot for local culture and scenic island routing.",
+    image: "/images/gallery/culture-route.webp",
+    alt: "Culture route island tour visual placeholder",
+    category: "tour",
+  },
 ];

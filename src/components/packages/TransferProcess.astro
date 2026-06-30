@@ -1,0 +1,30 @@
+---
+const steps = [
+  {
+    title: "Send route details",
+    description: "Share pickup, drop-off, date, time, passenger count, and luggage count.",
+  },
+  {
+    title: "Match vehicle fit",
+    description: "Choose sedan, MPV, or executive van based on comfort, route, and luggage needs.",
+  },
+  {
+    title: "Confirm timing",
+    description: "Lock the schedule and pickup instruction through WhatsApp before the ride.",
+  },
+  {
+    title: "Ride privately",
+    description: "Travel with a private driver and direct coordination during the transfer.",
+  },
+];
+---
+
+<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+  {steps.map((step, index) => (
+    <article class="rounded-[8px] border border-white/10 bg-[#111827]/72 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.22)]">
+      <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#e2e8f0] text-sm font-semibold text-[#0b0c10]">{index + 1}</span>
+      <h3 class="mt-5 text-lg font-semibold text-[#e2e8f0]">{step.title}</h3>
+      <p class="mt-3 text-sm leading-6 text-slate-400">{step.description}</p>
+    </article>
+  ))}
+</div>
