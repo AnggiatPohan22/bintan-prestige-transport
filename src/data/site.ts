@@ -13,5 +13,6 @@ export const site = {
   email: "hello@example.com",
   phone: "+62 812-3456-7890",
   address: "Bintan, Riau Islands, Indonesia",
+  responseWindow: "Daily, 08:00 - 22:00",
   heroVideo: "/videos/hero-luxury-drive.mp4",
 };

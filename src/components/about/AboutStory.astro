@@ -1,0 +1,39 @@
+---
+const values = [
+  {
+    title: "Private, not crowded",
+    description: "Every route is framed around private timing, direct communication, and guest comfort.",
+  },
+  {
+    title: "Premium, not complicated",
+    description: "The website stays simple: choose the service, send details, and confirm through WhatsApp.",
+  },
+  {
+    title: "Local, not generic",
+    description: "The structure supports island-aware route decisions for transfers, tours, and custom stops.",
+  },
+];
+---
+
+<section class="container-page section-padding">
+  <div class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#e2e8f0]/60">Our positioning</p>
+      <h2 class="mt-4 text-3xl font-semibold leading-tight text-[#e2e8f0] sm:text-4xl">
+        A travel service foundation shaped for premium guests.
+      </h2>
+      <p class="mt-5 text-sm leading-7 text-slate-400 sm:text-base">
+        This page keeps the brand story concise and operational. It is ready for real business copy later,
+        while already communicating private driver confidence, island familiarity, and premium route handling.
+      </p>
+    </div>
+    <div class="grid gap-4">
+      {values.map((item) => (
+        <article class="rounded-[8px] border border-white/10 bg-[#111827]/72 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.22)]">
+          <h3 class="text-lg font-semibold text-[#e2e8f0]">{item.title}</h3>
+          <p class="mt-3 text-sm leading-6 text-slate-400">{item.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

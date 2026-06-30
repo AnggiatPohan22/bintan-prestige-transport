@@ -3,26 +3,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/common/Breadcrumb.astro";
 import SectionHeader from "../components/common/SectionHeader.astro";
 import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
-import { site } from "../data/site";
+import ContactCards from "../components/contact/ContactCards.astro";
+import ContactHero from "../components/contact/ContactHero.astro";
+import WhatsAppPlanner from "../components/contact/WhatsAppPlanner.astro";
 ---
 
-<BaseLayout title="Contact" description="Contact page placeholder for WhatsApp taxi and tour booking.">
+<BaseLayout title="Contact" description="Contact the premium private taxi and island tour service through WhatsApp, phone, or email.">
+  <ContactHero />
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
   <section class="container-page section-padding">
-    <SectionHeader eyebrow="Contact" title="Start a booking conversation" description="This placeholder keeps the first contact flow simple and ready for future CMS/API content." />
-    <div class="mt-8 grid gap-4 md:grid-cols-3">
-      <div class="rounded-[8px] border border-slate-200 bg-white p-5 shadow-sm">
-        <p class="text-sm font-semibold text-[#111317]">Phone</p>
-        <p class="mt-2 text-sm text-slate-600">{site.phone}</p>
-      </div>
-      <div class="rounded-[8px] border border-slate-200 bg-white p-5 shadow-sm">
-        <p class="text-sm font-semibold text-[#111317]">Email</p>
-        <p class="mt-2 text-sm text-slate-600">{site.email}</p>
-      </div>
-      <div class="rounded-[8px] border border-slate-200 bg-white p-5 shadow-sm">
-        <p class="text-sm font-semibold text-[#111317]">Address</p>
-        <p class="mt-2 text-sm text-slate-600">{site.address}</p>
-      </div>
+    <SectionHeader eyebrow="Contact options" title="Reach the travel concierge" description="Keep the first contact path simple while leaving room for future CMS/API-powered contact details." />
+    <div class="mt-8">
+      <ContactCards />
+    </div>
+  </section>
+  <section class="border-y border-white/10 bg-[#111827]/45">
+    <div class="container-page section-padding">
+      <WhatsAppPlanner />
     </div>
   </section>
   <WhatsAppCTA title="Need transfer or tour details?" />

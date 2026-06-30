@@ -1,0 +1,24 @@
+---
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { site } from "../../data/site";
+
+const cards = [
+  { title: "WhatsApp / Phone", value: site.phone, icon: Phone },
+  { title: "Email", value: site.email, icon: Mail },
+  { title: "Service Area", value: site.address, icon: MapPin },
+  { title: "Response Window", value: site.responseWindow, icon: Clock },
+];
+---
+
+<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+  {cards.map((card) => {
+    const Icon = card.icon;
+    return (
+      <article class="rounded-[8px] border border-white/10 bg-[#111827]/72 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.22)]">
+        <Icon className="h-5 w-5 text-[#e2e8f0]/72" aria-hidden="true" />
+        <p class="mt-4 text-sm font-semibold text-[#e2e8f0]">{card.title}</p>
+        <p class="mt-2 text-sm leading-6 text-slate-400">{card.value}</p>
+      </article>
+    );
+  })}
+</div>

@@ -1,0 +1,17 @@
+---
+const signals = [
+  { value: "Static-first", label: "Fast public pages" },
+  { value: "WhatsApp", label: "Human-first booking" },
+  { value: "Private", label: "Transfer and tour focus" },
+  { value: "Future CMS", label: "API-ready data shape" },
+];
+---
+
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  {signals.map((item) => (
+    <article class="rounded-[8px] border border-white/10 bg-[#111827]/72 p-5 text-center shadow-[0_18px_55px_rgba(0,0,0,0.22)]">
+      <p class="text-2xl font-semibold text-[#e2e8f0]">{item.value}</p>
+      <p class="mt-2 text-sm text-slate-500">{item.label}</p>
+    </article>
+  ))}
+</div>

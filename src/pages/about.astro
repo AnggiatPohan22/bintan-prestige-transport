@@ -2,17 +2,23 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/common/Breadcrumb.astro";
 import SectionHeader from "../components/common/SectionHeader.astro";
-import FeatureCard from "../components/common/FeatureCard.astro";
+import AboutHero from "../components/about/AboutHero.astro";
+import AboutStory from "../components/about/AboutStory.astro";
+import TrustSignals from "../components/about/TrustSignals.astro";
+import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
 ---
 
-<BaseLayout title="About Us" description="About page placeholder for the Travel Agent Taxi and Tour frontend.">
+<BaseLayout title="About Us" description="About the premium private taxi, transfer, and island tour concierge service foundation.">
+  <AboutHero />
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About Us" }]} />
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="About" title="About the travel service" description="STEP 0 placeholder page prepared for future brand story, local expertise, and trust content." />
-    <div class="mt-8 grid gap-4 md:grid-cols-3">
-      <FeatureCard title="Private taxi" description="Foundation for pick up, drop, airport, ferry, hotel, and custom routes." />
-      <FeatureCard title="Island tours" description="Foundation for curated tour package content and future CMS data." />
-      <FeatureCard title="WhatsApp-first" description="Simple conversion path before a full booking engine is needed." />
+  <AboutStory />
+  <section class="border-y border-white/10 bg-[#111827]/45">
+    <div class="container-page section-padding">
+      <SectionHeader eyebrow="Trust signals" title="A foundation built for practical premium travel" description="These signals keep the story grounded until real reviews, certifications, fleet photos, and business credentials are added." />
+      <div class="mt-8">
+        <TrustSignals />
+      </div>
     </div>
   </section>
+  <WhatsAppCTA title="Need private transfer or tour help?" />
 </BaseLayout>

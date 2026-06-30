@@ -19,14 +19,14 @@ Astro, React, Tailwind CSS, Motion, Lucide React, TypeScript
 - STEP 2 - Home Page Content Sections & Luxury Visual Completion
 - STEP 3 - Pick Up & Drop Page
 - STEP 4 - Island Tour Page
+- STEP 5 - About & Contact Page
 
 ## Current Status
 
-STEP 4 Island Tour page is in place. The project has a refined dark luxury
-homepage, premium private transfer page, and premium private island tour page
-with tour hero, package grid, experience highlights, flexible itinerary flow,
-tour FAQ, WhatsApp CTA flow, expanded tour/gallery/FAQ data, and passing
-build/check verification.
+STEP 5 About and Contact pages are in place. The project has a refined dark
+luxury homepage, premium private transfer page, premium private island tour
+page, About brand story and trust foundation, Contact WhatsApp planning flow,
+expanded local site/contact data, and passing build/check verification.
 
 ## Development Rules
 
@@ -40,7 +40,6 @@ build/check verification.
 
 ## Next Plan
 
-- STEP 5 - About & Contact Page
 - STEP 6 - Animation & Interaction Pass
 - STEP 7 - SEO, Schema & Sitemap
 - STEP 8 - Performance Audit & Launch Readiness
