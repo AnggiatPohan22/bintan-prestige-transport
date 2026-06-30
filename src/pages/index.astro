@@ -6,27 +6,43 @@ import ServiceCards from "../components/home/ServiceCards.astro";
 import WhyChooseUs from "../components/home/WhyChooseUs.astro";
 import GalleryGrid from "../components/common/GalleryGrid.astro";
 import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
+import BentoShowcase from "../components/home/BentoShowcase.astro";
+import PremiumCarSelector from "../components/home/PremiumCarSelector";
 import { gallery } from "../data/gallery";
 ---
 
-<BaseLayout title="Home" description="Taxi and island tour frontend foundation with fast static pages and WhatsApp booking.">
+<BaseLayout title="Premium Private Taxi & Island Tour Experience" description="Modern dark luxury taxi and island tour frontend foundation for premium transfers, VIP driver service, and WhatsApp booking.">
   <Hero />
   <section class="container-page section-padding">
-    <SectionHeader eyebrow="Services" title="Taxi and tour foundations" description="Reusable placeholder sections for STEP 0 without building the full homepage detail yet." />
+    <SectionHeader eyebrow="Signature services" title="Premium movement, shaped for private travel" description="Two focused service tracks for the current foundation: private transfers and island tours." />
     <div class="mt-8">
       <ServiceCards />
     </div>
   </section>
-  <section class="bg-slate-50">
+  <section class="border-y border-white/10 bg-[#111827]/45">
     <div class="container-page section-padding">
-      <SectionHeader eyebrow="Why us" title="Built for mobile travel decisions" />
+      <SectionHeader eyebrow="Luxury grid" title="Concierge details without clutter" description="A bento foundation for future service highlights, destination moments, and fleet storytelling." />
+      <div class="mt-8">
+        <BentoShowcase />
+      </div>
+    </div>
+  </section>
+  <section class="container-page section-padding">
+    <SectionHeader eyebrow="Fleet" title="Choose the tone of the ride" description="A lightweight React island for the premium car selector. No heavy slider dependency." />
+    <div class="mt-8">
+      <PremiumCarSelector client:load />
+    </div>
+  </section>
+  <section class="border-y border-white/10 bg-[#111827]/45">
+    <div class="container-page section-padding">
+      <SectionHeader eyebrow="Why us" title="Built for premium mobile travel decisions" />
       <div class="mt-8">
         <WhyChooseUs />
       </div>
     </div>
   </section>
   <section class="container-page section-padding">
-    <SectionHeader eyebrow="Gallery" title="Visual placeholders" description="Image paths are ready for real taxi, car, tour, and destination assets." />
+    <SectionHeader eyebrow="Gallery" title="Cinematic visual placeholders" description="Image slots are ready for real fleet, route, and island destination assets." />
     <div class="mt-8">
       <GalleryGrid items={gallery} />
     </div>

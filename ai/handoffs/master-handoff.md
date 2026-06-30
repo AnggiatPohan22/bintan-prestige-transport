@@ -15,13 +15,15 @@ Astro, React, Tailwind CSS, Motion, Lucide React, TypeScript
 ## Completed Steps
 
 - STEP 0 - Astro Project Setup & Frontend Foundation
+- STEP 1 - Modern Dark Luxury UI Foundation, Hero, Booking Form & Premium Interaction Base
 
 ## Current Status
 
-STEP 0 foundation files are in place. The project has configuration, layout,
-SEO foundation, responsive base styling, placeholder pages, structured local
-data, reusable components, AI documentation, dependency lockfile, and passing
-build/check verification.
+STEP 1 dark luxury homepage foundation is in place. The project has a refined
+dark visual theme, immersive hero, floating WhatsApp booking form, premium
+service cards, bento showcase, lightweight premium car selector React island,
+responsive homepage composition, updated local data, and passing build/check
+verification.
 
 ## Development Rules
 
@@ -35,8 +37,7 @@ build/check verification.
 
 ## Next Plan
 
-- STEP 1 - Base Layout, Navbar, Footer, SEO Refinement
-- STEP 2 - Home Page Structure
+- STEP 2 - Home Page Content Sections & Luxury Visual Completion
 - STEP 3 - Pick Up & Drop Page
 - STEP 4 - Island Tour Page
 - STEP 5 - About & Contact Page

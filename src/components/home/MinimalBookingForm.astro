@@ -1,0 +1,39 @@
+---
+import { CalendarDays, Car, MapPin, Search } from "lucide-react";
+import { site } from "../../data/site";
+
+const message =
+  "Hello, I want to check availability. Pick-up: -, Drop-off: -, Date: -, Service type: premium taxi or tour.";
+const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+const fields = [
+  { label: "Pick-up", value: "Airport, hotel, ferry", icon: MapPin },
+  { label: "Drop-off", value: "Resort, beach, city", icon: MapPin },
+  { label: "Date", value: "Choose travel date", icon: CalendarDays },
+  { label: "Service Type", value: "Transfer or island tour", icon: Car },
+];
+---
+
+<form class="luxury-surface mx-auto grid w-full max-w-6xl gap-3 rounded-[8px] p-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr_auto]" action={href}>
+  {fields.map((field) => {
+    const Icon = field.icon;
+    return (
+      <div class="flex min-h-16 items-center gap-3 rounded-[8px] border border-white/10 bg-white/[0.03] px-4">
+        <Icon className="h-5 w-5 text-[#e2e8f0]/76" aria-hidden="true" />
+        <div class="min-w-0">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">{field.label}</p>
+          <p class="truncate text-sm font-medium text-[#e2e8f0]">{field.value}</p>
+        </div>
+      </div>
+    );
+  })}
+  <a
+    class="inline-flex min-h-14 items-center justify-center gap-2 rounded-[8px] bg-[#e2e8f0] px-5 text-sm font-semibold text-[#0b0c10] shadow-[0_0_28px_rgba(226,232,240,0.16)] transition hover:bg-white sm:col-span-2 lg:col-span-1"
+    href={href}
+    target="_blank"
+    rel="noreferrer"
+  >
+    <Search className="h-4 w-4" aria-hidden="true" />
+    <span>Check Availability</span>
+  </a>
+</form>

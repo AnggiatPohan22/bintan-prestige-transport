@@ -1,25 +1,36 @@
 ---
 import { site } from "../../data/site";
+import MinimalBookingForm from "./MinimalBookingForm.astro";
 ---
 
-<section class="bg-[#111317] text-white">
-  <div class="container-page grid min-h-[560px] items-center gap-8 py-12 md:grid-cols-[1.05fr_0.95fr] md:py-16">
-    <div>
-      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f4e6bd]">Taxi & Tour Service</p>
-      <h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
-        Premium travel support for transfers and island tours.
-      </h1>
-      <p class="mt-5 max-w-xl text-base leading-7 text-white/72 sm:text-lg">
-        Static-first frontend foundation for a fast, mobile-first taxi and tour website with WhatsApp booking.
+<section class="relative isolate overflow-hidden bg-[#0b0c10] text-white">
+  <div class="absolute inset-0 -z-20">
+    <video class="h-full w-full object-cover opacity-35" autoplay muted loop playsinline preload="metadata">
+      <source src={site.heroVideo} type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 visual-placeholder"></div>
+  </div>
+  <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(11,12,16,0.64),rgba(11,12,16,0.94)_72%,#0b0c10)]"></div>
+  <div class="absolute inset-x-0 top-16 -z-10 mx-auto h-48 w-[72%] rounded-full bg-[#e2e8f0]/10 blur-3xl"></div>
+
+  <div class="container-page flex min-h-[calc(100vh-4rem)] flex-col justify-center gap-8 py-12 md:min-h-[720px] md:py-16">
+    <div class="mx-auto max-w-4xl text-center">
+      <p class="animate-[fadeUp_0.7s_ease-out_both] text-xs font-semibold uppercase tracking-[0.28em] text-[#e2e8f0]/72 sm:text-sm">
+        Premium Taxi & Tour Concierge
       </p>
-      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-        <a class="inline-flex min-h-12 items-center justify-center rounded-full bg-[#c9a14a] px-5 text-sm font-semibold text-[#111317]" href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`} target="_blank" rel="noreferrer">Book via WhatsApp</a>
-        <a class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-semibold text-white" href="/packages/island-tour">View Packages</a>
+      <h1 class="mt-5 animate-[fadeUp_0.8s_ease-out_0.08s_both] text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-7xl">
+        Premium Private Taxi & Island Tour Experience
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl animate-[fadeUp_0.8s_ease-out_0.16s_both] text-base leading-7 text-slate-300 sm:text-lg">
+        Arrive in comfort. Explore with confidence. Move through Bintan with private luxury service.
+      </p>
+      <div class="mt-8 flex animate-[fadeUp_0.8s_ease-out_0.24s_both] flex-col justify-center gap-3 sm:flex-row">
+        <a class="inline-flex min-h-12 items-center justify-center rounded-full bg-[#e2e8f0] px-6 text-sm font-semibold text-[#0b0c10] shadow-[0_0_34px_rgba(226,232,240,0.18)] transition hover:bg-white" href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`} target="_blank" rel="noreferrer">Book via WhatsApp</a>
+        <a class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/18 bg-white/5 px-6 text-sm font-semibold text-[#e2e8f0] backdrop-blur transition hover:bg-white/10" href="/packages/island-tour">Explore Packages</a>
       </div>
     </div>
-
-    <div class="aspect-[4/3] overflow-hidden rounded-[8px] bg-white/10 shadow-2xl">
-      <img class="h-full w-full object-cover" src="/images/hero/taxi-tour-hero.jpg" alt="Premium taxi and island tour hero placeholder" />
+    <div class="animate-[fadeUp_0.8s_ease-out_0.32s_both]">
+      <MinimalBookingForm />
     </div>
   </div>
 </section>

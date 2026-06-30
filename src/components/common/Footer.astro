@@ -3,23 +3,23 @@ import { navigation } from "../../data/navigation";
 import { site } from "../../data/site";
 ---
 
-<footer class="bg-[#111317] text-white">
+<footer class="border-t border-white/10 bg-[#0b0c10] text-white">
   <div class="container-page grid gap-8 py-10 md:grid-cols-[1.4fr_1fr_1fr]">
     <div class="max-w-md">
-      <p class="text-lg font-semibold">{site.name}</p>
-      <p class="mt-3 text-sm leading-6 text-white/70">{site.defaultDescription}</p>
+      <p class="text-lg font-semibold text-[#e2e8f0]">{site.name}</p>
+      <p class="mt-3 text-sm leading-6 text-slate-400">{site.defaultDescription}</p>
     </div>
 
     <div>
-      <p class="text-sm font-semibold text-[#f4e6bd]">Menu</p>
-      <div class="mt-3 grid gap-2 text-sm text-white/70">
-        {navigation.map((item) => <a class="hover:text-white" href={item.href}>{item.label}</a>)}
+      <p class="text-sm font-semibold text-[#e2e8f0]">Menu</p>
+      <div class="mt-3 grid gap-2 text-sm text-slate-400">
+        {navigation.map((item) => <a class="hover:text-[#e2e8f0]" href={item.href}>{item.label}</a>)}
       </div>
     </div>
 
     <div>
-      <p class="text-sm font-semibold text-[#f4e6bd]">Contact</p>
-      <div class="mt-3 grid gap-2 text-sm text-white/70">
+      <p class="text-sm font-semibold text-[#e2e8f0]">Contact</p>
+      <div class="mt-3 grid gap-2 text-sm text-slate-400">
         <span>{site.phone}</span>
         <span>{site.email}</span>
         <span>{site.address}</span>
@@ -27,6 +27,6 @@ import { site } from "../../data/site";
     </div>
   </div>
   <div class="border-t border-white/10 py-4">
-    <p class="container-page text-xs text-white/50">Copyright {new Date().getFullYear()} {site.shortName}. All rights reserved.</p>
+    <p class="container-page text-xs text-slate-500">Copyright {new Date().getFullYear()} {site.shortName}. All rights reserved.</p>
   </div>
 </footer>

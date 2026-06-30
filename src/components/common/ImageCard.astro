@@ -9,12 +9,16 @@ interface Props {
 const { title, description, image, alt } = Astro.props;
 ---
 
-<article class="overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-sm">
-  <div class="aspect-[4/3] bg-slate-100">
-    <img class="h-full w-full object-cover" src={image} alt={alt} loading="lazy" />
+<article class="group overflow-hidden rounded-[8px] border border-white/10 bg-[#111827]/80 shadow-[0_18px_55px_rgba(0,0,0,0.22)] transition hover:border-[#e2e8f0]/24">
+  <div
+    class="visual-placeholder aspect-[4/3] bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
+    role="img"
+    aria-label={alt}
+    style={`background-image: linear-gradient(135deg, rgba(11,12,16,0.16), rgba(6,78,59,0.34)), url('${image}');`}
+  >
   </div>
   <div class="p-4">
-    <h3 class="text-base font-semibold text-[#111317]">{title}</h3>
-    {description && <p class="mt-2 text-sm leading-6 text-slate-600">{description}</p>}
+    <h3 class="text-base font-semibold text-[#e2e8f0]">{title}</h3>
+    {description && <p class="mt-2 text-sm leading-6 text-slate-400">{description}</p>}
   </div>
 </article>

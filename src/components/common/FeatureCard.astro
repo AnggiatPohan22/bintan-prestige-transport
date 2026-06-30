@@ -7,8 +7,8 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<article class="rounded-[8px] border border-slate-200 bg-white p-5 shadow-sm">
-  <div class="mb-4 h-1.5 w-12 rounded-full bg-[#c9a14a]"></div>
-  <h3 class="text-base font-semibold text-[#111317]">{title}</h3>
-  <p class="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+<article class="rounded-[8px] border border-white/10 bg-[#111827]/72 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.22)] transition hover:border-[#e2e8f0]/24">
+  <div class="mb-4 h-1.5 w-12 rounded-full bg-[#e2e8f0] shadow-[0_0_24px_rgba(226,232,240,0.18)]"></div>
+  <h3 class="text-base font-semibold text-[#e2e8f0]">{title}</h3>
+  <p class="mt-2 text-sm leading-6 text-slate-400">{description}</p>
 </article>
