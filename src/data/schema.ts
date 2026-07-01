@@ -6,7 +6,7 @@ import { site } from "./site";
 import { tours } from "./tours";
 import { absoluteUrl } from "./seo";
 
-const sameAs: string[] = [];
+const sameAs = site.socialLinks;
 
 export const organizationSchema = {
   "@type": "TravelAgency",
@@ -29,10 +29,12 @@ export const localBusinessSchema = {
   email: site.email,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Bintan",
-    addressRegion: "Riau Islands",
-    addressCountry: "ID",
+    streetAddress: site.address,
+    addressLocality: site.addressLocality,
+    addressRegion: site.addressRegion,
+    addressCountry: site.addressCountry,
   },
+  hasMap: site.googleMapsUrl || undefined,
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],

@@ -23,14 +23,16 @@ Astro, React, Tailwind CSS, Motion, Lucide React, TypeScript
 - STEP 6 - Animation & Interaction Pass
 - STEP 7 - SEO, Schema & Sitemap
 - STEP 8 - Performance Audit & Launch Readiness
+- STEP 9 - Production Content & Deployment Configuration
 
 ## Current Status
 
-STEP 8 performance and launch-readiness pass is complete. The project has a
-refined dark luxury frontend with premium pages, mobile interactions, canonical
-metadata, richer Open Graph/Twitter metadata, JSON-LD schema, generated sitemap,
-generated robots output, lighter shared client-side JavaScript, deferred
-homepage fleet selector loading, and passing build/check verification.
+STEP 9 production configuration is in place. The project has a refined dark
+luxury frontend with premium pages, mobile interactions, canonical metadata,
+richer Open Graph/Twitter metadata, JSON-LD schema, generated sitemap, generated
+robots output, lighter shared client-side JavaScript, deferred homepage fleet
+selector loading, environment-based public business configuration, static
+hosting headers, and deployment checklist documentation.
 
 ## Development Rules
 
@@ -44,4 +46,4 @@ homepage fleet selector loading, and passing build/check verification.
 
 ## Next Plan
 
-- STEP 9 - Production Content, Real Media & Deployment Configuration
+- STEP 10 - Final QA, Domain Replacement & Deployment Smoke Test
