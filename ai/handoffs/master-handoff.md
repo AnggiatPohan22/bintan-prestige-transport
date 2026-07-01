@@ -22,13 +22,15 @@ Astro, React, Tailwind CSS, Motion, Lucide React, TypeScript
 - STEP 5 - About & Contact Page
 - STEP 6 - Animation & Interaction Pass
 - STEP 7 - SEO, Schema & Sitemap
+- STEP 8 - Performance Audit & Launch Readiness
 
 ## Current Status
 
-STEP 7 SEO foundation is in place. The project has a refined dark luxury
-frontend with premium pages, mobile interactions, canonical metadata, richer
-Open Graph/Twitter metadata, JSON-LD schema, generated sitemap, generated
-robots output, and passing build/check verification.
+STEP 8 performance and launch-readiness pass is complete. The project has a
+refined dark luxury frontend with premium pages, mobile interactions, canonical
+metadata, richer Open Graph/Twitter metadata, JSON-LD schema, generated sitemap,
+generated robots output, lighter shared client-side JavaScript, deferred
+homepage fleet selector loading, and passing build/check verification.
 
 ## Development Rules
 
@@ -42,4 +44,4 @@ robots output, and passing build/check verification.
 
 ## Next Plan
 
-- STEP 8 - Performance Audit & Launch Readiness
+- STEP 9 - Production Content, Real Media & Deployment Configuration

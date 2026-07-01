@@ -1,12 +1,10 @@
 import { Menu, MessageCircle, X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { navigation } from "../../data/navigation";
 import { site } from "../../data/site";
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
-  const reduceMotion = useReducedMotion();
   const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
 
   useEffect(() => {
@@ -37,40 +35,32 @@ export default function MobileNav() {
         {isOpen ? <X aria-hidden="true" size={20} /> : <Menu aria-hidden="true" size={20} />}
       </button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="fixed inset-x-0 top-16 z-50 border-b border-white/10 bg-[#0b0c10]/96 px-4 py-5 shadow-[0_30px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl"
-            initial={reduceMotion ? false : { opacity: 0, y: -12 }}
-            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-          >
-            <div className="mx-auto grid w-full max-w-[1180px] gap-2">
-              {navigation.map((item) => (
-                <a
-                  className="rounded-[8px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-semibold text-[#e2e8f0]"
-                  href={item.href}
-                  key={item.href}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
+      {isOpen && (
+        <div className="fixed inset-x-0 top-16 z-50 border-b border-white/10 bg-[#0b0c10]/96 px-4 py-5 shadow-[0_30px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl">
+          <div className="mx-auto grid w-full max-w-[1180px] gap-2">
+            {navigation.map((item) => (
               <a
-                className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#e2e8f0] px-5 text-sm font-semibold text-[#0b0c10]"
-                href={whatsappHref}
+                className="rounded-[8px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-semibold text-[#e2e8f0]"
+                href={item.href}
+                key={item.href}
                 onClick={() => setIsOpen(false)}
-                rel="noreferrer"
-                target="_blank"
               >
-                <MessageCircle aria-hidden="true" size={18} />
-                <span>Chat on WhatsApp</span>
+                {item.label}
               </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+            <a
+              className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#e2e8f0] px-5 text-sm font-semibold text-[#0b0c10]"
+              href={whatsappHref}
+              onClick={() => setIsOpen(false)}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <MessageCircle aria-hidden="true" size={18} />
+              <span>Chat on WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

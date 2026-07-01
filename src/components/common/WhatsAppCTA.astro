@@ -1,5 +1,4 @@
 ---
-import MotionButton from "../animations/MotionButton";
 import { site } from "../../data/site";
 
 interface Props {
@@ -24,7 +23,15 @@ const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(mes
       <p class="mt-3 text-sm leading-6 text-slate-400 sm:text-base">{description}</p>
     </div>
     <div class="mt-6 md:mt-0">
-      <MotionButton client:load href={href} label="Chat on WhatsApp" />
+      <a
+        class="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#e2e8f0] px-5 text-sm font-semibold text-[#0b0c10] shadow-[0_0_28px_rgba(226,232,240,0.16)] transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#e2e8f0]/60 focus:ring-offset-2 focus:ring-offset-[#0b0c10]"
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat on WhatsApp"
+      >
+        Chat on WhatsApp
+      </a>
     </div>
   </div>
 </section>
