@@ -8,6 +8,7 @@ import TourExperience from "../../components/packages/TourExperience.astro";
 import TourFAQ from "../../components/packages/TourFAQ.astro";
 import TourHero from "../../components/packages/TourHero.astro";
 import TourPackageGrid from "../../components/packages/TourPackageGrid.astro";
+import { breadcrumbSchema, packageSchema } from "../../data/schema";
 
 const itinerary = [
   "Private hotel or villa pick up with route confirmation",
@@ -16,11 +17,17 @@ const itinerary = [
   "Optional food, shopping, or sunset stop based on package timing",
   "Private drop off at hotel, ferry terminal, dinner venue, or next destination",
 ];
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Packages", href: "/packages/island-tour" },
+  { label: "Island Tour", href: "/packages/island-tour" },
+];
+const schema = [...packageSchema("tour"), breadcrumbSchema(breadcrumbs)];
 ---
 
-<BaseLayout title="Island Tour" description="Premium private island tour packages for beaches, culture, scenic routes, night movement, and custom concierge itineraries.">
+<BaseLayout title="Island Tour" description="Premium private island tour packages for beaches, culture, scenic routes, night movement, and custom concierge itineraries." canonical="/packages/island-tour" schema={schema}>
   <TourHero />
-  <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Packages", href: "/packages/island-tour" }, { label: "Island Tour" }]} />
+  <Breadcrumb items={breadcrumbs} />
   <section id="tour-packages" class="container-page section-padding">
     <SectionHeader eyebrow="Tour packages" title="Private island routes with premium pacing" description="Choose a starter route, then confirm timing, stops, vehicle fit, and guest preferences through WhatsApp." />
     <div class="mt-8">

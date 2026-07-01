@@ -13,9 +13,10 @@ import PremiumCarSelector from "../components/home/PremiumCarSelector";
 import RouteHighlights from "../components/home/RouteHighlights.astro";
 import LuxuryExperience from "../components/home/LuxuryExperience.astro";
 import { gallery } from "../data/gallery";
+import { homeSchema } from "../data/schema";
 ---
 
-<BaseLayout title="Premium Private Taxi & Island Tour Experience" description="Modern dark luxury taxi and island tour frontend foundation for premium transfers, VIP driver service, and WhatsApp booking.">
+<BaseLayout title="Premium Private Taxi & Island Tour Experience" description="Modern dark luxury taxi and island tour frontend foundation for premium transfers, VIP driver service, and WhatsApp booking." canonical="/" schema={homeSchema}>
   <Hero />
   <LuxuryExperience />
   <section class="container-page section-padding">

@@ -6,11 +6,18 @@ import AboutHero from "../components/about/AboutHero.astro";
 import AboutStory from "../components/about/AboutStory.astro";
 import TrustSignals from "../components/about/TrustSignals.astro";
 import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
+import { breadcrumbSchema, organizationSchema } from "../data/schema";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+];
+const schema = [organizationSchema, breadcrumbSchema(breadcrumbs)];
 ---
 
-<BaseLayout title="About Us" description="About the premium private taxi, transfer, and island tour concierge service foundation.">
+<BaseLayout title="About Us" description="About the premium private taxi, transfer, and island tour concierge service foundation." canonical="/about" schema={schema}>
   <AboutHero />
-  <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About Us" }]} />
+  <Breadcrumb items={breadcrumbs} />
   <AboutStory />
   <section class="border-y border-white/10 bg-[#111827]/45">
     <div class="container-page section-padding">

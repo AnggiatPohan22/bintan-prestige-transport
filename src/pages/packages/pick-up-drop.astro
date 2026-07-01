@@ -10,11 +10,19 @@ import TransferFleet from "../../components/packages/TransferFleet.astro";
 import TransferHero from "../../components/packages/TransferHero.astro";
 import TransferProcess from "../../components/packages/TransferProcess.astro";
 import { routes } from "../../data/routes";
+import { breadcrumbSchema, packageSchema } from "../../data/schema";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Packages", href: "/packages/pick-up-drop" },
+  { label: "Pick Up & Drop", href: "/packages/pick-up-drop" },
+];
+const schema = [...packageSchema("transfer"), breadcrumbSchema(breadcrumbs)];
 ---
 
-<BaseLayout title="Pick Up & Drop" description="Premium private pick up and drop transfer service for airport, ferry terminal, hotel, dinner, and custom routes.">
+<BaseLayout title="Pick Up & Drop" description="Premium private pick up and drop transfer service for airport, ferry terminal, hotel, dinner, and custom routes." canonical="/packages/pick-up-drop" schema={schema}>
   <TransferHero />
-  <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Packages", href: "/packages/pick-up-drop" }, { label: "Pick Up & Drop" }]} />
+  <Breadcrumb items={breadcrumbs} />
   <section id="transfer-routes" class="container-page section-padding">
     <SectionHeader eyebrow="Transfer routes" title="Private routes for arrival, departure, and island movement" description="Start from these common route patterns, then confirm final pickup time, waiting needs, luggage, and vehicle fit through WhatsApp." />
     <div class="mt-8">

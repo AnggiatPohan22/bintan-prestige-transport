@@ -21,14 +21,14 @@ Astro, React, Tailwind CSS, Motion, Lucide React, TypeScript
 - STEP 4 - Island Tour Page
 - STEP 5 - About & Contact Page
 - STEP 6 - Animation & Interaction Pass
+- STEP 7 - SEO, Schema & Sitemap
 
 ## Current Status
 
-STEP 6 animation and interaction pass is in place. The project has a refined
-dark luxury homepage, premium package pages, About and Contact pages, mobile
-navigation, floating WhatsApp quick action, skip link, focus-visible states,
-missing hero animation keyframes, Motion refinements, and passing build/check
-verification.
+STEP 7 SEO foundation is in place. The project has a refined dark luxury
+frontend with premium pages, mobile interactions, canonical metadata, richer
+Open Graph/Twitter metadata, JSON-LD schema, generated sitemap, generated
+robots output, and passing build/check verification.
 
 ## Development Rules
 
@@ -42,5 +42,4 @@ verification.
 
 ## Next Plan
 
-- STEP 7 - SEO, Schema & Sitemap
 - STEP 8 - Performance Audit & Launch Readiness

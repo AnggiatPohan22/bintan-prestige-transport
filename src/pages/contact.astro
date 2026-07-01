@@ -6,11 +6,18 @@ import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
 import ContactCards from "../components/contact/ContactCards.astro";
 import ContactHero from "../components/contact/ContactHero.astro";
 import WhatsAppPlanner from "../components/contact/WhatsAppPlanner.astro";
+import { breadcrumbSchema, localBusinessSchema, organizationSchema } from "../data/schema";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Contact", href: "/contact" },
+];
+const schema = [organizationSchema, localBusinessSchema, breadcrumbSchema(breadcrumbs)];
 ---
 
-<BaseLayout title="Contact" description="Contact the premium private taxi and island tour service through WhatsApp, phone, or email.">
+<BaseLayout title="Contact" description="Contact the premium private taxi and island tour service through WhatsApp, phone, or email." canonical="/contact" schema={schema}>
   <ContactHero />
-  <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
+  <Breadcrumb items={breadcrumbs} />
   <section class="container-page section-padding">
     <SectionHeader eyebrow="Contact options" title="Reach the travel concierge" description="Keep the first contact path simple while leaving room for future CMS/API-powered contact details." />
     <div class="mt-8">
