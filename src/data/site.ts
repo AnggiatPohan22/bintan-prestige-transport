@@ -29,6 +29,7 @@ export const site = {
       import.meta.env.PUBLIC_SITE_DESCRIPTION,
       "Premium private taxi, airport transfer, VIP driver, and island tour experience with WhatsApp-first reservations.",
     ),
+  logoImage: envValue(import.meta.env.PUBLIC_LOGO_IMAGE, ""),
   defaultOgImage: envValue(import.meta.env.PUBLIC_DEFAULT_OG_IMAGE, "/images/brand/og-placeholder.jpg"),
   whatsappNumber: envValue(import.meta.env.PUBLIC_WHATSAPP_NUMBER, "6281234567890"),
   whatsappMessage: envValue(
@@ -42,6 +43,8 @@ export const site = {
   addressRegion: envValue(import.meta.env.PUBLIC_ADDRESS_REGION, "Riau Islands"),
   addressCountry: envValue(import.meta.env.PUBLIC_ADDRESS_COUNTRY, "ID"),
   responseWindow: envValue(import.meta.env.PUBLIC_RESPONSE_WINDOW, "Daily, 08:00 - 22:00"),
+  heroImage: envValue(import.meta.env.PUBLIC_HERO_IMAGE, ""),
+  heroImages: csvList(import.meta.env.PUBLIC_HERO_IMAGES),
   heroVideo: envValue(import.meta.env.PUBLIC_HERO_VIDEO, "/videos/hero-luxury-drive.mp4"),
   googleMapsUrl: envValue(import.meta.env.PUBLIC_GOOGLE_MAPS_URL, ""),
   socialLinks: csvList(import.meta.env.PUBLIC_SOCIAL_LINKS),

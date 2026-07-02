@@ -1,5 +1,7 @@
 ---
 import { ShieldCheck, Sparkles, Timer } from "lucide-react";
+import HeroBackdrop from "../common/HeroBackdrop.astro";
+import { heroSlides } from "../../data/media";
 
 const points = [
   { label: "Private driver mindset", icon: ShieldCheck },
@@ -9,10 +11,10 @@ const points = [
 ---
 
 <section class="relative overflow-hidden border-b border-white/10 bg-[#0b0c10]">
-  <div class="absolute inset-0 visual-placeholder opacity-75"></div>
+  <HeroBackdrop images={heroSlides.about} className="z-0" />
   <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,12,16,0.55),#0b0c10_88%)]"></div>
   <div class="container-page relative grid min-h-[560px] gap-8 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-16">
-    <div>
+    <div class="hero-copy">
       <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">About the service</p>
       <h1 class="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-6xl">
         Private travel support with a calm luxury rhythm.
@@ -22,14 +24,14 @@ const points = [
       </p>
     </div>
 
-    <div class="luxury-surface silver-glow rounded-[8px] p-5 sm:p-6">
+    <div class="hero-panel luxury-surface silver-glow rounded-[8px] p-5 sm:p-6">
       <p class="text-sm font-semibold text-[#e2e8f0]">Built around</p>
       <div class="mt-5 grid gap-3">
         {points.map((point) => {
           const Icon = point.icon;
           return (
-            <div class="flex items-center gap-3 rounded-[8px] border border-white/10 bg-white/[0.03] p-4">
-              <Icon className="h-5 w-5 text-[#e2e8f0]/72" aria-hidden="true" />
+            <div class="luxury-card flex items-center gap-3 rounded-[8px] p-4">
+              <Icon className="h-5 w-5 text-[#f8e7a1]/82" aria-hidden="true" />
               <span class="text-sm font-medium text-slate-300">{point.label}</span>
             </div>
           );

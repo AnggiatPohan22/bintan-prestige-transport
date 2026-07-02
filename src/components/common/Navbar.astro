@@ -1,14 +1,22 @@
 ---
 import { navigation } from "../../data/navigation";
 import { site } from "../../data/site";
-import MobileNav from "./MobileNav";
+import MobileNav from "./MobileNav.astro";
 ---
 
-<header class="sticky top-0 z-40 border-b border-white/10 bg-[#0b0c10]/82 text-white shadow-[0_14px_45px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+<header class="sticky top-0 z-[80] border-b border-white/10 bg-[#0b0c10]/82 text-white shadow-[0_14px_45px_rgba(0,0,0,0.18)] backdrop-blur-xl">
   <nav class="container-page flex min-h-16 items-center justify-between gap-4 py-3">
-    <a href="/" class="flex min-w-0 flex-col">
-      <span class="text-base font-semibold tracking-wide text-[#e2e8f0]">{site.shortName}</span>
-      <span class="hidden text-xs text-slate-400 sm:block">{site.tagline}</span>
+    <a href="/" class="flex min-w-0 items-center gap-3">
+      {
+        site.logoImage ? (
+          <img class="h-10 w-auto max-w-[150px] object-contain sm:max-w-[190px]" src={site.logoImage} alt={`${site.shortName} logo`} />
+        ) : (
+          <span class="flex min-w-0 flex-col">
+            <span class="text-base font-semibold tracking-wide text-[#e2e8f0]">{site.shortName}</span>
+            <span class="hidden text-xs text-slate-400 sm:block">{site.tagline}</span>
+          </span>
+        )
+      }
     </a>
 
     <div class="hidden items-center gap-6 text-sm font-medium text-slate-300 md:flex">
@@ -17,14 +25,14 @@ import MobileNav from "./MobileNav";
 
     <div class="flex items-center gap-2">
       <a
-        class="hidden min-h-11 items-center justify-center rounded-full border border-[#e2e8f0]/20 bg-[#e2e8f0] px-4 text-sm font-semibold text-[#0b0c10] shadow-[0_0_28px_rgba(226,232,240,0.16)] transition hover:bg-white sm:inline-flex"
+        class="luxury-btn-primary hidden min-h-11 px-4 sm:inline-flex"
         href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`}
         target="_blank"
         rel="noreferrer"
       >
         WhatsApp
       </a>
-      <MobileNav client:load />
+      <MobileNav />
     </div>
   </nav>
 </header>

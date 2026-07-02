@@ -1,6 +1,8 @@
 ---
 import { Compass, MapPinned, MessageCircle, Sparkles } from "lucide-react";
 import { site } from "../../data/site";
+import { heroSlides } from "../../data/media";
+import HeroBackdrop from "../common/HeroBackdrop.astro";
 
 const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(
   "Hello, I want to check availability for a private island tour package.",
@@ -14,10 +16,10 @@ const highlights = [
 ---
 
 <section class="relative overflow-hidden border-b border-white/10 bg-[#0b0c10]">
-  <div class="absolute inset-0 visual-placeholder opacity-80"></div>
+  <HeroBackdrop images={heroSlides.islandTour} className="z-0" />
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(6,78,59,0.28),transparent_28rem),linear-gradient(180deg,rgba(11,12,16,0.48),#0b0c10_86%)]"></div>
   <div class="container-page relative grid min-h-[640px] gap-8 py-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:py-16">
-    <div>
+    <div class="hero-copy">
       <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">Private island tour</p>
       <h1 class="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-6xl">
         Explore Bintan with a private luxury tour rhythm.
@@ -26,30 +28,30 @@ const highlights = [
         Curated island routes for beaches, viewpoints, culture, dinner, and relaxed private movement with WhatsApp-first planning.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#e2e8f0] px-6 text-sm font-semibold text-[#0b0c10] shadow-[0_0_34px_rgba(226,232,240,0.18)] transition hover:bg-white" href={href} target="_blank" rel="noreferrer">
+        <a class="luxury-btn-primary" href={href} target="_blank" rel="noreferrer">
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
           <span>Plan Tour via WhatsApp</span>
         </a>
-        <a class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/18 bg-white/5 px-6 text-sm font-semibold text-[#e2e8f0] backdrop-blur transition hover:bg-white/10" href="#tour-packages">
+        <a class="luxury-btn-secondary" href="#tour-packages">
           View Tour Packages
         </a>
       </div>
     </div>
 
-    <div class="luxury-surface silver-glow rounded-[8px] p-5 sm:p-6">
+    <div class="hero-panel luxury-surface silver-glow rounded-[8px] p-5 sm:p-6">
       <p class="text-sm font-semibold text-[#e2e8f0]">Tour foundation covers</p>
       <div class="mt-5 grid gap-3">
         {highlights.map((item) => {
           const Icon = item.icon;
           return (
-            <div class="flex items-center gap-3 rounded-[8px] border border-white/10 bg-white/[0.03] p-4">
-              <Icon className="h-5 w-5 text-[#e2e8f0]/72" aria-hidden="true" />
+            <div class="luxury-card flex items-center gap-3 rounded-[8px] p-4">
+              <Icon className="h-5 w-5 text-[#f8e7a1]/82" aria-hidden="true" />
               <span class="text-sm font-medium text-slate-300">{item.label}</span>
             </div>
           );
         })}
       </div>
-      <div class="mt-5 rounded-[8px] border border-[#064e3b]/50 bg-[#064e3b]/24 p-4">
+      <div class="mt-5 rounded-[8px] border border-[#d6b25e]/34 bg-[#d6b25e]/10 p-4">
         <p class="text-sm leading-6 text-emerald-100">
           Send your preferred stops, guest count, duration, and start time. The route can stay structured or flexible depending on the guest pace.
         </p>

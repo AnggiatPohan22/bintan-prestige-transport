@@ -1,0 +1,37 @@
+---
+interface Props {
+  images?: string[];
+  video?: string;
+  className?: string;
+}
+
+const { images = [], video = "", className = "-z-20" } = Astro.props;
+const activeImages = images.filter(Boolean);
+const duration = Math.max(activeImages.length * 6, 12);
+---
+
+<div class={`absolute inset-0 ${className}`} aria-hidden="true">
+  <div class="absolute inset-0 visual-placeholder"></div>
+  {
+    activeImages.length > 0 && (
+      <div class="hero-slideshow absolute inset-0">
+        {activeImages.map((image, index) => (
+          <div
+            class:list={[
+              "hero-slide absolute inset-0 bg-cover bg-center bg-no-repeat",
+              activeImages.length === 1 && "hero-slide-static",
+            ]}
+            style={`background-image: url('${image}'); animation-delay: ${index * 6}s; animation-duration: ${duration}s;`}
+          />
+        ))}
+      </div>
+    )
+  }
+  {
+    video && (
+      <video class="absolute inset-0 h-full w-full object-cover opacity-24" autoplay muted loop playsinline preload="metadata">
+        <source src={video} type="video/mp4" />
+      </video>
+    )
+  }
+</div>

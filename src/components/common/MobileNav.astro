@@ -1,0 +1,35 @@
+---
+import { Menu, MessageCircle, X } from "lucide-react";
+import { navigation } from "../../data/navigation";
+import { site } from "../../data/site";
+
+const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
+---
+
+<details class="mobile-menu relative z-[90] md:hidden">
+  <summary
+    class="relative z-[92] inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-[#f8e7a1]/26 bg-[#111827]/92 text-[#f8fafc] shadow-[0_12px_34px_rgba(0,0,0,0.32)] backdrop-blur transition hover:border-[#f8e7a1]/48 hover:bg-[#1f2937] focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70"
+    aria-label="Toggle navigation menu"
+  >
+    <Menu className="mobile-menu-open-icon h-5 w-5" aria-hidden="true" />
+    <X className="mobile-menu-close-icon h-5 w-5" aria-hidden="true" />
+  </summary>
+
+  <div class="fixed inset-0 z-[88] bg-[#020617]/70 md:hidden"></div>
+  <div class="fixed inset-x-3 top-[4.75rem] z-[89] rounded-[8px] border border-[#f8e7a1]/22 bg-[#0b0c10]/98 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.56)] backdrop-blur-xl md:hidden">
+    <div class="grid gap-2">
+      {navigation.map((item) => (
+        <a
+          class="luxury-card rounded-[8px] px-4 py-3 text-sm font-semibold text-[#f8fafc] transition hover:border-[#f8e7a1]/42"
+          href={item.href}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a class="luxury-btn-primary mt-2 min-h-12 px-5" href={whatsappHref} rel="noreferrer" target="_blank">
+        <MessageCircle className="h-4 w-4" aria-hidden="true" />
+        <span>Chat on WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</details>
