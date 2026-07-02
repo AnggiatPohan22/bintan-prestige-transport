@@ -26,7 +26,7 @@ const { title, description, canonical, ogImage, schema, noindex } = Astro.props;
     <SEO title={title} description={description} canonical={canonical} ogImage={ogImage} noindex={noindex} />
     <JsonLd data={schema} />
   </head>
-  <body>
+  <body class="editorial-site">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Navbar />
     <main id="main-content" class="min-h-screen">

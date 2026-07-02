@@ -3,30 +3,45 @@ import { navigation } from "../../data/navigation";
 import { site } from "../../data/site";
 ---
 
-<footer class="border-t border-white/10 bg-[#0b0c10] text-white">
-  <div class="container-page grid gap-8 py-10 md:grid-cols-[1.4fr_1fr_1fr]">
-    <div class="max-w-md">
-      <p class="text-lg font-semibold text-[#e2e8f0]">{site.name}</p>
-      <p class="mt-3 text-sm leading-6 text-slate-400">{site.defaultDescription}</p>
+<footer class="border-t border-[#bfa46f]/16 bg-[#08090d] text-white">
+  <div class="editorial-container grid gap-10 py-12 md:grid-cols-[1.45fr_0.8fr_1fr] lg:py-16">
+    <div class="max-w-xl">
+      <p class="editorial-kicker">Private Travel Concierge</p>
+      <p class="mt-4 max-w-lg font-[var(--font-editorial-heading)] text-3xl font-medium leading-none text-[#f8fafc] sm:text-4xl">
+        {site.name}
+      </p>
+      <p class="editorial-copy mt-5 text-slate-400">{site.defaultDescription}</p>
+      <a
+        class="editorial-button-primary mt-7 min-h-11 px-5"
+        href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        Start on WhatsApp
+      </a>
     </div>
 
     <div>
-      <p class="text-sm font-semibold text-[#e2e8f0]">Menu</p>
-      <div class="mt-3 grid gap-2 text-sm text-slate-400">
-        {navigation.map((item) => <a class="hover:text-[#e2e8f0]" href={item.href}>{item.label}</a>)}
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#bfa46f]">Explore</p>
+      <div class="mt-4 grid gap-2 text-sm text-slate-400">
+        {navigation.map((item) => <a class="transition hover:text-[#f8e7a1]" href={item.href}>{item.label}</a>)}
       </div>
     </div>
 
     <div>
-      <p class="text-sm font-semibold text-[#e2e8f0]">Contact</p>
-      <div class="mt-3 grid gap-2 text-sm text-slate-400">
-        <span>{site.phone}</span>
-        <span>{site.email}</span>
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#bfa46f]">Contact</p>
+      <div class="mt-4 grid gap-2 text-sm leading-6 text-slate-400">
+        <a class="transition hover:text-[#f8e7a1]" href={`tel:${site.phone}`}>{site.phone}</a>
+        <a class="transition hover:text-[#f8e7a1]" href={`mailto:${site.email}`}>{site.email}</a>
         <span>{site.address}</span>
+        <span>{site.responseWindow}</span>
       </div>
     </div>
   </div>
-  <div class="border-t border-white/10 py-4">
-    <p class="container-page text-xs text-slate-500">Copyright {new Date().getFullYear()} {site.shortName}. All rights reserved.</p>
+  <div class="border-t border-white/10 py-5">
+    <div class="editorial-container flex flex-col gap-2 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+      <p>Copyright {new Date().getFullYear()} {site.shortName}. All rights reserved.</p>
+      <p>Premium taxi, transfer, and private tour experience.</p>
+    </div>
   </div>
 </footer>
