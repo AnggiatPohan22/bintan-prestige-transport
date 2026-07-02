@@ -9,23 +9,23 @@ import MinimalBookingForm from "./MinimalBookingForm.astro";
   <HeroBackdrop images={heroSlides.home} video={site.heroVideo} />
   <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(11,12,16,0.46),rgba(11,12,16,0.78)_48%,#0b0c10_92%),linear-gradient(90deg,rgba(11,12,16,0.5),rgba(11,12,16,0.18),rgba(11,12,16,0.56))]"></div>
 
-  <div class="container-page flex min-h-[calc(100vh-4rem)] flex-col justify-center gap-8 py-12 md:min-h-[720px] md:py-16">
-    <div class="hero-copy mx-auto max-w-4xl text-center">
-      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-[#e2e8f0]/72 sm:text-sm">
+  <div class="editorial-container flex min-h-[calc(88svh-4rem)] flex-col justify-center gap-8 py-12 md:min-h-[640px] md:py-16">
+    <div class="hero-copy max-w-5xl">
+      <p class="editorial-kicker">
         Premium Taxi & Tour Concierge
       </p>
-      <h1 class="mt-5 text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-7xl">
-        Premium Private Taxi & Island Tour Experience
+      <h1 class="editorial-heading mt-4 text-[#f8fafc]">
+        Private rides and island tours with a magazine-worthy rhythm.
       </h1>
-      <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-        Arrive in comfort. Explore with confidence. Move through Bintan with private luxury service.
+      <p class="editorial-lede mt-5 text-slate-300">
+        Move through Bintan with calm private transfers, polished vehicle options, and curated tour pacing designed for guests who value comfort, timing, and a human concierge touch.
       </p>
-      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-        <a class="luxury-btn-primary" href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`} target="_blank" rel="noreferrer">Book via WhatsApp</a>
-        <a class="luxury-btn-secondary" href="/packages/island-tour">Explore Packages</a>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a class="editorial-button-primary" href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`} target="_blank" rel="noreferrer">Book via WhatsApp</a>
+        <a class="editorial-button-secondary" href="/packages/island-tour">Explore Packages</a>
       </div>
     </div>
-    <div class="hero-panel">
+    <div class="hero-panel max-w-6xl">
       <MinimalBookingForm />
     </div>
   </div>

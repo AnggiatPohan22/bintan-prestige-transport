@@ -19,61 +19,115 @@ import { homeSchema } from "../data/schema";
 <BaseLayout title="Premium Private Taxi & Island Tour Experience" description="Modern dark luxury taxi and island tour frontend foundation for premium transfers, VIP driver service, and WhatsApp booking." canonical="/" schema={homeSchema}>
   <Hero />
   <LuxuryExperience />
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="Signature services" title="Premium movement, shaped for private travel" description="Two focused service tracks for the current foundation: private transfers and island tours." />
-    <div class="mt-8">
-      <ServiceCards />
+  <section class="editorial-section-warm">
+    <div class="editorial-container">
+      <SectionHeader
+        eyebrow="Signature services"
+        title="Two ways to move through Bintan, both privately handled."
+        description="Choose a polished transfer for airport, ferry, hotel, and dinner movement, or shape a private island route around beaches, food, culture, and time."
+        tone="light"
+        variant="editorial"
+      />
+      <div class="mt-8">
+        <ServiceCards />
+      </div>
     </div>
   </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
-      <SectionHeader eyebrow="Luxury grid" title="Concierge details without clutter" description="A bento foundation for future service highlights, destination moments, and fleet storytelling." />
+
+  <section class="editorial-section-dark border-y border-[#bfa46f]/12">
+    <div class="editorial-container">
+      <SectionHeader
+        eyebrow="Concierge details"
+        title="Everything feels considered before the ride begins."
+        description="A calmer editorial grid for the moments that matter: arrival timing, vehicle fit, route comfort, and the small decisions that make private travel feel smooth."
+        variant="editorial"
+      />
       <div class="mt-8">
         <BentoShowcase />
       </div>
     </div>
   </section>
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="Featured routes" title="Start from a transfer, evolve into a private itinerary" description="Sharper route and tour cards make the homepage feel ready for real commercial content while still using local placeholder data." />
-    <div class="mt-8">
-      <RouteHighlights />
+
+  <section class="editorial-section-warm">
+    <div class="editorial-container">
+      <SectionHeader
+        eyebrow="Featured routes"
+        title="Start with a route. Let the itinerary become personal."
+        description="A transfer can stay direct, or become the first movement in a longer private day across Bintan."
+        tone="light"
+        variant="editorial"
+      />
+      <div class="mt-8">
+        <RouteHighlights />
+      </div>
     </div>
   </section>
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="Fleet" title="Choose the tone of the ride" description="A lightweight React island for the premium car selector. No heavy slider dependency." />
-    <div class="mt-8">
-      <PremiumCarSelector client:visible />
+
+  <section class="editorial-section-dark">
+    <div class="editorial-container">
+      <SectionHeader
+        eyebrow="Fleet"
+        title="Choose the tone of the ride."
+        description="A focused selector for the current fleet mood, from quiet sedan movement to group-ready private comfort."
+        variant="editorial"
+      />
+      <div class="mt-8">
+        <PremiumCarSelector client:visible />
+      </div>
     </div>
   </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
-      <SectionHeader eyebrow="How it works" title="A simple concierge flow from message to private ride" description="The homepage now explains the booking path without adding backend logic or a full booking engine." />
+
+  <section class="editorial-section-dark border-y border-[#bfa46f]/12">
+    <div class="editorial-container">
+      <SectionHeader
+        eyebrow="How it works"
+        title="A simple concierge flow from message to private ride."
+        description="No heavy booking engine. Just clear details, route confirmation, and a human WhatsApp conversation."
+        variant="editorial"
+      />
       <div class="mt-8">
         <ConciergeFlow />
       </div>
     </div>
   </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
-      <SectionHeader eyebrow="Why us" title="Built for premium mobile travel decisions" />
+
+  <section class="editorial-section-warm">
+    <div class="editorial-container">
+      <SectionHeader
+        eyebrow="Gallery"
+        title="A visual rhythm for fleet, island routes, and quiet travel moments."
+        description="The gallery is ready for final production imagery, with image-led modules that feel closer to a travel magazine than a template grid."
+        tone="light"
+        variant="editorial"
+      />
+      <div class="mt-8">
+        <GalleryGrid items={gallery} />
+      </div>
+    </div>
+  </section>
+
+  <section class="editorial-section-dark border-y border-[#bfa46f]/12">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Why us" title="Built for premium mobile travel decisions." variant="editorial" />
       <div class="mt-8">
         <WhyChooseUs />
       </div>
     </div>
   </section>
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="Gallery" title="Cinematic visual placeholders" description="Image slots are ready for real fleet, route, and island destination assets." />
-    <div class="mt-8">
-      <GalleryGrid items={gallery} />
-    </div>
-  </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
-      <SectionHeader eyebrow="FAQ" title="Answers before the first WhatsApp message" description="Short trust-building answers for booking, routing, fleet, and custom itinerary expectations." />
+
+  <section class="editorial-section-dark">
+    <div class="editorial-container">
+      <SectionHeader
+        eyebrow="FAQ"
+        title="Answers before the first WhatsApp message."
+        description="Short trust-building answers for booking, routing, fleet, and custom itinerary expectations."
+        variant="editorial"
+      />
       <div class="mt-8">
         <FAQPreview />
       </div>
     </div>
   </section>
+
   <WhatsAppCTA />
 </BaseLayout>

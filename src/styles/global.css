@@ -90,14 +90,15 @@ a:focus-visible {
 }
 
 .editorial-section {
-  padding-block: clamp(4rem, 8vw, 7.5rem);
+  padding-block: clamp(3rem, 6vw, 5.5rem);
 }
 
 .editorial-section-compact {
-  padding-block: clamp(3rem, 6vw, 5rem);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
 }
 
 .editorial-section-dark {
+  padding-block: clamp(3rem, 6vw, 5.5rem);
   background:
     radial-gradient(circle at 80% 0%, rgba(191, 164, 111, 0.12), transparent 28rem),
     var(--color-black);
@@ -105,6 +106,7 @@ a:focus-visible {
 }
 
 .editorial-section-warm {
+  padding-block: clamp(3rem, 6vw, 5.5rem);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(245, 240, 232, 0.94)),
     var(--editorial-warm);
@@ -125,37 +127,37 @@ a:focus-visible {
 }
 
 .editorial-heading {
-  max-width: 12ch;
+  max-width: 13.5ch;
   color: inherit;
   font-family: var(--font-editorial-heading);
-  font-size: clamp(2.75rem, 7vw, 6.75rem);
+  font-size: clamp(2.25rem, 5.4vw, 5.15rem);
   font-weight: 500;
   letter-spacing: 0;
-  line-height: 0.95;
+  line-height: 1.02;
 }
 
 .editorial-title {
-  max-width: 14ch;
+  max-width: 16ch;
   color: inherit;
   font-family: var(--font-editorial-heading);
-  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  font-size: clamp(1.75rem, 3vw, 3.25rem);
   font-weight: 500;
   letter-spacing: 0;
-  line-height: 1;
+  line-height: 1.08;
 }
 
 .editorial-lede {
   max-width: 42rem;
   color: color-mix(in srgb, currentColor 72%, transparent);
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  line-height: 1.8;
+  font-size: clamp(0.96rem, 1.15vw, 1.08rem);
+  line-height: 1.65;
 }
 
 .editorial-copy {
   max-width: 38rem;
   color: color-mix(in srgb, currentColor 68%, transparent);
   font-size: 0.96rem;
-  line-height: 1.75;
+  line-height: 1.65;
 }
 
 .editorial-grid {

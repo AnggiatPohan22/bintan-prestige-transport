@@ -10,7 +10,9 @@ this first in future sessions before scanning the full project.
 ## Baseline Workflow
 
 - `develop` was pushed to GitHub before this branch was created.
-- Current work is intentionally uncommitted until the user asks for commit.
+- Phase A and Phase B were committed before Phase C started.
+- Current Phase C work is intentionally uncommitted until the user asks for
+  commit.
 - Keep phases small and verify after each phase.
 - Do not change routes or data flow unless a phase explicitly approves it.
 
@@ -118,16 +120,59 @@ Verification:
 - Preview smoke test route checks: pass for home, about, contact, package
   pages, sitemap, and robots.
 
+## Phase C - Homepage Editorial Luxury Implementation
+
+Report:
+
+- `ai/reports/editorial-luxury-phase-c-report.md`
+
+Changed:
+
+- `src/pages/index.astro`
+- `src/components/common/SectionHeader.astro`
+- `src/components/common/GalleryGrid.astro`
+- `src/components/home/Hero.astro`
+- `src/components/home/LuxuryExperience.astro`
+- `src/components/home/ServiceCards.astro`
+- `src/components/home/RouteHighlights.astro`
+- `src/components/home/ConciergeFlow.astro`
+- `src/components/home/FAQPreview.astro`
+
+Implemented:
+
+- Homepage section rhythm converted into alternating editorial warm and dark
+  bands.
+- `SectionHeader` now supports an editorial variant while preserving the default
+  variant for existing pages.
+- Hero, luxury experience, services, routes, gallery, concierge flow, and FAQ
+  now use more editorial copy, gold accents, and stronger luxury hierarchy.
+- Section spacing, hero height, font scale, card padding, image ratios, and
+  internal content margins were tuned after visual review to avoid oversized
+  sections and excessive page length.
+- Homepage remains static-first and keeps the existing route/data structure.
+
+Verification:
+
+- `npm.cmd run astro check`: pass.
+- `npm.cmd run build`: pass.
+- `git diff --check`: pass.
+
+Remaining Risks:
+
+- Final production images still need replacement and compression.
+- Shared cards outside the homepage still need the Phase D reusable-section pass.
+- Browser/mobile visual QA should be repeated after Phase D.
+
 ## Next Recommended Phase
 
-Phase C - Homepage Editorial Luxury Implementation.
+Phase D - Cards and Reusable Sections.
 
 Suggested prompt:
 
 ```txt
-Proceed with Editorial Luxury Phase C for homepage only. Use the existing
-editorial utilities and keep routes/data flow unchanged. Before editing, list
-the exact files. Focus on homepage hero rhythm, section hierarchy, gallery,
-service cards, route cards, and CTA flow. Run npm.cmd run astro check,
-npm.cmd run build, and git diff --check. Do not commit unless asked.
+Proceed with Editorial Luxury Phase D for reusable cards and shared sections.
+Use the existing editorial utilities and keep routes/data flow unchanged. Before
+editing, list the exact files. Focus on shared card polish, reusable section
+consistency, package previews, CTA surfaces, and mobile spacing. Run npm.cmd run
+astro check, npm.cmd run build, and git diff --check. Do not commit unless asked.
 ```
