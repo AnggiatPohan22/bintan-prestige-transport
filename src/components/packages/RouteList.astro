@@ -1,6 +1,7 @@
 ---
 interface RouteItem {
   title: string;
+  slug: string;
   description: string;
   duration?: string;
   capacity?: string;
@@ -29,7 +30,12 @@ const { items } = Astro.props;
             {item.capacity && <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{item.capacity}</span>}
           </div>
         </div>
-        {item.priceFrom && <span class="w-fit shrink-0 rounded-full bg-[#e2e8f0] px-4 py-2 text-sm font-semibold text-[#0b0c10]">{item.priceFrom}</span>}
+        <div class="flex shrink-0 flex-col gap-3">
+          {item.priceFrom && <span class="w-fit rounded-full bg-[#e2e8f0] px-4 py-2 text-sm font-semibold text-[#0b0c10]">{item.priceFrom}</span>}
+          <a class="editorial-button-secondary min-h-11 px-4" href={`/packages/pick-up-drop/${item.slug}`}>
+            View detail
+          </a>
+        </div>
       </div>
     </article>
   ))}

@@ -1,6 +1,4 @@
 ---
-import ImageCard from "./ImageCard.astro";
-
 interface GalleryItem {
   title: string;
   description?: string;
@@ -15,6 +13,73 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-  {items.map((item) => <ImageCard {...item} />)}
+<div class="client-gallery" aria-label="Client island tour photo gallery">
+  {items.map((item, index) => (
+    <button
+      class={`client-gallery-photo client-gallery-photo-${(index % 6) + 1}`}
+      type="button"
+      aria-label={`Open ${item.title} photo`}
+      data-gallery-src={item.image}
+      data-gallery-alt={item.alt}
+      data-gallery-title={item.title}
+      data-gallery-description={item.description ?? ""}
+    >
+      <img src={item.image} alt={item.alt} loading="lazy" />
+      <span class="client-gallery-caption">
+        <span>{item.title}</span>
+        {item.description && <small>{item.description}</small>}
+      </span>
+    </button>
+  ))}
 </div>
+
+<div class="client-gallery-lightbox" data-gallery-lightbox hidden>
+  <button class="client-gallery-backdrop" type="button" aria-label="Close gallery image" data-gallery-close></button>
+  <figure class="client-gallery-dialog" role="dialog" aria-modal="true" aria-label="Gallery image preview">
+    <button class="client-gallery-close" type="button" aria-label="Close gallery image" data-gallery-close>Close</button>
+    <img src="" alt="" data-gallery-preview />
+    <figcaption>
+      <strong data-gallery-preview-title></strong>
+      <span data-gallery-preview-description></span>
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+  const galleryLightbox = document.querySelector<HTMLElement>("[data-gallery-lightbox]");
+  const galleryPreview = galleryLightbox?.querySelector<HTMLImageElement>("[data-gallery-preview]");
+  const galleryTitle = galleryLightbox?.querySelector<HTMLElement>("[data-gallery-preview-title]");
+  const galleryDescription = galleryLightbox?.querySelector<HTMLElement>("[data-gallery-preview-description]");
+  const galleryPhotos = document.querySelectorAll<HTMLButtonElement>("[data-gallery-src]");
+  const galleryCloseButtons = document.querySelectorAll<HTMLButtonElement>("[data-gallery-close]");
+
+  const closeGallery = () => {
+    if (!galleryLightbox) return;
+
+    galleryLightbox.hidden = true;
+    document.documentElement.classList.remove("gallery-is-open");
+  };
+
+  galleryPhotos.forEach((photo) => {
+    photo.addEventListener("click", () => {
+      if (!galleryLightbox || !galleryPreview || !galleryTitle || !galleryDescription) return;
+
+      galleryPreview.src = photo.dataset.gallerySrc ?? "";
+      galleryPreview.alt = photo.dataset.galleryAlt ?? "";
+      galleryTitle.textContent = photo.dataset.galleryTitle ?? "";
+      galleryDescription.textContent = photo.dataset.galleryDescription ?? "";
+      galleryLightbox.hidden = false;
+      document.documentElement.classList.add("gallery-is-open");
+    });
+  });
+
+  galleryCloseButtons.forEach((button) => {
+    button.addEventListener("click", closeGallery);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeGallery();
+    }
+  });
+</script>

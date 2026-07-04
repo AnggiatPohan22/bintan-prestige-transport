@@ -4,9 +4,12 @@ import { faqs } from "../../data/faqs";
 
 <div class="grid gap-3">
   {faqs.slice(0, 5).map((item) => (
-    <article class="editorial-card rounded-[8px] p-5">
-      <h3 class="font-[var(--font-editorial-heading)] text-xl font-medium text-[#f8fafc]">{item.question}</h3>
-      <p class="mt-2 text-sm leading-7 text-slate-400">{item.answer}</p>
-    </article>
+    <details class="faq-accordion editorial-card rounded-[8px]">
+      <summary>
+        <span>{item.question}</span>
+        <span class="faq-accordion-icon" aria-hidden="true"></span>
+      </summary>
+      <p>{item.answer}</p>
+    </details>
   ))}
 </div>

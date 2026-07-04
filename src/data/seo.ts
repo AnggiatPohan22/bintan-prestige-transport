@@ -1,6 +1,8 @@
 import { site } from "./site";
+import { routes } from "./routes";
+import { tours } from "./tours";
 
-export const seoPages = [
+const staticSeoPages = [
   {
     path: "/",
     title: "Premium Private Taxi & Island Tour Experience",
@@ -37,5 +39,21 @@ export const seoPages = [
     priority: 0.8,
   },
 ];
+
+const tourSeoPages = tours.map((tour) => ({
+  path: `/packages/island-tour/${tour.slug}`,
+  title: tour.title,
+  description: tour.description,
+  priority: 0.8,
+}));
+
+const routeSeoPages = routes.map((route) => ({
+  path: `/packages/pick-up-drop/${route.slug}`,
+  title: route.title,
+  description: route.description,
+  priority: 0.8,
+}));
+
+export const seoPages = [...staticSeoPages, ...tourSeoPages, ...routeSeoPages];
 
 export const absoluteUrl = (path = "/") => new URL(path, site.url).toString();

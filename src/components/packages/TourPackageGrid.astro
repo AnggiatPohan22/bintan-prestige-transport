@@ -24,14 +24,22 @@ import { tours } from "../../data/tours";
           <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{tour.duration}</span>
           <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{tour.capacity}</span>
         </div>
-        <a
-          class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-[#e2e8f0] px-4 text-sm font-semibold text-[#0b0c10] transition hover:bg-white"
-          href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(tour.whatsappMessage)}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Ask tour availability
-        </a>
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          <a
+            class="editorial-button-primary min-h-11 px-4"
+            href={`/packages/island-tour/${tour.slug}`}
+          >
+            View detail
+          </a>
+          <a
+            class="editorial-button-secondary min-h-11 px-4"
+            href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(tour.whatsappMessage)}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Ask availability
+          </a>
+        </div>
       </div>
     </article>
   ))}

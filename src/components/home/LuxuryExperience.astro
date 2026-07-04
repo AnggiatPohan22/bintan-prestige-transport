@@ -4,6 +4,8 @@ const stats = [
   { value: "3", label: "Premium fleet categories" },
   { value: "1", label: "WhatsApp-first booking flow" },
 ];
+
+const moodImage = "/images/cars/luxury-mpv.jpg";
 ---
 
 <section class="editorial-section-dark">
@@ -19,27 +21,35 @@ const stats = [
         </p>
         <div class="mt-6 grid gap-3 sm:grid-cols-3">
           {stats.map((item) => (
-            <div class="rounded-[8px] border border-[#bfa46f]/18 bg-white/[0.035] p-3 sm:p-4">
+            <div class="rounded-[8px] border border-[#bfa46f]/24 bg-[#071a14]/74 p-3 sm:p-4">
               <p class="font-[var(--font-editorial-heading)] text-2xl font-medium text-[#f8e7a1] sm:text-3xl">{item.value}</p>
-              <p class="mt-2 text-xs leading-5 text-slate-500">{item.label}</p>
+              <p class="mt-2 text-xs leading-5 text-[#c7d2c3]/72">{item.label}</p>
             </div>
           ))}
         </div>
       </div>
 
       <div class="editorial-image-frame min-h-72 p-5 sm:p-6 lg:p-8">
-        <div class="absolute inset-0 visual-placeholder opacity-80"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(130deg,rgba(11,12,16,0.22),rgba(11,12,16,0.88)_72%)]"></div>
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          role="img"
+          aria-label="Luxury private vehicle service mood"
+          style={`background-image: url('${moodImage}');`}
+        >
+        </div>
+        <div class="absolute inset-0 bg-[linear-gradient(115deg,rgba(11,12,16,0.24),rgba(11,12,16,0.68)_46%,rgba(11,12,16,0.92)_100%),linear-gradient(180deg,rgba(11,12,16,0.05),rgba(11,12,16,0.88)_86%)]"></div>
         <div class="relative flex h-full min-h-60 flex-col justify-end">
           <span class="w-fit rounded-full border border-[#bfa46f]/28 bg-black/28 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#f8e7a1] backdrop-blur">
             Editorial service mood
           </span>
-          <h3 class="mt-4 max-w-xl font-[var(--font-editorial-heading)] text-2xl font-medium leading-tight text-[#f8fafc] sm:text-3xl">
-            Calm cabins, private timing, and island-aware route decisions.
-          </h3>
-          <p class="mt-4 max-w-xl text-sm leading-7 text-slate-400">
-            The page now frames each ride like a premium travel feature: image-led, direct, and ready for WhatsApp confirmation.
-          </p>
+          <div class="mt-4 max-w-xl rounded-[8px] border border-[#bfa46f]/16 bg-black/34 p-4 shadow-[0_22px_70px_rgba(0,0,0,0.42)] backdrop-blur-sm">
+            <h3 class="font-[var(--font-editorial-heading)] text-2xl font-medium leading-tight text-[#f8fafc] sm:text-3xl">
+              Calm cabins, private timing, and island-aware route decisions.
+            </h3>
+            <p class="mt-4 text-sm leading-7 text-slate-300">
+              The page now frames each ride like a premium travel feature: image-led, direct, and ready for WhatsApp confirmation.
+            </p>
+          </div>
         </div>
       </div>
     </div>

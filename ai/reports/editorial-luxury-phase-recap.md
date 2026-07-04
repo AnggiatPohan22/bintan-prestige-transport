@@ -85,8 +85,17 @@ Added:
 Verification:
 
 - `npm.cmd run astro check`: pass.
-- `npm.cmd run build`: pass.
+- `npm.cmd run build`: pass, 15 pages built.
 - `git diff --check`: pass.
+
+Checkpoint notes:
+
+- Phase C now includes homepage polish, availability form refinement, WhatsApp
+  pre-chat, package detail pages, custom package booking forms, gallery
+  lightbox, footer trust treatment, and color palette consolidation.
+- For the next session, read this recap first, then
+  `ai/reports/editorial-luxury-phase-c-report.md`, then
+  `ai/handoffs/editorial-luxury-phase-c-handoff.md`.
 
 ## Phase B - Header, Footer, and Base Layout Polish
 
@@ -149,6 +158,26 @@ Implemented:
 - Section spacing, hero height, font scale, card padding, image ratios, and
   internal content margins were tuned after visual review to avoid oversized
   sections and excessive page length.
+- Hero availability filters now generate WhatsApp messages from the selected
+  pick-up, drop-off, travel date, and service type.
+- Hero filter dropdowns use custom luxury listbox styling and full-card click
+  targets; the date card opens the date picker and shows the selected date.
+- Availability form now floats between the Hero and the next section, with
+  downward menus, a matching date panel, and lightweight load animation.
+- Taxi Transfer and Island Tour packages now have static detail pages with hero
+  imagery, itinerary/detail content, booking notes, and a custom WhatsApp
+  booking form.
+- Island Tour listing cards and Taxi route cards now link to their own package
+  detail pages.
+- Homepage polish added swipeable Signature Service and Featured Routes on
+  tablet/mobile, a frameless swipe gallery, compact FAQ accordion, refined fleet
+  visual treatment, stronger CTA visual, and logo/trust-focused footer.
+- Gallery was updated from strip cards into a responsive pure-photo client
+  mosaic with blurred-background lightbox on click.
+- Card and button palette was updated away from grey/slate into emerald-black,
+  champagne, and antique-gold surfaces for better luxury consistency.
+- Floating WhatsApp now opens a lightweight concierge pre-chat panel before
+  sending the visitor into WhatsApp.
 - Homepage remains static-first and keeps the existing route/data structure.
 
 Verification:

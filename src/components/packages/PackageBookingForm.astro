@@ -1,0 +1,135 @@
+---
+import { CalendarDays, Clock, MapPin, MessageCircle, Send, Users } from "lucide-react";
+import { site } from "../../data/site";
+
+interface DetailItem {
+  title: string;
+  priceFrom?: string;
+  duration?: string;
+  whatsappMessage?: string;
+}
+
+interface Props {
+  item: DetailItem;
+  typeLabel: string;
+}
+
+const { item, typeLabel } = Astro.props;
+const defaultMessage = item.whatsappMessage ?? `Hello, I want to book ${item.title}.`;
+const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`;
+---
+
+<section class="editorial-section-dark border-y border-[#bfa46f]/12">
+  <div class="editorial-container grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+    <div>
+      <p class="editorial-kicker">Booking Information</p>
+      <h2 class="editorial-title mt-3 text-[#f8fafc]">Customize your request before WhatsApp.</h2>
+      <p class="editorial-lede mt-4 text-slate-400">
+        Add date, time, pickup point, guest count, and special notes. The button will generate a ready-to-send WhatsApp message for this package.
+      </p>
+      <div class="mt-6 rounded-[8px] border border-[#bfa46f]/18 bg-white/[0.035] p-4 text-sm leading-6 text-slate-300">
+        <strong class="text-[#f8e7a1]">{typeLabel}</strong>
+        <span class="block">{item.title}</span>
+        {item.priceFrom && <span class="block text-slate-500">From {item.priceFrom}</span>}
+        {item.duration && <span class="block text-slate-500">Duration: {item.duration}</span>}
+      </div>
+    </div>
+
+    <form
+      class="package-booking-form editorial-card p-4 sm:p-6"
+      action={href}
+      data-package-booking
+      data-whatsapp-number={site.whatsappNumber}
+      data-package-title={item.title}
+      data-package-type={typeLabel}
+      data-package-price={item.priceFrom ?? "To be confirmed"}
+      data-package-duration={item.duration ?? "To be confirmed"}
+    >
+      <div class="grid gap-3 sm:grid-cols-2">
+        <label class="package-field">
+          <span><CalendarDays className="h-4 w-4" aria-hidden="true" /> Travel date</span>
+          <input type="date" name="date" />
+        </label>
+        <label class="package-field">
+          <span><Clock className="h-4 w-4" aria-hidden="true" /> Preferred time</span>
+          <input type="time" name="time" />
+        </label>
+        <label class="package-field">
+          <span><Users className="h-4 w-4" aria-hidden="true" /> Guests</span>
+          <select name="guests">
+            <option>1 guest</option>
+            <option>2 guests</option>
+            <option>3-4 guests</option>
+            <option>5-6 guests</option>
+            <option>7+ guests</option>
+          </select>
+        </label>
+        <label class="package-field">
+          <span><MapPin className="h-4 w-4" aria-hidden="true" /> Pickup point</span>
+          <input type="text" name="pickup" placeholder="Hotel, ferry, villa..." />
+        </label>
+        <label class="package-field sm:col-span-2">
+          <span><MapPin className="h-4 w-4" aria-hidden="true" /> Drop-off / return plan</span>
+          <input type="text" name="dropoff" placeholder="Same hotel, ferry terminal, dinner venue..." />
+        </label>
+        <label class="package-field sm:col-span-2">
+          <span><MessageCircle className="h-4 w-4" aria-hidden="true" /> Custom request</span>
+          <textarea name="notes" rows="4" placeholder="Add preferred stops, activity questions, luggage, child seat, timing, or special request."></textarea>
+        </label>
+      </div>
+
+      <a class="editorial-button-primary mt-4 w-full px-4" href={href} target="_blank" rel="noreferrer" data-booking-link>
+        <Send className="h-4 w-4" aria-hidden="true" />
+        <span>Book via WhatsApp</span>
+      </a>
+    </form>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-package-booking]").forEach((form) => {
+    const link = form.querySelector<HTMLAnchorElement>("[data-booking-link]");
+
+    const buildUrl = () => {
+      const data = new FormData(form);
+      const phone = form.dataset.whatsappNumber ?? "";
+      const title = form.dataset.packageTitle ?? "Package";
+      const type = form.dataset.packageType ?? "Package";
+      const price = form.dataset.packagePrice ?? "To be confirmed";
+      const duration = form.dataset.packageDuration ?? "To be confirmed";
+      const date = data.get("date")?.toString() || "Flexible / to confirm";
+      const time = data.get("time")?.toString() || "Flexible / to confirm";
+      const guests = data.get("guests")?.toString() || "To be confirmed";
+      const pickup = data.get("pickup")?.toString() || "To be confirmed";
+      const dropoff = data.get("dropoff")?.toString() || "To be confirmed";
+      const notes = data.get("notes")?.toString() || "-";
+      const message = [
+        `Hello, I want to book ${title}.`,
+        "",
+        `Package type: ${type}`,
+        `Price from: ${price}`,
+        `Duration: ${duration}`,
+        `Travel date: ${date}`,
+        `Preferred time: ${time}`,
+        `Guests: ${guests}`,
+        `Pickup point: ${pickup}`,
+        `Drop-off / return: ${dropoff}`,
+        `Custom request: ${notes}`,
+        "",
+        "Please confirm availability, final price, and recommended itinerary.",
+      ].join("\n");
+
+      return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    };
+
+    const updateLink = () => {
+      if (link) {
+        link.href = buildUrl();
+      }
+    };
+
+    form.addEventListener("input", updateLink);
+    form.addEventListener("change", updateLink);
+    updateLink();
+  });
+</script>

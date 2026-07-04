@@ -1,0 +1,78 @@
+---
+interface DetailItem {
+  title: string;
+  highlights?: string[];
+  itinerary?: string[];
+  includes?: string[];
+  bookingNotes?: string[];
+  goodFor?: string[];
+}
+
+interface Props {
+  item: DetailItem;
+}
+
+const { item } = Astro.props;
+---
+
+<section class="editorial-section-dark">
+  <div class="editorial-container grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="editorial-card p-5 sm:p-7">
+      <p class="editorial-kicker">Package Detail</p>
+      <h2 class="editorial-title mt-3 text-[#f8fafc]">What this package is designed for.</h2>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {item.goodFor?.map((label) => (
+          <span class="rounded-full border border-[#bfa46f]/24 bg-[#bfa46f]/10 px-3 py-2 text-xs font-bold text-[#f8e7a1]">{label}</span>
+        ))}
+      </div>
+      <div class="mt-7 grid gap-3">
+        {item.highlights?.map((highlight) => (
+          <div class="rounded-[8px] border border-white/10 bg-white/[0.035] p-4">
+            <p class="text-sm leading-6 text-slate-300">{highlight}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="editorial-card p-5 sm:p-7">
+      <p class="editorial-kicker">Itinerary</p>
+      <h2 class="editorial-title mt-3 text-[#f8fafc]">A private flow that stays flexible.</h2>
+      <ol class="mt-7 grid gap-4">
+        {item.itinerary?.map((step, index) => (
+          <li class="grid grid-cols-[auto_1fr] gap-4 rounded-[8px] border border-white/10 bg-black/18 p-4">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-[#bfa46f]/38 bg-[#bfa46f]/12 text-xs font-bold text-[#f8e7a1]">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <p class="pt-1 text-sm leading-6 text-slate-300">{step}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="editorial-section-warm">
+  <div class="editorial-container grid gap-6 lg:grid-cols-2">
+    <div class="editorial-card editorial-card-warm p-5 sm:p-7">
+      <p class="editorial-kicker">Included Support</p>
+      <h2 class="editorial-title mt-3">What we help arrange.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {item.includes?.map((include) => (
+          <div class="rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4">
+            <p class="text-sm font-semibold leading-6 text-[#111827]">{include}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="editorial-card editorial-card-warm p-5 sm:p-7">
+      <p class="editorial-kicker">Booking Notes</p>
+      <h2 class="editorial-title mt-3">Confirm before you go.</h2>
+      <ul class="mt-6 grid gap-3">
+        {item.bookingNotes?.map((note) => (
+          <li class="rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4 text-sm leading-6 text-[#4b5563]">{note}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
