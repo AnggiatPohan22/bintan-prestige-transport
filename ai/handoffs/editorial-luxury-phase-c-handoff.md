@@ -50,6 +50,17 @@ lightbox, and WhatsApp concierge entry.
 - `git diff --check`: pass.
 - Preview smoke test passed for homepage, selected package detail pages, and
   sitemap.
+- GitHub sync check: local `codex/editorial-luxury-phase-a` and
+  `origin/codex/editorial-luxury-phase-a` both point to `f5920ca`.
+
+## Git Sync Rule
+
+- After every future commit, push the active local branch to GitHub.
+- Use `git push` when upstream is configured.
+- Use `git push -u origin codex/editorial-luxury-phase-a` if upstream is
+  missing.
+- After pushing, run `git status --short --branch` and verify the branch is not
+  ahead or behind the remote.
 
 ## Next Session Read Order
 

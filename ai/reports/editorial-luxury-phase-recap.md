@@ -11,8 +11,13 @@ this first in future sessions before scanning the full project.
 
 - `develop` was pushed to GitHub before this branch was created.
 - Phase A and Phase B were committed before Phase C started.
-- Current Phase C work is intentionally uncommitted until the user asks for
-  commit.
+- Phase C checkpoint was committed and pushed to GitHub on branch
+  `codex/editorial-luxury-phase-a`.
+- After every future commit on this branch, push the same branch to GitHub with
+  `git push` or `git push -u origin codex/editorial-luxury-phase-a` if upstream
+  is missing.
+- After pushing, run `git status --short --branch` and confirm the local branch
+  is not ahead or behind its GitHub remote.
 - Keep phases small and verify after each phase.
 - Do not change routes or data flow unless a phase explicitly approves it.
 
