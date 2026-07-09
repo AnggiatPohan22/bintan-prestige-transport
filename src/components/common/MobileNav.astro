@@ -4,18 +4,30 @@ import { navigation } from "../../data/navigation";
 import { site } from "../../data/site";
 
 const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 const menuDescriptions: Record<string, string> = {
   "/": "Editorial overview",
   "/packages/pick-up-drop": "Private transfer",
   "/packages/island-tour": "Curated tour",
+  "/blog": "Travel guides",
   "/about": "Brand story",
   "/contact": "Concierge contact",
+};
+
+const isActive = (href: string) => {
+  const normalizedHref = href.replace(/\/$/, "") || "/";
+
+  if (normalizedHref === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath === normalizedHref || currentPath.startsWith(`${normalizedHref}/`);
 };
 ---
 
 <details class="mobile-menu relative z-[90] md:hidden">
   <summary
-    class="relative z-[92] inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-[#bfa46f]/34 bg-[#111827]/94 text-[#f8fafc] shadow-[0_12px_34px_rgba(0,0,0,0.32)] backdrop-blur transition hover:border-[#f8e7a1]/52 hover:bg-[#1f2937] focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70"
+    class="relative z-[92] inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[8px] border border-[#f8e7a1]/28 bg-black/24 text-[#f8fafc] shadow-[0_12px_34px_rgba(0,0,0,0.32)] backdrop-blur-md transition hover:border-[#f8e7a1]/56 hover:bg-[#f8e7a1]/10 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70"
     aria-label="Toggle navigation menu"
   >
     <Menu className="mobile-menu-open-icon h-5 w-5" aria-hidden="true" />
@@ -36,21 +48,22 @@ const menuDescriptions: Record<string, string> = {
     <div class="relative grid gap-2 p-3">
       {navigation.map((item, index) => (
         <a
-          class="group grid grid-cols-[2.25rem_1fr_auto] items-center gap-3 rounded-[8px] border border-white/10 bg-[#111827]/74 px-3 py-3 text-[#f8fafc] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition hover:border-[#d6b46a]/48 hover:bg-[#172033]/86"
+          class={`group grid grid-cols-[2.25rem_1fr_auto] items-center gap-3 rounded-[8px] border px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition hover:border-[#d6b46a]/58 hover:bg-[#172033]/86 hover:!text-[#f8e7a1] ${isActive(item.href) ? "border-[#d6b46a]/56 bg-[#f8e7a1]/10 !text-[#f8e7a1]" : "border-white/10 bg-[#111827]/74 text-[#f8fafc]"}`}
           href={item.href}
+          aria-current={isActive(item.href) ? "page" : undefined}
         >
-          <span class="flex h-8 w-8 items-center justify-center rounded-full border border-[#bfa46f]/24 bg-[#bfa46f]/10 text-[11px] font-bold text-[#f8e7a1]">
+          <span class={`flex h-8 w-8 items-center justify-center rounded-[8px] border text-[11px] font-bold ${isActive(item.href) ? "border-[#f8e7a1]/50 bg-[#f8e7a1]/16 text-[#fff4bd]" : "border-[#bfa46f]/24 bg-[#bfa46f]/10 text-[#f8e7a1]"}`}>
             {String(index + 1).padStart(2, "0")}
           </span>
           <span class="min-w-0">
             <span class="block text-sm font-bold leading-5">{item.label}</span>
-            <span class="block truncate text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">{menuDescriptions[item.href] ?? "Explore"}</span>
+            <span class={`block truncate text-[11px] font-medium uppercase tracking-[0.14em] ${isActive(item.href) ? "text-[#d6b46a]" : "text-slate-500"}`}>{menuDescriptions[item.href] ?? "Explore"}</span>
           </span>
-          <ArrowUpRight className="h-4 w-4 text-[#bfa46f] opacity-70 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" aria-hidden="true" />
+          <ArrowUpRight className={`h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 ${isActive(item.href) ? "text-[#f8e7a1] opacity-100" : "text-[#bfa46f] opacity-70"}`} aria-hidden="true" />
         </a>
       ))}
 
-      <a class="editorial-button-primary mt-2 min-h-12 px-5 shadow-[0_18px_48px_rgba(214,180,106,0.24)]" href={whatsappHref} rel="noreferrer" target="_blank">
+      <a class="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#f8e7a1]/75 bg-[#f8e7a1] px-5 text-sm font-extrabold text-[#080705] shadow-[0_18px_48px_rgba(214,180,106,0.24)] transition hover:bg-[#fff4bd]" href={whatsappHref} rel="noreferrer" target="_blank">
         <MessageCircle className="h-4 w-4" aria-hidden="true" />
         <span>Chat on WhatsApp</span>
       </a>

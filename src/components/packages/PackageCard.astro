@@ -20,12 +20,14 @@ const { packageItem } = Astro.props;
 ---
 
 <article class="luxury-card overflow-hidden rounded-[8px]">
-  <div
-    class="visual-placeholder aspect-[16/10] bg-cover bg-center"
-    role="img"
-    aria-label={packageItem.alt}
-    style={`background-image: linear-gradient(135deg, rgba(11,12,16,0.08), rgba(11,12,16,0.66)), url('${packageItem.image}');`}
-  >
+  <div class="visual-placeholder relative aspect-[16/10] overflow-hidden">
+    <img
+      class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 hover:scale-[1.025]"
+      src={packageItem.image}
+      alt={packageItem.alt}
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(11,12,16,0.08),rgba(11,12,16,0.66))]" aria-hidden="true"></div>
   </div>
   <div class="p-5">
     <p class="text-xs font-semibold uppercase tracking-[0.16em] text-[#e2e8f0]/56">{packageItem.category ?? "package"}</p>

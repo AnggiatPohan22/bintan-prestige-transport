@@ -3,24 +3,24 @@ import { tours } from "./tours";
 
 export const packages = [
   {
-    title: "Pick Up & Drop",
-    slug: "pick-up-drop",
+    title: "Taxy Transfer",
+    slug: "taxi-transfer",
     description:
-      "Premium airport, ferry, hotel, and custom route transfer with private driver comfort.",
-    image: "/images/cars/avanza.webp",
+      "More options for private taxi transfer with premium sedan, luxury MPV, or executive van. Flexible timing and multi-stop routes available.",
+    image: "/images/cars/toyota-avanza.png",
     alt: "Premium private taxi transfer service",
     priceFrom: "IDR 300K",
     duration: "Flexible",
     capacity: "1-8 passengers",
     category: "taxi",
-    whatsappMessage: "Hello, I want to ask about Pick Up & Drop service.",
+    whatsappMessage: "Hello, I want to ask about Taxi Transfer service.",
     items: routes,
   },
   {
     title: "Island Tour",
     slug: "island-tour",
     description:
-      "Concierge-style private island tour for beaches, viewpoints, culture, and night routes.",
+      "Explore the island with a private driver and flexible half-day or full-day tour packages. Choose from various attractions and enjoy a personalized experience.",
     image: "/images/tours/snorkeling.jpg",
     alt: "Luxury private island tour service",
     priceFrom: "IDR 750K",

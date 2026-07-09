@@ -1,0 +1,176 @@
+---
+interface Props {
+  count: number;
+  label?: string;
+  breakpoint?: "mobile" | "tablet" | "all";
+  className?: string;
+}
+
+const { count, label = "Card slider controls", breakpoint = "mobile", className = "" } = Astro.props;
+---
+
+{count > 1 && (
+  <div class={`swipe-pagination-ui ${className}`} data-swipe-controls data-swipe-breakpoint={breakpoint} aria-label={label}>
+    <div class="swipe-pagination-dots" aria-label={`${label} pagination`}>
+      {Array.from({ length: count }).map((_, index) => (
+        <button
+          class:list={["swipe-pagination-dot", index === 0 && "is-active"]}
+          type="button"
+          aria-label={`Show item ${index + 1}`}
+          aria-current={index === 0 ? "true" : "false"}
+          data-swipe-dot={index}
+        />
+      ))}
+    </div>
+    <div class="swipe-pagination-arrows">
+      <button class="swipe-pagination-arrow" type="button" aria-label="Previous item" data-swipe-prev>
+        <span aria-hidden="true">&lsaquo;</span>
+      </button>
+      <button class="swipe-pagination-arrow" type="button" aria-label="Next item" data-swipe-next>
+        <span aria-hidden="true">&rsaquo;</span>
+      </button>
+    </div>
+  </div>
+)}
+
+<script>
+  const swipeWindow = window as Window & {
+    __bintanSwipeControlsReady?: boolean;
+  };
+
+  if (!swipeWindow.__bintanSwipeControlsReady) {
+    swipeWindow.__bintanSwipeControlsReady = true;
+
+    const getSwipeItems = (track: HTMLElement) =>
+      Array.from(track.querySelectorAll<HTMLElement>("[data-swipe-item]")).filter((item) => !item.hidden);
+
+    const updateCarousel = (carousel: HTMLElement) => {
+      const track = carousel.querySelector<HTMLElement>("[data-swipe-track]");
+      const controls = carousel.querySelector<HTMLElement>("[data-swipe-controls]");
+      const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>("[data-swipe-dot]"));
+      const previousButton = carousel.querySelector<HTMLButtonElement>("[data-swipe-prev]");
+      const nextButton = carousel.querySelector<HTMLButtonElement>("[data-swipe-next]");
+
+      if (!track || !controls || dots.length === 0) {
+        return;
+      }
+
+      const items = getSwipeItems(track);
+      controls.hidden = items.length <= 1;
+
+      dots.forEach((dot, index) => {
+        dot.hidden = index >= items.length;
+      });
+
+      if (items.length <= 1) {
+        return;
+      }
+
+      const trackRect = track.getBoundingClientRect();
+      const trackAnchor = carousel.dataset.swipeAlign === "center" ? trackRect.left + trackRect.width / 2 : trackRect.left;
+      let activeIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      items.forEach((item, index) => {
+        const itemRect = item.getBoundingClientRect();
+        const itemAnchor = carousel.dataset.swipeAlign === "center" ? itemRect.left + itemRect.width / 2 : itemRect.left;
+        const distance = Math.abs(itemAnchor - trackAnchor);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          activeIndex = index;
+        }
+      });
+
+      dots.forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-current", isActive ? "true" : "false");
+      });
+
+      if (previousButton) {
+        previousButton.disabled = activeIndex === 0;
+      }
+
+      if (nextButton) {
+        nextButton.disabled = activeIndex === items.length - 1;
+      }
+    };
+
+    const scrollCarouselTo = (carousel: HTMLElement, targetIndex: number) => {
+      const track = carousel.querySelector<HTMLElement>("[data-swipe-track]");
+      if (!track) {
+        return;
+      }
+
+      const items = getSwipeItems(track);
+      const item = items[Math.max(0, Math.min(items.length - 1, targetIndex))];
+      if (!item) {
+        return;
+      }
+
+      const alignOffset = carousel.dataset.swipeAlign === "center" ? (track.clientWidth - item.clientWidth) / 2 : 0;
+      track.scrollTo({
+        left: item.offsetLeft - track.offsetLeft - alignOffset,
+        behavior: "smooth",
+      });
+      updateCarousel(carousel);
+    };
+
+    const getActiveIndex = (carousel: HTMLElement) => {
+      const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>("[data-swipe-dot]")).filter((dot) => !dot.hidden);
+      return Math.max(0, dots.findIndex((dot) => dot.classList.contains("is-active")));
+    };
+
+    const initSwipeCarousels = () => {
+      document.querySelectorAll<HTMLElement>("[data-swipe-carousel]").forEach((carousel) => {
+        if (carousel.dataset.swipeReady === "true") {
+          updateCarousel(carousel);
+          return;
+        }
+
+        const track = carousel.querySelector<HTMLElement>("[data-swipe-track]");
+        if (!track) {
+          return;
+        }
+
+        carousel.dataset.swipeReady = "true";
+        let frame = 0;
+
+        track.addEventListener(
+          "scroll",
+          () => {
+            window.cancelAnimationFrame(frame);
+            frame = window.requestAnimationFrame(() => updateCarousel(carousel));
+          },
+          { passive: true },
+        );
+
+        track.addEventListener("swipe-carousel:update", () => updateCarousel(carousel));
+        window.addEventListener("resize", () => updateCarousel(carousel));
+
+        carousel.querySelectorAll<HTMLButtonElement>("[data-swipe-dot]").forEach((dot) => {
+          dot.addEventListener("click", () => scrollCarouselTo(carousel, Number(dot.dataset.swipeDot ?? "0")));
+        });
+
+        carousel.querySelector<HTMLButtonElement>("[data-swipe-prev]")?.addEventListener("click", () => {
+          scrollCarouselTo(carousel, getActiveIndex(carousel) - 1);
+        });
+
+        carousel.querySelector<HTMLButtonElement>("[data-swipe-next]")?.addEventListener("click", () => {
+          scrollCarouselTo(carousel, getActiveIndex(carousel) + 1);
+        });
+
+        updateCarousel(carousel);
+      });
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initSwipeCarousels, { once: true });
+    } else {
+      initSwipeCarousels();
+    }
+
+    window.addEventListener("load", initSwipeCarousels);
+  }
+</script>

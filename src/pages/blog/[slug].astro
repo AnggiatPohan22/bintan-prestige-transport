@@ -1,0 +1,148 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleGallery from "../../components/blog/ArticleGallery.astro";
+import BlogCard from "../../components/blog/BlogCard.astro";
+import Breadcrumb from "../../components/common/Breadcrumb.astro";
+import SectionHeader from "../../components/common/SectionHeader.astro";
+import WhatsAppCTA from "../../components/common/WhatsAppCTA.astro";
+import { absoluteUrl } from "../../data/seo";
+import { blogArticles, getRelatedBlogArticles } from "../../data/blog";
+import { breadcrumbSchema, localBusinessSchema, organizationSchema } from "../../data/schema";
+
+export const getStaticPaths = () =>
+  blogArticles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+
+const { article } = Astro.props;
+const relatedArticles = getRelatedBlogArticles(article);
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
+  { label: article.title, href: `/blog/${article.slug}` },
+];
+const schema = [
+  organizationSchema,
+  localBusinessSchema,
+  {
+    "@type": "BlogPosting",
+    headline: article.title,
+    description: article.description,
+    image: absoluteUrl(article.heroImage),
+    datePublished: article.publishedAt,
+    author: {
+      "@type": "Organization",
+      name: organizationSchema.name,
+    },
+    publisher: { "@id": organizationSchema["@id"] },
+    mainEntityOfPage: absoluteUrl(`/blog/${article.slug}`),
+    keywords: article.tags.join(", "),
+  },
+  breadcrumbSchema(breadcrumbs),
+];
+---
+
+<BaseLayout title={article.title} description={article.description} canonical={`/blog/${article.slug}`} ogImage={article.heroImage} schema={schema}>
+  <section class="site-hero-section relative isolate overflow-hidden bg-[#0b0c10] text-white">
+    <div
+      class="absolute inset-0 -z-10 bg-cover bg-center"
+      role="img"
+      aria-label={article.heroAlt}
+      style={`background-image: linear-gradient(90deg, rgba(11,12,16,0.92), rgba(11,12,16,0.62), rgba(11,12,16,0.88)), linear-gradient(180deg, rgba(11,12,16,0.12), #0b0c10 94%), url('${article.heroImage}');`}
+    ></div>
+    <div class="site-hero-inner site-page-hero-inner editorial-container grid min-h-[560px] items-end gap-8 py-16 md:grid-cols-[1fr_0.72fr] md:py-20">
+      <div class="max-w-4xl">
+        <p class="editorial-kicker">{article.category}</p>
+        <h1 class="editorial-heading mt-4 max-w-[13ch] text-[#f8fafc]">{article.title}</h1>
+        <p class="editorial-lede mt-5 text-slate-300">{article.excerpt}</p>
+        <div class="mt-7 flex flex-wrap gap-2 text-xs font-bold text-slate-200">
+          <span class="gold-pill rounded-full px-3 py-1">{article.location}</span>
+          <span class="rounded-full border border-white/12 bg-black/24 px-3 py-1">{article.readTime}</span>
+          <span class="rounded-full border border-white/12 bg-black/24 px-3 py-1">{new Date(article.publishedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span>
+        </div>
+      </div>
+      <aside class="editorial-card p-5 sm:p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#f8e7a1]/72">Article tags</p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          {article.tags.map((tag) => <span class="blog-filter-chip">{tag}</span>)}
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <Breadcrumb items={breadcrumbs} />
+
+  <article class="editorial-section-dark">
+    <div class="editorial-container grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
+      <div class="min-w-0">
+        <div class="blog-prose editorial-card p-5 sm:p-7 lg:p-9">
+          <p class="blog-lead">{article.intro}</p>
+          {article.sections.map((section) => (
+            <section>
+              <h2>{section.title}</h2>
+              {section.body.map((paragraph) => <p>{paragraph}</p>)}
+            </section>
+          ))}
+        </div>
+
+        <section class="mt-6 editorial-card p-5 sm:p-7">
+          <p class="editorial-kicker">Quick takeaway</p>
+          <ul class="mt-5 grid gap-3">
+            {article.takeaway.map((item) => (
+              <li class="rounded-[8px] border border-[#bfa46f]/16 bg-white/[0.035] p-4 text-sm leading-6 text-slate-300">{item}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="mt-6">
+          <SectionHeader eyebrow="Article gallery" title="Visual reference for this guide" description="Images help guests understand the route, vehicle mood, or destination before opening WhatsApp." variant="editorial" />
+          <div class="mt-6">
+            <ArticleGallery images={article.gallery} />
+          </div>
+        </section>
+      </div>
+
+      <aside class="grid gap-4 lg:sticky lg:top-28">
+        <div class="editorial-card p-5">
+          <p class="editorial-kicker">Plan this route</p>
+          <h2 class="mt-3 font-[var(--font-editorial-heading)] text-2xl font-medium leading-tight text-[#f8fafc]">Want this arranged privately?</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-400">Send the article topic, date, pickup point, guest count, and preferred timing through WhatsApp.</p>
+          <a class="editorial-button-primary mt-5 w-full px-4" href={`https://wa.me/6282386357012?text=${encodeURIComponent(`Hello, I read the article "${article.title}" and want help planning this in Bintan.`)}`} target="_blank" rel="noreferrer">Ask on WhatsApp</a>
+        </div>
+        <div class="editorial-card p-5">
+          <p class="editorial-kicker">Article details</p>
+          <dl class="mt-4 grid gap-3 text-sm">
+            <div class="rounded-[8px] border border-[#bfa46f]/16 bg-white/[0.035] p-3">
+              <dt class="text-xs font-bold uppercase text-[#bfa46f]">Category</dt>
+              <dd class="mt-1 text-slate-200">{article.category}</dd>
+            </div>
+            <div class="rounded-[8px] border border-[#bfa46f]/16 bg-white/[0.035] p-3">
+              <dt class="text-xs font-bold uppercase text-[#bfa46f]">Location</dt>
+              <dd class="mt-1 text-slate-200">{article.location}</dd>
+            </div>
+            <div class="rounded-[8px] border border-[#bfa46f]/16 bg-white/[0.035] p-3">
+              <dt class="text-xs font-bold uppercase text-[#bfa46f]">Read time</dt>
+              <dd class="mt-1 text-slate-200">{article.readTime}</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <section class="editorial-section-dark border-y border-[#bfa46f]/12">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Related posts" title="Continue planning your Bintan trip" description="These related posts connect taxi planning, route ideas, and destination decisions." variant="editorial" />
+      <div class="mt-8 grid gap-5 md:grid-cols-3">
+        {relatedArticles.map((relatedArticle) => <BlogCard article={relatedArticle} />)}
+      </div>
+    </div>
+  </section>
+
+  <WhatsAppCTA
+    title="Need help turning this guide into a route?"
+    description="Send your date, hotel, guest count, luggage notes, and preferred destinations. We will help shape the movement."
+    message={`Hello, I read the article "${article.title}" and want help planning a private Bintan taxi or tour.`}
+  />
+</BaseLayout>

@@ -20,7 +20,7 @@ const quickMessages = [
 ---
 
 <div
-  class="whatsapp-assistant fixed bottom-4 right-4 z-40"
+  class="whatsapp-assistant fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] right-4 z-40 sm:bottom-[5.75rem]"
   data-whatsapp-assistant
   data-whatsapp-number={site.whatsappNumber}
   data-default-message={site.whatsappMessage}
@@ -83,7 +83,7 @@ const quickMessages = [
   </section>
 
   <button
-    class="editorial-button-primary min-h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70 focus:ring-offset-2 focus:ring-offset-[#0b0c10]"
+    class="whatsapp-assistant-toggle editorial-button-primary min-h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70 focus:ring-offset-2 focus:ring-offset-[#0b0c10]"
     type="button"
     data-whatsapp-toggle
     aria-expanded="false"
@@ -102,6 +102,7 @@ const quickMessages = [
   const textarea = assistant?.querySelector<HTMLTextAreaElement>("[data-whatsapp-message]");
   const link = assistant?.querySelector<HTMLAnchorElement>("[data-whatsapp-link]");
   const quickButtons = assistant?.querySelectorAll<HTMLButtonElement>("[data-whatsapp-quick]");
+  let panelTransitionTimer: number | undefined;
 
   const updateWhatsAppLink = () => {
     if (!assistant || !textarea || !link) return;
@@ -114,13 +115,26 @@ const quickMessages = [
   const setPanelOpen = (isOpen: boolean) => {
     if (!panel || !toggle) return;
 
-    panel.hidden = !isOpen;
+    window.clearTimeout(panelTransitionTimer);
     toggle.setAttribute("aria-expanded", String(isOpen));
+    assistant?.setAttribute("data-open", String(isOpen));
 
     if (isOpen) {
+      panel.hidden = false;
       updateWhatsAppLink();
-      textarea?.focus();
+      window.requestAnimationFrame(() => {
+        panel.dataset.state = "open";
+      });
+      panelTransitionTimer = window.setTimeout(() => {
+        textarea?.focus();
+      }, 180);
+      return;
     }
+
+    panel.dataset.state = "closed";
+    panelTransitionTimer = window.setTimeout(() => {
+      panel.hidden = true;
+    }, 240);
   };
 
   toggle?.addEventListener("click", () => {

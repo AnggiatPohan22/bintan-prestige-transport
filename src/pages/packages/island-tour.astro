@@ -28,29 +28,33 @@ const schema = [...packageSchema("tour"), breadcrumbSchema(breadcrumbs)];
 <BaseLayout title="Island Tour" description="Premium private island tour packages for beaches, culture, scenic routes, night movement, and custom concierge itineraries." canonical="/packages/island-tour" schema={schema}>
   <TourHero />
   <Breadcrumb items={breadcrumbs} />
-  <section id="tour-packages" class="container-page section-padding">
-    <SectionHeader eyebrow="Tour packages" title="Private island routes with premium pacing" description="Choose a starter route, then confirm timing, stops, vehicle fit, and guest preferences through WhatsApp." />
-    <div class="mt-8">
-      <TourPackageGrid />
+  <section id="tour-packages" class="editorial-section-dark">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Tour packages" title="Private island routes with premium pacing" description="Choose a starter route, then confirm timing, stops, vehicle fit, and guest preferences through WhatsApp." variant="editorial" />
+      <div class="mt-8">
+        <TourPackageGrid />
+      </div>
     </div>
   </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
-      <SectionHeader eyebrow="Experience" title="Tour moments shaped for private travel" description="The page now supports beach, culture, evening, and custom concierge tour positioning without building a complex tour builder." />
+  <section class="editorial-section-dark border-y border-[#bfa46f]/12">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Experience" title="Tour moments shaped for private travel" description="The page now supports beach, culture, evening, and custom concierge tour positioning without building a complex tour builder." variant="editorial" />
       <div class="mt-8">
         <TourExperience />
       </div>
     </div>
   </section>
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="Itinerary" title="A flexible tour flow guests can understand quickly" description="This foundation keeps itinerary content clear while leaving room for real stops and CMS-driven details later." />
-    <div class="mt-8">
-      <TourItinerary items={itinerary} />
+  <section class="editorial-section-warm">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Itinerary" title="A flexible tour flow guests can understand quickly" description="This foundation keeps itinerary content clear while leaving room for real stops and CMS-driven details later." tone="light" variant="editorial" />
+      <div class="mt-8">
+        <TourItinerary items={itinerary} />
+      </div>
     </div>
   </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
-      <SectionHeader eyebrow="FAQ" title="Island tour questions answered early" description="Short answers for route flexibility, mixed stops, booking, and private vehicle expectations." />
+  <section class="editorial-section-dark">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="FAQ" title="Island tour questions answered early" description="Short answers for route flexibility, mixed stops, booking, and private vehicle expectations." variant="editorial" />
       <div class="mt-8">
         <TourFAQ />
       </div>

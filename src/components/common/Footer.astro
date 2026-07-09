@@ -8,9 +8,7 @@ const footerLogo = site.logoImage || "/images/brand/bintan-prestige-white-logo.p
 <footer class="border-t border-[#bfa46f]/16 bg-[#08090d] text-white">
   <div class="editorial-container grid gap-10 py-12 md:grid-cols-[1.25fr_0.7fr_0.9fr_1fr] lg:py-16">
     <div class="max-w-xl">
-      <img class="h-16 w-auto max-w-56 object-contain" src={footerLogo} alt={`${site.shortName} logo`} loading="lazy" />
-      <p class="editorial-kicker mt-5">Private Travel Concierge</p>
-      <p class="mt-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#f8e7a1]">{site.tagline}</p>
+      <img class="h-46 w-auto max-w-86 object-contain" src={footerLogo} alt={`${site.shortName} logo`} loading="lazy" />
       <p class="editorial-copy mt-5 text-slate-400">{site.defaultDescription}</p>
     </div>
 
@@ -43,7 +41,12 @@ const footerLogo = site.logoImage || "/images/brand/bintan-prestige-white-logo.p
   <div class="border-t border-white/10 py-5">
     <div class="editorial-container flex flex-col gap-2 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
       <p>Copyright {new Date().getFullYear()} {site.shortName}. All rights reserved.</p>
-      <p>Premium taxi, transfer, and private tour experience.</p>
+      <p>
+        Design & Maintanance by{" "}
+        <a class="font-semibold text-[#bfa46f] transition hover:text-[#f8e7a1]" href="https://www.giatteh.com" target="_blank" rel="noreferrer">
+          Giattech
+        </a>
+      </p>
     </div>
   </div>
 </footer>

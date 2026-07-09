@@ -1,0 +1,261 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogCard from "../components/blog/BlogCard.astro";
+import Breadcrumb from "../components/common/Breadcrumb.astro";
+import SectionHeader from "../components/common/SectionHeader.astro";
+import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
+import { absoluteUrl } from "../data/seo";
+import { blogArticles, blogCategories, blogLocations, blogTags, favoriteBlogArticles } from "../data/blog";
+import { breadcrumbSchema, localBusinessSchema, organizationSchema } from "../data/schema";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
+];
+const featuredArticle = favoriteBlogArticles[0] ?? blogArticles[0];
+const regularArticles = blogArticles;
+const schema = [
+  organizationSchema,
+  localBusinessSchema,
+  {
+    "@type": "Blog",
+    name: "Bintan Taxi & Island Tour Blog",
+    description: "Guides for private taxi transfers, Bintan ferry and airport pickup, island tours, mangrove trips, snorkeling, and travel planning.",
+    url: absoluteUrl("/blog"),
+    publisher: { "@id": organizationSchema["@id"] },
+    blogPost: blogArticles.map((article) => ({
+      "@type": "BlogPosting",
+      headline: article.title,
+      description: article.description,
+      image: absoluteUrl(article.heroImage),
+      url: absoluteUrl(`/blog/${article.slug}`),
+      datePublished: article.publishedAt,
+    })),
+  },
+  breadcrumbSchema(breadcrumbs),
+];
+---
+
+<BaseLayout
+  title="Bintan Taxi & Island Tour Blog"
+  description="SEO travel guides for Bintan private taxi transfers, harbour pickup, airport pickup, hotel rides, mangrove tours, snorkeling, and island destinations."
+  canonical="/blog"
+  ogImage={featuredArticle.heroImage}
+  schema={schema}
+>
+  <section class="site-hero-section relative isolate overflow-hidden bg-[#0b0c10] text-white">
+    <div
+      class="absolute inset-0 -z-10 bg-cover bg-center"
+      role="img"
+      aria-label="Bintan travel blog editorial hero"
+      style={`background-image: linear-gradient(90deg, rgba(11,12,16,0.92), rgba(11,12,16,0.68), rgba(11,12,16,0.9)), linear-gradient(180deg, rgba(11,12,16,0.12), #0b0c10 94%), url('${featuredArticle.heroImage}');`}
+    ></div>
+    <div class="site-hero-inner site-page-hero-inner editorial-container grid min-h-[560px] items-end gap-8 py-16 md:grid-cols-[1fr_0.78fr] md:py-20">
+      <div class="max-w-4xl">
+        <p class="editorial-kicker">Bintan Travel Journal</p>
+        <h1 class="editorial-heading mt-4 max-w-[13ch] text-[#f8fafc]">Taxi guides and island stories for smarter trips.</h1>
+        <p class="editorial-lede mt-5 text-slate-300">
+          Practical articles for airport pickup, harbour transfer, hotel rides, mangrove routes, snorkeling days, and private Bintan travel planning.
+        </p>
+      </div>
+      <aside class="editorial-card p-5 sm:p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#f8e7a1]/72">Editor picks</p>
+        <h2 class="mt-3 font-[var(--font-editorial-heading)] text-3xl font-medium leading-tight text-[#f8fafc]">{featuredArticle.title}</h2>
+        <p class="mt-4 text-sm leading-7 text-slate-400">{featuredArticle.excerpt}</p>
+        <a class="editorial-button-primary mt-5 min-h-11 px-4" href={`/blog/${featuredArticle.slug}`}>Read featured guide</a>
+      </aside>
+    </div>
+  </section>
+
+  <Breadcrumb items={breadcrumbs} />
+
+  <section class="editorial-section-dark">
+    <div class="editorial-container">
+      <div class="grid gap-5 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+        <BlogCard article={featuredArticle} featured />
+        <aside class="grid gap-4">
+          <div class="editorial-card blog-topic-panel p-4 sm:p-5" data-blog-filter-panel>
+            <div class="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p class="editorial-kicker text-[0.68rem]">Browse topics</p>
+                <h2 class="mt-2 text-base font-extrabold leading-tight text-[#f8fafc] sm:text-lg">Filter by topic, place, or guide type.</h2>
+              </div>
+              <button class="blog-filter-chip" type="button" data-blog-filter="all" data-blog-value="all" aria-pressed="true">All articles</button>
+            </div>
+            <div class="mt-4 grid gap-3">
+              <div class="blog-topic-row">
+                <p class="blog-topic-label">Category</p>
+                <div class="blog-topic-chips">
+                  {blogCategories.map((category) => <button class="blog-filter-chip" type="button" data-blog-filter="category" data-blog-value={category} aria-pressed="false">{category}</button>)}
+                </div>
+              </div>
+              <div class="blog-topic-row">
+                <p class="blog-topic-label">Location</p>
+                <div class="blog-topic-chips">
+                  {blogLocations.map((location) => <button class="blog-filter-chip" type="button" data-blog-filter="location" data-blog-value={location} aria-pressed="false">{location}</button>)}
+                </div>
+              </div>
+              <div class="blog-topic-row">
+                <p class="blog-topic-label">Tags</p>
+                <div class="blog-topic-chips">
+                  {blogTags.slice(0, 12).map((tag) => <button class="blog-filter-chip" type="button" data-blog-filter="tag" data-blog-value={tag} aria-pressed="false">{tag}</button>)}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="editorial-card p-5 sm:p-6">
+            <p class="editorial-kicker">Favorite reads</p>
+            <div class="mt-4 grid gap-3">
+              {favoriteBlogArticles.map((article, index) => (
+                <a class="grid grid-cols-[2rem_1fr] gap-3 rounded-[8px] border border-[#bfa46f]/16 bg-white/[0.035] p-3 transition hover:border-[#f8e7a1]/38" href={`/blog/${article.slug}`}>
+                  <span class="flex h-8 w-8 items-center justify-center rounded-full border border-[#bfa46f]/28 bg-[#bfa46f]/10 text-xs font-bold text-[#f8e7a1]">{String(index + 1).padStart(2, "0")}</span>
+                  <span class="min-w-0">
+                    <span class="block text-sm font-bold leading-5 text-[#f8fafc]">{article.title}</span>
+                    <span class="mt-1 block text-xs text-slate-500">{article.location}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="editorial-section-dark border-y border-[#bfa46f]/12">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Latest guides" title="Transfer and destination articles" description="Use these articles as SEO-friendly entry points for guests planning private transport and Bintan experiences." variant="editorial" />
+      <p class="mt-5 text-sm font-semibold text-slate-500" data-blog-filter-status>Showing all articles.</p>
+      <div class="blog-latest-row mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3" data-blog-list data-page-size="6">
+        {regularArticles.map((article) => <BlogCard article={article} />)}
+      </div>
+      <nav class="blog-pagination mt-7" aria-label="Blog article pagination" data-blog-pagination hidden>
+        <button class="blog-pagination-button" type="button" data-blog-prev>Previous</button>
+        <div class="blog-pagination-pages" data-blog-pages></div>
+        <button class="blog-pagination-button" type="button" data-blog-next>Next</button>
+      </nav>
+    </div>
+  </section>
+
+  <section class="editorial-section-warm">
+    <div class="editorial-container grid gap-5 lg:grid-cols-3">
+      <div class="editorial-card editorial-card-warm p-5 sm:p-6">
+        <p class="editorial-kicker">Content structure</p>
+        <h2 class="editorial-title mt-3">Built for future article uploads.</h2>
+      </div>
+      <div class="rounded-[8px] border border-[#e5e0d6] bg-white/70 p-5 text-sm leading-7 text-slate-600 lg:col-span-2">
+        Articles are stored as structured data with title, slug, SEO description, category, location, tags, hero image, gallery images, content sections, and related post logic. This keeps the blog tidy now and ready for CMS mapping later.
+      </div>
+    </div>
+  </section>
+
+  <WhatsAppCTA message="Hello, I read your Bintan travel blog and want help planning a private taxi or island tour." />
+</BaseLayout>
+
+<script>
+  const filterPanel = document.querySelector<HTMLElement>("[data-blog-filter-panel]");
+  const filterList = document.querySelector<HTMLElement>("[data-blog-list]");
+  const filterStatus = document.querySelector<HTMLElement>("[data-blog-filter-status]");
+  const pagination = document.querySelector<HTMLElement>("[data-blog-pagination]");
+  const paginationPages = pagination?.querySelector<HTMLElement>("[data-blog-pages]");
+  const previousButton = pagination?.querySelector<HTMLButtonElement>("[data-blog-prev]");
+  const nextButton = pagination?.querySelector<HTMLButtonElement>("[data-blog-next]");
+  const filterButtons = filterPanel?.querySelectorAll<HTMLButtonElement>("[data-blog-filter]");
+  const filterCards = Array.from(filterList?.querySelectorAll<HTMLElement>("[data-blog-card]") ?? []);
+  const pageSize = Number(filterList?.dataset.pageSize ?? "6");
+  let currentPage = 1;
+  let currentFilter = {
+    type: "all",
+    value: "all",
+  };
+
+  const cardMatchesFilter = (card: HTMLElement) => {
+    const tags = card.dataset.blogTags?.split("|") ?? [];
+
+    return (
+      currentFilter.type === "all" ||
+      (currentFilter.type === "category" && card.dataset.blogCategory === currentFilter.value) ||
+      (currentFilter.type === "location" && card.dataset.blogLocation === currentFilter.value) ||
+      (currentFilter.type === "tag" && tags.includes(currentFilter.value))
+    );
+  };
+
+  const updatePagination = () => {
+    const matchingCards = filterCards.filter(cardMatchesFilter);
+    const pageCount = Math.max(1, Math.ceil(matchingCards.length / pageSize));
+    currentPage = Math.min(currentPage, pageCount);
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    filterCards.forEach((card) => {
+      card.hidden = true;
+    });
+
+    matchingCards.forEach((card, index) => {
+      card.hidden = index < startIndex || index >= endIndex;
+    });
+
+    filterList?.scrollTo({ left: 0, behavior: "auto" });
+
+    if (filterStatus) {
+      const resultLabel = currentFilter.type === "all" ? "all articles" : currentFilter.value;
+      const rangeStart = matchingCards.length === 0 ? 0 : startIndex + 1;
+      const rangeEnd = Math.min(endIndex, matchingCards.length);
+      filterStatus.textContent =
+        matchingCards.length === 0
+          ? `No articles found for ${resultLabel}.`
+          : `Showing ${rangeStart}-${rangeEnd} of ${matchingCards.length} ${resultLabel}.`;
+    }
+
+    if (!pagination || !paginationPages || !previousButton || !nextButton) return;
+
+    pagination.hidden = pageCount <= 1;
+    previousButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === pageCount;
+    paginationPages.innerHTML = "";
+
+    for (let page = 1; page <= pageCount; page += 1) {
+      const button = document.createElement("button");
+      button.className = "blog-pagination-page";
+      button.type = "button";
+      button.textContent = String(page);
+      button.setAttribute("aria-label", `Go to page ${page}`);
+      button.setAttribute("aria-current", page === currentPage ? "page" : "false");
+      button.addEventListener("click", () => {
+        currentPage = page;
+        updatePagination();
+      });
+      paginationPages.append(button);
+    }
+  };
+
+  const setActiveFilter = (activeButton: HTMLButtonElement) => {
+    currentFilter = {
+      type: activeButton.dataset.blogFilter ?? "all",
+      value: activeButton.dataset.blogValue ?? "all",
+    };
+    currentPage = 1;
+
+    filterButtons?.forEach((button) => {
+      button.setAttribute("aria-pressed", String(button === activeButton));
+    });
+
+    updatePagination();
+  };
+
+  previousButton?.addEventListener("click", () => {
+    currentPage = Math.max(1, currentPage - 1);
+    updatePagination();
+  });
+
+  nextButton?.addEventListener("click", () => {
+    currentPage += 1;
+    updatePagination();
+  });
+
+  filterButtons?.forEach((button) => {
+    button.addEventListener("click", () => setActiveFilter(button));
+  });
+
+  updatePagination();
+</script>

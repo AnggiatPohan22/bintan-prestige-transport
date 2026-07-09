@@ -43,9 +43,9 @@ const schema = [
 ---
 
 <BaseLayout title={route.title} description={route.description} canonical={`/packages/pick-up-drop/${route.slug}`} ogImage={route.image} schema={schema}>
-  <PackageDetailHero item={route} parentLabel="Taxi Transfer Package" />
+  <PackageDetailHero item={route} parentLabel="Taxi Transfer Package" showSummaryCard={false} />
   <Breadcrumb items={breadcrumbs} />
-  <PackageDetailContent item={route} />
+  <PackageDetailContent item={route} enableMobileSwipeControls />
   <PackageBookingForm item={route} typeLabel="Taxi Transfer Package" />
   <WhatsAppCTA
     title={`Ready to book ${route.title}?`}

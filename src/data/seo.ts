@@ -1,4 +1,5 @@
 import { site } from "./site";
+import { blogArticles } from "./blog";
 import { routes } from "./routes";
 import { tours } from "./tours";
 
@@ -23,6 +24,13 @@ const staticSeoPages = [
     description:
       "Premium private island tour packages for beaches, culture, scenic routes, night movement, and custom concierge itineraries.",
     priority: 0.9,
+  },
+  {
+    path: "/blog",
+    title: "Bintan Taxi & Island Tour Blog",
+    description:
+      "SEO travel guides for Bintan private taxi transfers, harbour pickup, airport pickup, hotel rides, mangrove tours, snorkeling, and island destinations.",
+    priority: 0.8,
   },
   {
     path: "/about",
@@ -54,6 +62,13 @@ const routeSeoPages = routes.map((route) => ({
   priority: 0.8,
 }));
 
-export const seoPages = [...staticSeoPages, ...tourSeoPages, ...routeSeoPages];
+const blogSeoPages = blogArticles.map((article) => ({
+  path: `/blog/${article.slug}`,
+  title: article.title,
+  description: article.description,
+  priority: article.favorite ? 0.8 : 0.7,
+}));
+
+export const seoPages = [...staticSeoPages, ...tourSeoPages, ...routeSeoPages, ...blogSeoPages];
 
 export const absoluteUrl = (path = "/") => new URL(path, site.url).toString();
