@@ -8,9 +8,10 @@ import WhatsAppCTA from "../../../components/common/WhatsAppCTA.astro";
 import { breadcrumbSchema, organizationSchema, localBusinessSchema } from "../../../data/schema";
 import { absoluteUrl } from "../../../data/seo";
 import { routes } from "../../../data/routes";
+import { transportRoutes } from "../../../data/transportRoutes";
 
 export const getStaticPaths = () =>
-  routes.map((route) => ({
+  [...routes, ...transportRoutes].map((route) => ({
     params: { slug: route.slug },
     props: { route },
   }));

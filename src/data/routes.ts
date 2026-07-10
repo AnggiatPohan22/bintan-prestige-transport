@@ -2,7 +2,7 @@ export const routes = [
   {
     title: "Package Transfer with Avanza & Innova",
     slug: "package-transfer-avanza-innova",
-    description: "Drop or Pickup from airport, ferry, or hotel with a private taxi route. also provide half-day or full-day island tour packages for guests who want to explore the island.",
+    description: "One way transfer from airport, ferry, or hotel with a private taxi route. also provide half-day or full-day island tour packages for guests who want to explore the island.",
     overview:
       "A premium private taxi transfer service for airport, ferry, or hotel pickup and drop-off. Guests can also choose half-day or full-day island tour packages to explore the island's attractions with a private driver.",
     image: "/images/cars/toyota-avanza.png",
@@ -12,20 +12,27 @@ export const routes = [
     duration: "Depending on route",
     capacity: "1-4 guests",
     category: "taxi-transfer",
-    mood: "Drop or Pickup or rent for half-day or full-day island tour",
+    mood: "One way transfer or rent for half-day or full-day island tour",
     goodFor: ["Airport arrival", "Hotel check-in", "Couples", "Business guests", "Harbor transfer", "Ferry terminal transfer", "Half-day island tour", "Full-day island tour"],
     highlights: [
       "Private taxi for airport, ferry, or hotel transfer",
       "Half-day or full-day island tour packages available",
       "Flexible pickup and drop-off locations",
       "Optional multi-stop arrangements for sightseeing",
+      "Luggage-friendly coordination for guests",
     ],
     packageDetails: [
       {
-        title: "Drop or Pickup",
+        title: "One Way Transfer",
         value: "IDR 350.000",
         description:
           "A direct private transfer for airport, ferry terminal, hotel, or resort movement with clear pickup timing and luggage-friendly coordination.",
+      },
+      {
+        title: "Round Trip",
+        value: "IDR 700.000",
+        description:
+          "A round-trip private transfer for airport, ferry terminal, hotel, or resort movement with clear pickup timing and luggage-friendly coordination.",
       },
       {
         title: "Half Day (5 hours)",
@@ -78,10 +85,16 @@ export const routes = [
     ],
     packageDetails: [
       {
-        title: "Drop or Pickup",
+        title: "One Way Transfer",
         value: "IDR 700.000",
         description:
           "A private Hiace transfer for groups or families moving between airport, ferry terminal, hotel, resort, or selected Bintan areas.",
+      },
+      {
+        title: "Round Trip",
+        value: "IDR 1.400.000",
+        description:
+          "A round-trip private transfer for airport, ferry terminal, hotel, or resort movement with clear pickup timing and luggage-friendly coordination.",
       },
       {
         title: "Half Day (5 hours)",
@@ -134,8 +147,8 @@ export const routes = [
     ],
     packageDetails: [
       {
-        title: "Island Day Tours",
-        value: "Full / Half Day",
+        title: "Island Full Day Tour",
+        value: "IDR 4.500.000",
         description:
           "A refined Alphard option for premium island movement, resort transfers, dining plans, and calm day routes with elevated comfort.",
       },
@@ -166,49 +179,5 @@ export const routes = [
       "Alphard availability may depend on date and group size.",
     ],
     whatsappMessage: "Hello, I want to book a luxury transfer with Alphard.",
-  },
-  {
-    title: "Package Transfer with Luxury Sedan",
-    slug: "package-transfer-luxury-sedan",
-    description: "Confortable and stylish private taxi transfer service using a luxury sedan for guests who want a premium experience from airport, ferry, or hotel to their destination.",
-    overview:
-      "A comfortable and stylish private taxi transfer service using a luxury sedan. Guests can enjoy a premium experience with a private driver from the airport, ferry, or hotel to their destination.",
-    image: "/images/cars/premium-sedan2.jpg",
-    heroImages: ["/images/cars/premium-sedan2.jpg", "/images/cars/premium-sedan.jpg", "/images/cars/luxury-mpv2.jpg"],
-    alt: "luxury private taxi transfer with premium sedan",
-    priceFrom: "Start From : IDR 1.000K",
-    duration: "Flexible evening or day timing",
-    capacity: "1-3 guests",
-    category: "taxi-transfer",
-    mood: "Premium transfer for guests seeking comfort and style",
-    goodFor: ["Custom ride", "Groups", "Multiple stops", "Flexible timing", "VIP guests", "Evening transfer", "Private dining experience"],
-    highlights: [
-      "Luxury sedan for airport, ferry, or hotel transfer",
-      "Comfortable and stylish private taxi experience",
-      "Flexible timing and multi-stop options available",
-      "Optional arrangements for sightseeing or dining",
-    ],
-    packageDetails: [
-      {
-        title: "Drop or Pickup",
-        value: "IDR 1.000.000",
-        description:
-          "A premium private sedan transfer for guests who want a stylish, quiet, and comfortable ride from airport, ferry terminal, hotel, or resort.",
-      },
-    ],
-    itinerary: [
-      "Share pickup point, drop-off point, and travel date",
-      "Confirm guest count, luggage, and preferred vehicle",
-      "Driver pickup at the agreed location",
-      "Private transfer with optional stops for sightseeing or dining",
-      "Drop-off and optional next booking support",
-    ],
-    includes: ["Premium sedan", "Route planning", "Luggage support", "WhatsApp concierge"],
-    bookingNotes: [
-      "Share full pickup and drop-off locations for accurate quote.",
-      "Multi-stop routes should be confirmed before booking.",
-      "Luxury sedan availability may depend on date and group size.",
-    ],
-    whatsappMessage: "Helllo, I want to book a package transfer with a luxury sedan.",
   },
 ];
