@@ -1,41 +1,43 @@
 ---
 const values = [
   {
-    title: "Private, not crowded",
-    description: "Every route is framed around private timing, direct communication, and guest comfort.",
+    title: "Private movement, clear timing",
+    description: "Every pickup, drop-off, and tour route is arranged around guest timing, luggage, destination flow, and comfortable private travel.",
   },
   {
-    title: "Premium, not complicated",
-    description: "The website stays simple: choose the service, send details, and confirm through WhatsApp.",
+    title: "Bintan routes handled locally",
+    description: "From ferry terminals and airport movement to Lagoi, Trikora, Tanjung Pinang, and activity stops, the service is shaped around real Bintan travel needs.",
   },
   {
-    title: "Local, not generic",
-    description: "The structure supports island-aware route decisions for transfers, tours, and custom stops.",
+    title: "Easy WhatsApp confirmation",
+    description: "Guests can share date, pickup point, guest count, route ideas, and special requests before confirming availability and the best vehicle option.",
   },
 ];
 ---
 
 <section class="editorial-section-dark">
   <div class="editorial-container">
-  <div class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-    <div>
-      <p class="editorial-kicker">Our positioning</p>
-      <h2 class="editorial-title mt-3 text-[#f8fafc]">
-        A travel service foundation shaped for premium guests.
-      </h2>
-      <p class="editorial-lede mt-5 text-slate-400">
-        This page keeps the brand story concise and operational. It is ready for real business copy later,
-        while already communicating private driver confidence, island familiarity, and premium route handling.
-      </p>
+    <div class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div>
+        <p class="editorial-kicker">Our positioning</p>
+        <h2 class="editorial-title mt-3 text-[#f8fafc]">
+          Bintan Prestige is built for guests who want the trip handled calmly.
+        </h2>
+        <p class="editorial-lede mt-5 text-slate-400">
+          The service focuses on private taxi, transfer, and tour coordination across Bintan. It keeps planning direct and human, so guests can move from arrival to resort, beach, city stop, or activity without a complicated booking flow.
+        </p>
+        <p class="mt-5 text-sm leading-7 text-slate-400">
+          Instead of a generic transport listing, Bintan Prestige presents a premium route partner: clear communication, practical local suggestions, and driver-supported travel for couples, families, groups, and corporate guests.
+        </p>
+      </div>
+      <div class="grid gap-4">
+        {values.map((item) => (
+          <article class="editorial-card rounded-[8px] p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#f8e7a1]/34">
+            <h3 class="font-[var(--font-editorial-heading)] text-2xl font-medium leading-tight text-[#f8fafc]">{item.title}</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">{item.description}</p>
+          </article>
+        ))}
+      </div>
     </div>
-    <div class="grid gap-4">
-      {values.map((item) => (
-        <article class="editorial-card rounded-[8px] p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#f8e7a1]/34">
-          <h3 class="font-[var(--font-editorial-heading)] text-2xl font-medium leading-tight text-[#f8fafc]">{item.title}</h3>
-          <p class="mt-3 text-sm leading-6 text-slate-400">{item.description}</p>
-        </article>
-      ))}
-    </div>
-  </div>
   </div>
 </section>

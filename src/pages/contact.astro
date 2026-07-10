@@ -5,6 +5,7 @@ import SectionHeader from "../components/common/SectionHeader.astro";
 import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
 import ContactCards from "../components/contact/ContactCards.astro";
 import ContactHero from "../components/contact/ContactHero.astro";
+import ContactSoftSell from "../components/contact/ContactSoftSell.astro";
 import WhatsAppPlanner from "../components/contact/WhatsAppPlanner.astro";
 import { breadcrumbSchema, localBusinessSchema, organizationSchema } from "../data/schema";
 
@@ -15,12 +16,12 @@ const breadcrumbs = [
 const schema = [organizationSchema, localBusinessSchema, breadcrumbSchema(breadcrumbs)];
 ---
 
-<BaseLayout title="Contact" description="Contact the premium private taxi and island tour service through WhatsApp, phone, or email." canonical="/contact" schema={schema}>
+<BaseLayout title="Contact Bintan Prestige" description="Contact Bintan Prestige for private taxi, transfer, tour, and activity planning in Bintan through WhatsApp, phone, or email." canonical="/contact" schema={schema}>
   <ContactHero />
   <Breadcrumb items={breadcrumbs} />
   <section class="editorial-section-dark">
     <div class="editorial-container">
-      <SectionHeader eyebrow="Contact options" title="Reach the travel concierge" description="Keep the first contact path simple while leaving room for future CMS/API-powered contact details." variant="editorial" />
+      <SectionHeader eyebrow="Contact options" title="Reach Bintan Prestige directly" description="Use WhatsApp, phone, or email to ask about private taxi, ferry pickup, airport transfer, tour routes, and activity planning around Bintan." variant="editorial" />
       <div class="mt-8">
         <ContactCards />
       </div>
@@ -31,5 +32,9 @@ const schema = [organizationSchema, localBusinessSchema, breadcrumbSchema(breadc
       <WhatsAppPlanner />
     </div>
   </section>
-  <WhatsAppCTA title="Need transfer or tour details?" />
+  <ContactSoftSell />
+  <WhatsAppCTA
+    title="Ready to contact Bintan Prestige?"
+    description="Use the planner above or send a direct WhatsApp message with your route, date, pickup point, and travel request."
+  />
 </BaseLayout>

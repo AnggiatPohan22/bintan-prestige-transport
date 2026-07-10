@@ -4,6 +4,7 @@ import Breadcrumb from "../components/common/Breadcrumb.astro";
 import SectionHeader from "../components/common/SectionHeader.astro";
 import AboutHero from "../components/about/AboutHero.astro";
 import AboutStory from "../components/about/AboutStory.astro";
+import AboutSoftSell from "../components/about/AboutSoftSell.astro";
 import TrustSignals from "../components/about/TrustSignals.astro";
 import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
 import { breadcrumbSchema, organizationSchema } from "../data/schema";
@@ -15,17 +16,21 @@ const breadcrumbs = [
 const schema = [organizationSchema, breadcrumbSchema(breadcrumbs)];
 ---
 
-<BaseLayout title="About Us" description="About the premium private taxi, transfer, and island tour concierge service foundation." canonical="/about" schema={schema}>
+<BaseLayout title="About Bintan Prestige" description="Learn about Bintan Prestige private taxi, tour, transfer, and activity support for premium Bintan travel." canonical="/about" schema={schema}>
   <AboutHero />
   <Breadcrumb items={breadcrumbs} />
   <AboutStory />
   <section class="editorial-section-warm">
     <div class="editorial-container">
-      <SectionHeader eyebrow="Trust signals" title="A foundation built for practical premium travel" description="These signals keep the story grounded until real reviews, certifications, fleet photos, and business credentials are added." tone="light" variant="editorial" />
+      <SectionHeader eyebrow="Trust signals" title="What Bintan Prestige stands for" description="Private movement, local route awareness, and clear WhatsApp communication for guests who want Bintan travel handled properly." tone="light" variant="editorial" />
       <div class="mt-8">
         <TrustSignals />
       </div>
     </div>
   </section>
-  <WhatsAppCTA title="Need private transfer or tour help?" />
+  <AboutSoftSell />
+  <WhatsAppCTA
+    title="Need private taxi or tour help in Bintan?"
+    description="Send your arrival point, resort, activity plan, or custom route request and Bintan Prestige will help prepare the next step."
+  />
 </BaseLayout>

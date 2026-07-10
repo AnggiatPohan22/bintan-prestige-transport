@@ -1,42 +1,28 @@
 ---
-import { ShieldCheck, Sparkles, Timer } from "lucide-react";
 import HeroBackdrop from "../common/HeroBackdrop.astro";
 import { heroSlides } from "../../data/media";
 
-const points = [
-  { label: "Private driver mindset", icon: ShieldCheck },
-  { label: "Concierge-style route support", icon: Sparkles },
-  { label: "Arrival and tour timing focus", icon: Timer },
-];
+
 ---
 
-<section class="site-hero-section relative overflow-hidden border-b border-white/10 bg-[#0b0c10]">
-  <HeroBackdrop images={heroSlides.about} className="z-0" />
-  <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,12,16,0.55),#0b0c10_88%)]"></div>
-  <div class="site-hero-inner site-page-hero-inner container-page relative grid min-h-[560px] gap-8 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-16">
-    <div class="hero-copy">
-      <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">About the service</p>
+<section class="about-hero site-hero-section relative isolate flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-[#0b0c10] text-white">
+  <HeroBackdrop images={heroSlides.about} className="-z-20" />
+  <div class="about-hero__shade absolute inset-0 -z-10"></div>
+  <div class="site-hero-inner about-hero__inner container-page relative flex min-h-[100svh] w-full flex-col justify-end py-12 lg:py-16">
+    <div class="hero-copy max-w-4xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">About Bintan Prestige</p>
       <h1 class="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-6xl">
-        Private travel support with a calm luxury rhythm.
+        Private taxi and tour support for premium Bintan travel.
       </h1>
       <p class="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-        A premium taxi and island tour frontend foundation for guests who want private movement, clear timing, and a human WhatsApp booking path.
+        Bintan Prestige helps guests move comfortably between ferry terminals, airport pickups, resorts, beaches, city stops, and activity routes with private driver coordination.
       </p>
-    </div>
-
-    <div class="hero-panel luxury-surface silver-glow rounded-[8px] p-5 sm:p-6">
-      <p class="text-sm font-semibold text-[#e2e8f0]">Built around</p>
-      <div class="mt-5 grid gap-3">
-        {points.map((point) => {
-          const Icon = point.icon;
-          return (
-            <div class="luxury-card flex items-center gap-3 rounded-[8px] p-4">
-              <Icon className="h-5 w-5 text-[#f8e7a1]/82" aria-hidden="true" />
-              <span class="text-sm font-medium text-slate-300">{point.label}</span>
-            </div>
-          );
-        })}
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a class="luxury-btn-primary" href="/packages/pick-up-drop">View Taxi & Tours</a>
+        <a class="luxury-btn-secondary" href="/packages/activities-packages">Explore Activities</a>
       </div>
     </div>
+
+    
   </div>
 </section>

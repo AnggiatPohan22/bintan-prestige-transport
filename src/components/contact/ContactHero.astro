@@ -4,25 +4,25 @@ import { site } from "../../data/site";
 import { heroSlides } from "../../data/media";
 import HeroBackdrop from "../common/HeroBackdrop.astro";
 
-const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
+
 ---
 
-<section class="site-hero-section relative overflow-hidden border-b border-white/10 bg-[#0b0c10]">
-  <HeroBackdrop images={heroSlides.contact} className="z-0" />
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(6,78,59,0.25),transparent_28rem),linear-gradient(180deg,rgba(11,12,16,0.52),#0b0c10_88%)]"></div>
-  <div class="site-hero-inner site-page-hero-inner container-page relative grid min-h-[520px] gap-8 py-12 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:py-16">
-    <div class="hero-copy">
+<section class="contact-hero site-hero-section relative isolate flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-[#0b0c10] text-white">
+  <HeroBackdrop images={heroSlides.contact} className="-z-20" />
+  <div class="contact-hero__shade absolute inset-0 -z-10"></div>
+  <div class="site-hero-inner contact-hero__inner container-page relative flex min-h-[100svh] w-full flex-col justify-end py-12 lg:py-16">
+    <div class="hero-copy max-w-4xl">
       <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">Contact and booking</p>
       <h1 class="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-6xl">
-        Start with a message. Confirm the route with a person.
+        Tell us your Bintan plan. We will shape the route.
       </h1>
       <p class="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-        Use WhatsApp for transfer availability, island tour planning, vehicle fit, route timing, and custom requests.
+        Contact Bintan Prestige for private taxi availability, tour routes, airport or ferry pickup, activity transfers, and custom travel requests across Bintan.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a class="luxury-btn-primary" href={href} target="_blank" rel="noreferrer">
+        <a class="luxury-btn-primary" href="#whatsapp-planner">
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
-          <span>Chat on WhatsApp</span>
+          <span>Open Planner</span>
         </a>
         <a class="luxury-btn-secondary" href={`tel:${site.phone}`}>
           <PhoneCall className="h-4 w-4" aria-hidden="true" />
@@ -31,14 +31,5 @@ const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(sit
       </div>
     </div>
 
-    <div class="hero-panel luxury-surface silver-glow rounded-[8px] p-5 sm:p-6">
-      <p class="text-sm font-semibold text-[#e2e8f0]">Send these details</p>
-      <ul class="mt-5 grid gap-3 text-sm text-slate-400">
-        <li>Pickup and drop-off point</li>
-        <li>Date, time, passenger count, and luggage count</li>
-        <li>Transfer, island tour, or custom itinerary preference</li>
-        <li>Vehicle preference and special timing needs</li>
-      </ul>
-    </div>
   </div>
 </section>
