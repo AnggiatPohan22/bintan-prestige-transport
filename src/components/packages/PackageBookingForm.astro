@@ -13,14 +13,15 @@ interface DetailItem {
 interface Props {
   item: DetailItem;
   typeLabel: string;
+  tone?: "default" | "light";
 }
 
-const { item, typeLabel } = Astro.props;
+const { item, typeLabel, tone = "default" } = Astro.props;
 const defaultMessage = item.whatsappMessage ?? `Hello, I want to book ${item.title}.`;
 const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`;
 ---
 
-<section class="package-booking-section editorial-section-dark border-y border-[#bfa46f]/12">
+<section class:list={["package-booking-section editorial-section-dark border-y border-[#bfa46f]/12", tone === "light" && "package-booking-section--light"]}>
   <div class="editorial-container grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-start lg:gap-10">
     <div class="package-booking-copy">
       <p class="editorial-kicker">Booking Information</p>

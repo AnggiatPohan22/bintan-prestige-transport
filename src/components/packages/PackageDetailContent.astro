@@ -21,14 +21,16 @@ interface DetailItem {
 interface Props {
   item: DetailItem;
   enableMobileSwipeControls?: boolean;
+  tone?: "default" | "activities";
 }
 
-const { item, enableMobileSwipeControls = false } = Astro.props;
+const { item, enableMobileSwipeControls = false, tone = "default" } = Astro.props;
 const detailCards = item.packageDetails ?? item.highlights?.map((highlight) => ({
   title: "Package highlight",
   description: highlight,
 })) ?? [];
 const showMobileSwipeControls = enableMobileSwipeControls && detailCards.length > 1;
+const isActivitiesTone = tone === "activities";
 ---
 
 <section class="editorial-section-dark">
@@ -122,27 +124,27 @@ const showMobileSwipeControls = enableMobileSwipeControls && detailCards.length 
 </section>
 
 {(item.whyChoose?.length || item.terms?.length) && (
-  <section class="editorial-section-warm border-t border-[#d8c6a3]/40">
+  <section class:list={["editorial-section-warm border-t border-[#d8c6a3]/40", isActivitiesTone && "activity-detail-support-section"]}>
     <div class="editorial-container grid gap-6 lg:grid-cols-2">
       {item.whyChoose?.length && (
-        <div class="editorial-card editorial-card-warm p-5 sm:p-7">
+        <div class:list={["editorial-card editorial-card-warm p-5 sm:p-7", isActivitiesTone && "activity-detail-support-card"]}>
           <p class="editorial-kicker">Why Choose Bintan Prestige Transport?</p>
           <h2 class="editorial-title mt-3">Private service with reliable support.</h2>
           <ul class="mt-6 grid gap-3 sm:grid-cols-2">
             {item.whyChoose.map((reason) => (
-              <li class="rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4 text-sm font-semibold leading-6 text-[#111827]">{reason}</li>
+              <li class:list={["rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4 text-sm font-semibold leading-6 text-[#111827]", isActivitiesTone && "activity-detail-support-item"]}>{reason}</li>
             ))}
           </ul>
         </div>
       )}
 
       {item.terms?.length && (
-        <div class="editorial-card editorial-card-warm p-5 sm:p-7">
+        <div class:list={["editorial-card editorial-card-warm p-5 sm:p-7", isActivitiesTone && "activity-detail-support-card"]}>
           <p class="editorial-kicker">Terms & Conditions</p>
           <h2 class="editorial-title mt-3">Please confirm before booking.</h2>
           <ul class="mt-6 grid gap-3">
             {item.terms.map((term) => (
-              <li class="rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4 text-sm leading-6 text-[#4b5563]">{term}</li>
+              <li class:list={["rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4 text-sm leading-6 text-[#4b5563]", isActivitiesTone && "activity-detail-support-item"]}>{term}</li>
             ))}
           </ul>
         </div>

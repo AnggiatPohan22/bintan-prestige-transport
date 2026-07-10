@@ -44,8 +44,8 @@ const schema = [
 <BaseLayout title={tour.title} description={tour.description} canonical={`/packages/activities-packages/${tour.slug}`} ogImage={tour.image} schema={schema}>
   <PackageDetailHero item={tour} parentLabel="Activities Package" />
   <Breadcrumb items={breadcrumbs} />
-  <PackageDetailContent item={tour} />
-  <PackageBookingForm item={tour} typeLabel="Activities Package" />
+  <PackageDetailContent item={tour} tone="activities" />
+  <PackageBookingForm item={tour} typeLabel="Activities Package" tone="light" />
   <WhatsAppCTA
     title={`Ready to plan ${tour.title}?`}
     description="Send your preferred date, pickup point, guest count, and custom route request through WhatsApp."
