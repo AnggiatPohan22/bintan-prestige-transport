@@ -39,9 +39,9 @@ const items = [
 ];
 ---
 
-<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+<div class="home-scroll-row home-scroll-row-3 home-bento-grid md:grid md:grid-cols-2 lg:grid-cols-3">
   {items.map((item, index) => (
-    <article class={`group relative min-h-48 overflow-hidden rounded-[8px] border border-[#bfa46f]/24 bg-[#071a14]/82 p-5 shadow-[0_22px_65px_rgba(0,0,0,0.28)] transition duration-300 hover:border-[#f8e7a1]/38 ${item.className}`}>
+    <article class={`home-scroll-card group relative min-h-48 overflow-hidden rounded-[8px] border border-[#bfa46f]/24 bg-[#071a14]/82 p-5 shadow-[0_22px_65px_rgba(0,0,0,0.28)] transition duration-300 hover:border-[#f8e7a1]/38 ${item.className}`}>
       <div class="absolute inset-0 -z-10 opacity-80 visual-placeholder"></div>
       <div class="absolute inset-0 -z-10 bg-[linear-gradient(140deg,rgba(11,12,16,0.34),rgba(11,12,16,0.88))]"></div>
       <span class="rounded-full border border-white/14 bg-black/24 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#e2e8f0]/80">{item.label}</span>

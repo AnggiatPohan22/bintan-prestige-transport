@@ -27,14 +27,14 @@ const isActive = (href: string) => {
 
 <details class="mobile-menu relative z-[90] md:hidden">
   <summary
-    class="relative z-[92] inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[8px] border border-[#f8e7a1]/28 bg-black/24 text-[#f8fafc] shadow-[0_12px_34px_rgba(0,0,0,0.32)] backdrop-blur-md transition hover:border-[#f8e7a1]/56 hover:bg-[#f8e7a1]/10 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70"
+    class="relative z-[92] inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[8px] border border-[#f8e7a1]/36 bg-[#06100d]/82 text-[#f8fafc] shadow-[0_12px_34px_rgba(0,0,0,0.36)] backdrop-blur-xl transition hover:border-[#f8e7a1]/64 hover:bg-[#f8e7a1]/12 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70"
     aria-label="Toggle navigation menu"
   >
     <Menu className="mobile-menu-open-icon h-5 w-5" aria-hidden="true" />
     <X className="mobile-menu-close-icon h-5 w-5" aria-hidden="true" />
   </summary>
 
-  <div class="fixed inset-0 z-[88] bg-[#020617]/78 backdrop-blur-[2px] md:hidden"></div>
+  <div class="fixed inset-0 z-[88] bg-[#020617]/84 backdrop-blur-sm md:hidden"></div>
   <div class="mobile-menu-panel fixed inset-x-3 top-[5rem] z-[89] overflow-hidden rounded-[8px] border border-[#bfa46f]/30 bg-[#090a0d]/98 shadow-[0_34px_110px_rgba(0,0,0,0.64)] backdrop-blur-xl md:hidden">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(248,231,161,0.16),transparent_16rem),linear-gradient(135deg,rgba(191,164,111,0.08),transparent_42%)]"></div>
     <div class="relative border-b border-[#bfa46f]/18 px-5 py-4">

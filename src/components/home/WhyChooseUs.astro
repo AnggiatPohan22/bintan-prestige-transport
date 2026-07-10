@@ -17,6 +17,10 @@ const features = [
 ];
 ---
 
-<div class="grid gap-4 md:grid-cols-3">
-  {features.map((feature) => <FeatureCard {...feature} />)}
+<div class="home-scroll-row home-scroll-row-3 md:grid md:grid-cols-3">
+  {features.map((feature) => (
+    <div class="home-scroll-card">
+      <FeatureCard {...feature} />
+    </div>
+  ))}
 </div>

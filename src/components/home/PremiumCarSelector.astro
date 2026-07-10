@@ -1,0 +1,144 @@
+---
+import { ChevronLeft, ChevronRight, Luggage, MessageCircle, Users } from "lucide-react";
+import { carTypes } from "../../data/carTypes";
+import { site } from "../../data/site";
+
+const initialCar = carTypes[0];
+const fleetJson = JSON.stringify(carTypes);
+---
+
+<section class="luxury-surface fleet-selector overflow-hidden rounded-[8px]" data-fleet-selector data-fleet-items={fleetJson} data-whatsapp-number={site.whatsappNumber}>
+  <div class="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
+    <div class="fleet-visual-panel relative overflow-hidden border-b border-[#bfa46f]/18 bg-[#07130f] lg:border-b-0 lg:border-r lg:border-[#bfa46f]/18">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_44%_30%,rgba(248,231,161,0.18),transparent_20rem),radial-gradient(circle_at_75%_55%,rgba(6,78,59,0.54),transparent_24rem),linear-gradient(145deg,#07130f,#0b0c10_68%)]"></div>
+      <div class="absolute inset-x-8 bottom-8 h-px bg-gradient-to-r from-transparent via-[#f8e7a1]/45 to-transparent"></div>
+      <div class="relative z-[1] flex min-h-full items-center justify-center p-4 sm:p-6 lg:p-7">
+        <figure class="fleet-car-frame w-full">
+          <img alt={initialCar.alt} class="fleet-car-image h-full w-full" src={initialCar.image} data-fleet-image />
+          <figcaption class="sr-only" data-fleet-caption>{initialCar.name}</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="fleet-content-panel p-5 sm:p-7 lg:p-8">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#f8e7a1]/72">Premium Fleet</p>
+      <div class="fleet-copy-panel">
+        <h3 class="mt-3 font-[var(--font-editorial-heading)] text-3xl font-medium text-[#f8fafc] sm:text-4xl" data-fleet-name>{initialCar.name}</h3>
+        <p class="mt-1 text-sm font-bold text-[#f8e7a1]/82" data-fleet-type>{initialCar.type}</p>
+        <p class="mt-4 text-sm leading-6 text-slate-400" data-fleet-description>{initialCar.shortDescription}</p>
+
+        <div class="fleet-spec-grid mt-5 grid gap-3 sm:grid-cols-2">
+          <div class="fleet-spec-card rounded-[8px] border border-[#bfa46f]/20 bg-[#064e3b]/22 p-4">
+            <Users className="h-5 w-5 text-[#f8e7a1]/80" aria-hidden="true" />
+            <p class="mt-2 text-xs uppercase tracking-[0.16em] text-slate-500">Capacity</p>
+            <p class="text-sm font-semibold text-[#e2e8f0]" data-fleet-capacity>{initialCar.capacity}</p>
+          </div>
+          <div class="fleet-spec-card rounded-[8px] border border-[#bfa46f]/20 bg-[#064e3b]/22 p-4">
+            <Luggage className="h-5 w-5 text-[#f8e7a1]/80" aria-hidden="true" />
+            <p class="mt-2 text-xs uppercase tracking-[0.16em] text-slate-500">Luggage</p>
+            <p class="text-sm font-semibold text-[#e2e8f0]" data-fleet-luggage>{initialCar.luggage}</p>
+          </div>
+        </div>
+
+        <div class="fleet-feature-row mt-5 flex flex-wrap gap-2" data-fleet-features>
+          {initialCar.features.map((feature) => (
+            <span class="rounded-full border border-[#bfa46f]/24 bg-[#064e3b]/42 px-3 py-1 text-xs font-semibold text-[#f8e7a1]">{feature}</span>
+          ))}
+        </div>
+
+        <p class="mt-5 text-sm font-bold text-[#f8e7a1]">From <span data-fleet-price>{initialCar.priceFrom}</span></p>
+      </div>
+
+      <div class="fleet-control-row mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="fleet-dot-group" aria-label="Choose vehicle">
+          {carTypes.map((car, index) => (
+            <button
+              aria-label={`Show ${car.name}`}
+              aria-pressed={index === 0 ? "true" : "false"}
+              class={`fleet-dot-button ${index === 0 ? "is-active" : ""}`}
+              data-fleet-dot
+              data-fleet-index={index}
+              type="button"
+            ></button>
+          ))}
+        </div>
+        <div class="flex gap-2">
+          <button aria-label="Previous vehicle" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#bfa46f]/28 bg-[#064e3b]/30 text-[#f8e7a1] shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition hover:border-[#f8e7a1]/50 hover:bg-[#064e3b]/46" data-fleet-prev type="button">
+            <ChevronLeft size={18} aria-hidden="true" />
+          </button>
+          <button aria-label="Next vehicle" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#bfa46f]/28 bg-[#064e3b]/30 text-[#f8e7a1] shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition hover:border-[#f8e7a1]/50 hover:bg-[#064e3b]/46" data-fleet-next type="button">
+            <ChevronRight size={18} aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      <a class="fleet-whatsapp-button mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#f8e7a1]/70 bg-[#f8e7a1] px-5 text-sm font-extrabold !text-[#080705] shadow-[0_18px_46px_rgba(214,178,94,0.24)] transition hover:-translate-y-0.5 hover:bg-[#fff4bd]" href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(`Hello, I want to ask about ${initialCar.name}.`)}`} rel="noreferrer" target="_blank" data-fleet-whatsapp>
+        <MessageCircle size={17} aria-hidden="true" />
+        <span>Ask for this vehicle</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-fleet-selector]").forEach((selector) => {
+    const items = JSON.parse(selector.dataset.fleetItems ?? "[]");
+    const whatsappNumber = selector.dataset.whatsappNumber ?? "";
+    let activeIndex = 0;
+
+    const image = selector.querySelector<HTMLImageElement>("[data-fleet-image]");
+    const caption = selector.querySelector<HTMLElement>("[data-fleet-caption]");
+    const name = selector.querySelector<HTMLElement>("[data-fleet-name]");
+    const type = selector.querySelector<HTMLElement>("[data-fleet-type]");
+    const description = selector.querySelector<HTMLElement>("[data-fleet-description]");
+    const capacity = selector.querySelector<HTMLElement>("[data-fleet-capacity]");
+    const luggage = selector.querySelector<HTMLElement>("[data-fleet-luggage]");
+    const features = selector.querySelector<HTMLElement>("[data-fleet-features]");
+    const price = selector.querySelector<HTMLElement>("[data-fleet-price]");
+    const whatsapp = selector.querySelector<HTMLAnchorElement>("[data-fleet-whatsapp]");
+    const dots = Array.from(selector.querySelectorAll<HTMLButtonElement>("[data-fleet-dot]"));
+
+    const render = (nextIndex: number) => {
+      if (!items.length) return;
+      activeIndex = (nextIndex + items.length) % items.length;
+      const car = items[activeIndex];
+
+      selector.dataset.activeFleet = car.slug;
+      selector.classList.remove("is-fleet-transitioning");
+      requestAnimationFrame(() => selector.classList.add("is-fleet-transitioning"));
+      if (image) {
+        image.src = car.image;
+        image.alt = car.alt;
+      }
+      if (caption) caption.textContent = car.name;
+      if (name) name.textContent = car.name;
+      if (type) type.textContent = car.type;
+      if (description) description.textContent = car.shortDescription;
+      if (capacity) capacity.textContent = car.capacity;
+      if (luggage) luggage.textContent = car.luggage;
+      if (price) price.textContent = car.priceFrom;
+      if (features) {
+        features.textContent = "";
+        car.features.forEach((feature: string) => {
+          const pill = document.createElement("span");
+          pill.className = "rounded-full border border-[#bfa46f]/24 bg-[#064e3b]/42 px-3 py-1 text-xs font-semibold text-[#f8e7a1]";
+          pill.textContent = feature;
+          features.append(pill);
+        });
+      }
+      if (whatsapp) {
+        whatsapp.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hello, I want to ask about ${car.name}.`)}`;
+      }
+
+      dots.forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.setAttribute("aria-pressed", isActive ? "true" : "false");
+        dot.classList.toggle("is-active", isActive);
+      });
+    };
+
+    selector.querySelector("[data-fleet-prev]")?.addEventListener("click", () => render(activeIndex - 1));
+    selector.querySelector("[data-fleet-next]")?.addEventListener("click", () => render(activeIndex + 1));
+    dots.forEach((dot) => dot.addEventListener("click", () => render(Number(dot.dataset.fleetIndex ?? 0))));
+  });
+</script>

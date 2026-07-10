@@ -1,4 +1,6 @@
 ---
+import { site } from "../../data/site";
+
 interface RouteItem {
   title: string;
   slug: string;
@@ -9,6 +11,7 @@ interface RouteItem {
   capacity?: string;
   category?: string;
   priceFrom?: string;
+  highlights?: string[];
   whatsappMessage?: string;
 }
 
@@ -46,41 +49,57 @@ const getPriceDisplay = (value?: string) => {
 };
 ---
 
-<div class="grid gap-4">
+<div class="package-card-grid">
   {items.map((item) => {
     const priceDisplay = getPriceDisplay(item.priceFrom);
 
     return (
-      <article class="transfer-route-card group">
+      <article class={`package-offer-card package-offer-card--${item.category ?? "route"} group`}>
         {item.image && (
-          <div class="transfer-route-card__media" aria-hidden="true">
+          <div class="package-offer-card__media">
             <img
-              class="transfer-route-card__image"
+              class="package-offer-card__image"
               src={item.image}
-              alt=""
+              alt={item.alt ?? item.title}
               loading="lazy"
             />
-          </div>
-        )}
-        <div class="transfer-route-card__body">
-          <div class="min-w-0 max-w-2xl">
-            {item.category && <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#f8e7a1]/62">{item.category}</p>}
-            <h3 class="mt-2 font-[var(--font-editorial-heading)] text-[1.45rem] font-medium leading-tight text-[#f8fafc] sm:text-[1.7rem]">{item.title}</h3>
-            <p class="mt-3 max-w-[44rem] text-sm leading-6 text-slate-300">{item.description}</p>
-            <div class="mt-4 flex flex-wrap gap-2 text-xs font-bold text-slate-200">
-              {item.duration && <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{item.duration}</span>}
-              {item.capacity && <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{item.capacity}</span>}
+            <div class="package-offer-card__shade" aria-hidden="true"></div>
+            <div class="package-offer-card__badges">
+              {item.category && <span class="package-offer-card__category">{item.category}</span>}
+              {priceDisplay && (
+                <span class="package-offer-card__price">
+                  <span>{priceDisplay.label}</span>
+                  <strong>{priceDisplay.price}</strong>
+                </span>
+              )}
             </div>
           </div>
-          <div class="transfer-route-card__actions">
-            {priceDisplay && (
-              <div class="flex min-w-0 items-center gap-2.5">
-                <span class="shrink-0 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[#f8e7a1]/64">{priceDisplay.label}</span>
-                <span class="transfer-route-card__price">{priceDisplay.price}</span>
-              </div>
-            )}
-            <a class="transfer-route-card__link" href={`/packages/pick-up-drop/${item.slug}`}>
-              View detail
+        )}
+        <div class="package-offer-card__body">
+          <div class="package-offer-card__copy">
+            <h3 class="package-offer-card__title">{item.title}</h3>
+            <p class="package-offer-card__description">{item.description}</p>
+          </div>
+          <div class="package-offer-card__meta" aria-label="Package basics">
+            {item.duration && <span>{item.duration}</span>}
+            {item.capacity && <span>{item.capacity}</span>}
+          </div>
+          <ul class="package-offer-card__highlights" aria-label="Package highlights">
+            {(item.highlights ?? []).slice(0, 3).map((highlight) => (
+              <li>{highlight}</li>
+            ))}
+          </ul>
+          <div class="package-offer-card__actions">
+            <a class="package-offer-card__link package-offer-card__link--secondary" href={`/packages/pick-up-drop/${item.slug}`}>
+              Read more
+            </a>
+            <a
+              class="package-offer-card__link package-offer-card__link--primary"
+              href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(item.whatsappMessage ?? `Hello, I want to ask about ${item.title}.`)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Ask availability
             </a>
           </div>
         </div>

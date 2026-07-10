@@ -17,7 +17,7 @@ const isActive = (href: string) => {
 };
 ---
 
-<header class="fixed inset-x-0 top-0 z-[80] border-b border-[#f8e7a1]/10 bg-[#0b0c10]/10 text-white backdrop-blur-[2px] transition-colors">
+<header class="fixed inset-x-0 top-0 z-[80] border-b border-[#f8e7a1]/14 bg-[#07100d]/82 text-white shadow-[0_18px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-colors">
   <nav class="editorial-container flex min-h-[4.25rem] items-center justify-between gap-4 py-2.5 md:min-h-[4.75rem] md:py-3">
     <a href="/" class="group flex min-w-0 items-center gap-3" aria-label={`${site.shortName} home`}>
       {
@@ -32,10 +32,10 @@ const isActive = (href: string) => {
       }
     </a>
 
-    <div class="hidden items-center gap-2 rounded-[8px] border border-white/10 bg-black/18 px-2 py-1.5 text-[12px] font-semibold uppercase tracking-[0.13em] text-slate-200 shadow-[0_18px_48px_rgba(0,0,0,0.18)] backdrop-blur-md md:flex lg:gap-3">
+    <div class="hidden items-center gap-1.5 rounded-[8px] border border-[#f8e7a1]/18 bg-[#050807]/72 px-2 py-1.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#f8fafc] shadow-[0_18px_54px_rgba(0,0,0,0.3)] backdrop-blur-xl md:flex lg:gap-2">
       {navigation.map((item) => (
         <a
-          class={`relative rounded-[6px] px-3 py-2 transition duration-200 hover:bg-[#f8e7a1]/10 hover:!text-[#f8e7a1] ${isActive(item.href) ? "bg-[#f8e7a1]/12 !text-[#f8e7a1] shadow-[inset_0_-1px_0_rgba(248,231,161,0.62)]" : ""}`}
+          class={`relative rounded-[6px] px-3 py-2 text-shadow-sm transition duration-200 hover:bg-[#f8e7a1]/12 hover:!text-[#fff4bd] ${isActive(item.href) ? "bg-[#f8e7a1]/92 !text-[#080705] shadow-[inset_0_1px_0_rgba(255,255,255,0.54),0_10px_24px_rgba(214,178,94,0.16)]" : "text-[#f8fafc]/92"}`}
           href={item.href}
           aria-current={isActive(item.href) ? "page" : undefined}
         >

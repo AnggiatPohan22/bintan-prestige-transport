@@ -9,7 +9,7 @@ import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
 import BentoShowcase from "../components/home/BentoShowcase.astro";
 import ConciergeFlow from "../components/home/ConciergeFlow.astro";
 import FAQPreview from "../components/home/FAQPreview.astro";
-import PremiumCarSelector from "../components/home/PremiumCarSelector";
+import PremiumCarSelector from "../components/home/PremiumCarSelector.astro";
 import RouteHighlights from "../components/home/RouteHighlights.astro";
 import LuxuryExperience from "../components/home/LuxuryExperience.astro";
 import { gallery } from "../data/gallery";
@@ -72,7 +72,7 @@ import { homeSchema } from "../data/schema";
         variant="editorial"
       />
       <div class="mt-8">
-        <PremiumCarSelector client:visible />
+        <PremiumCarSelector />
       </div>
     </div>
   </section>
