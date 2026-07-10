@@ -1,6 +1,4 @@
 ---
-import ImageCard from "./ImageCard.astro";
-
 interface GalleryItem {
   title: string;
   description?: string;
@@ -15,6 +13,200 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-  {items.map((item) => <ImageCard {...item} />)}
+<div class="client-gallery-shell">
+  <div class="client-gallery" role="list" aria-label="Client island tour photo gallery" data-gallery-track>
+    {items.map((item, index) => (
+      <button
+        class="client-gallery-photo is-edge"
+        type="button"
+        role="listitem"
+        aria-label={`Open ${item.title} photo`}
+        data-gallery-card
+        data-gallery-index={index}
+        data-gallery-src={item.image}
+        data-gallery-alt={item.alt}
+        data-gallery-title={item.title}
+        data-gallery-description={item.description ?? ""}
+      >
+        <img src={item.image} alt={item.alt} loading="lazy" />
+        <span class="client-gallery-caption">
+          <span>{item.title}</span>
+          {item.description && <small>{item.description}</small>}
+        </span>
+      </button>
+    ))}
+  </div>
 </div>
+
+<div class="client-gallery-lightbox" data-gallery-lightbox hidden>
+  <button class="client-gallery-backdrop" type="button" aria-label="Close gallery image" data-gallery-close></button>
+  <figure class="client-gallery-dialog" role="dialog" aria-modal="true" aria-label="Gallery image preview">
+    <button class="client-gallery-close" type="button" aria-label="Close gallery image" data-gallery-close>Close</button>
+    <div class="client-gallery-dialog-frame">
+      <img src="" alt="" data-gallery-preview />
+    </div>
+    <figcaption>
+      <strong data-gallery-preview-title></strong>
+      <span data-gallery-preview-description></span>
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+  const galleryLightbox = document.querySelector<HTMLElement>("[data-gallery-lightbox]");
+  const galleryPreview = galleryLightbox?.querySelector<HTMLImageElement>("[data-gallery-preview]");
+  const galleryTitle = galleryLightbox?.querySelector<HTMLElement>("[data-gallery-preview-title]");
+  const galleryDescription = galleryLightbox?.querySelector<HTMLElement>("[data-gallery-preview-description]");
+  const galleryPhotos = document.querySelectorAll<HTMLButtonElement>("[data-gallery-src]");
+  const galleryCloseButtons = document.querySelectorAll<HTMLButtonElement>("[data-gallery-close]");
+  const galleryTrack = document.querySelector<HTMLElement>("[data-gallery-track]");
+  const galleryCards = Array.from(document.querySelectorAll<HTMLElement>("[data-gallery-card]"));
+
+  let galleryFrame = 0;
+  let isGalleryPointerDown = false;
+  let galleryDragStartX = 0;
+  let galleryDragStartScroll = 0;
+  let galleryDidDrag = false;
+
+  const galleryStateClasses = [
+    "is-active",
+    "is-near",
+    "is-near-before",
+    "is-near-after",
+    "is-edge",
+    "is-edge-before",
+    "is-edge-after",
+  ];
+
+  const updateGalleryVisualState = () => {
+    if (!galleryTrack || galleryCards.length === 0) return;
+
+    const trackRect = galleryTrack.getBoundingClientRect();
+    const trackCenter = trackRect.left + trackRect.width / 2;
+    let activeIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    galleryCards.forEach((card, index) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const distance = Math.abs(cardCenter - trackCenter);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        activeIndex = index;
+      }
+    });
+
+    galleryCards.forEach((card, index) => {
+      const offset = index - activeIndex;
+      const isBefore = offset < 0;
+
+      card.classList.remove(...galleryStateClasses);
+
+      if (offset === 0) {
+        card.classList.add("is-active");
+        return;
+      }
+
+      if (Math.abs(offset) === 1) {
+        card.classList.add("is-near", isBefore ? "is-near-before" : "is-near-after");
+        return;
+      }
+
+      card.classList.add("is-edge", isBefore ? "is-edge-before" : "is-edge-after");
+    });
+  };
+
+  const scheduleGalleryVisualState = () => {
+    if (galleryFrame) return;
+
+    galleryFrame = window.requestAnimationFrame(() => {
+      galleryFrame = 0;
+      updateGalleryVisualState();
+    });
+  };
+
+  const closeGallery = () => {
+    if (!galleryLightbox) return;
+
+    galleryLightbox.hidden = true;
+    document.documentElement.classList.remove("gallery-is-open");
+  };
+
+  galleryPhotos.forEach((photo) => {
+    photo.addEventListener("click", (event) => {
+      if (!galleryLightbox || !galleryPreview || !galleryTitle || !galleryDescription) return;
+      if (galleryDidDrag) {
+        event.preventDefault();
+        galleryDidDrag = false;
+        return;
+      }
+
+      galleryPreview.src = photo.dataset.gallerySrc ?? "";
+      galleryPreview.alt = photo.dataset.galleryAlt ?? "";
+      galleryTitle.textContent = photo.dataset.galleryTitle ?? "";
+      galleryDescription.textContent = photo.dataset.galleryDescription ?? "";
+      galleryLightbox.hidden = false;
+      document.documentElement.classList.add("gallery-is-open");
+    });
+  });
+
+  galleryCloseButtons.forEach((button) => {
+    button.addEventListener("click", closeGallery);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeGallery();
+    }
+  });
+
+  if (galleryTrack) {
+    galleryTrack.addEventListener("scroll", scheduleGalleryVisualState, { passive: true });
+
+    galleryTrack.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+
+      isGalleryPointerDown = true;
+      galleryDidDrag = false;
+      galleryDragStartX = event.clientX;
+      galleryDragStartScroll = galleryTrack.scrollLeft;
+      galleryTrack.setPointerCapture(event.pointerId);
+      galleryTrack.classList.add("is-dragging");
+    });
+
+    galleryTrack.addEventListener("pointermove", (event) => {
+      if (!isGalleryPointerDown) return;
+
+      const dragDistance = event.clientX - galleryDragStartX;
+      if (Math.abs(dragDistance) > 6) {
+        galleryDidDrag = true;
+      }
+
+      galleryTrack.scrollLeft = galleryDragStartScroll - dragDistance;
+    });
+
+    const stopGalleryDrag = (event: PointerEvent) => {
+      if (!isGalleryPointerDown) return;
+
+      isGalleryPointerDown = false;
+      if (galleryTrack.hasPointerCapture(event.pointerId)) {
+        galleryTrack.releasePointerCapture(event.pointerId);
+      }
+      galleryTrack.classList.remove("is-dragging");
+      scheduleGalleryVisualState();
+
+      if (galleryDidDrag) {
+        window.setTimeout(() => {
+          galleryDidDrag = false;
+        }, 250);
+      }
+    };
+
+    galleryTrack.addEventListener("pointerup", stopGalleryDrag);
+    galleryTrack.addEventListener("pointercancel", stopGalleryDrag);
+    window.addEventListener("resize", scheduleGalleryVisualState);
+    window.addEventListener("load", scheduleGalleryVisualState);
+    updateGalleryVisualState();
+  }
+</script>

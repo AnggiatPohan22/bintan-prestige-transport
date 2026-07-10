@@ -1,0 +1,108 @@
+---
+import { Send } from "lucide-react";
+import PackageBookingFields from "./PackageBookingFields.astro";
+import { site } from "../../data/site";
+
+interface DetailItem {
+  title: string;
+  priceFrom?: string;
+  duration?: string;
+  whatsappMessage?: string;
+}
+
+interface Props {
+  item: DetailItem;
+  typeLabel: string;
+  tone?: "default" | "light";
+}
+
+const { item, typeLabel, tone = "default" } = Astro.props;
+const defaultMessage = item.whatsappMessage ?? `Hello, I want to book ${item.title}.`;
+const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`;
+---
+
+<section class:list={["package-booking-section editorial-section-dark border-y border-[#bfa46f]/12", tone === "light" && "package-booking-section--light"]}>
+  <div class="editorial-container grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-start lg:gap-10">
+    <div class="package-booking-copy">
+      <p class="editorial-kicker">Booking Information</p>
+      <h2 class="editorial-title mt-3 text-[#f8fafc]">Customize your request before WhatsApp.</h2>
+      <p class="editorial-lede mt-4 text-slate-400">
+        Add date, time, pickup point, guest count, and special notes. The button will generate a ready-to-send WhatsApp message for this package.
+      </p>
+      <div class="package-booking-summary mt-7">
+        <span class="package-booking-summary__eyebrow">{typeLabel}</span>
+        <strong>{item.title}</strong>
+        <div class="package-booking-summary__meta">
+          {item.priceFrom && <span>From {item.priceFrom}</span>}
+          {item.duration && <span>Duration: {item.duration}</span>}
+        </div>
+      </div>
+    </div>
+
+    <form
+      class="package-booking-form editorial-card p-4 sm:p-6 lg:p-7"
+      action={href}
+      data-package-booking
+      data-whatsapp-number={site.whatsappNumber}
+      data-package-title={item.title}
+      data-package-type={typeLabel}
+      data-package-price={item.priceFrom ?? "To be confirmed"}
+      data-package-duration={item.duration ?? "To be confirmed"}
+    >
+      <PackageBookingFields />
+
+      <a class="package-booking-cta editorial-button-primary mt-5 w-full px-4" href={href} target="_blank" rel="noreferrer" data-booking-link>
+        <Send className="h-4 w-4" aria-hidden="true" />
+        <span>Book via WhatsApp</span>
+      </a>
+    </form>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-package-booking]").forEach((form) => {
+    const link = form.querySelector<HTMLAnchorElement>("[data-booking-link]");
+
+    const buildUrl = () => {
+      const data = new FormData(form);
+      const phone = form.dataset.whatsappNumber ?? "";
+      const title = form.dataset.packageTitle ?? "Package";
+      const type = form.dataset.packageType ?? "Package";
+      const price = form.dataset.packagePrice ?? "To be confirmed";
+      const duration = form.dataset.packageDuration ?? "To be confirmed";
+      const date = data.get("date")?.toString() || "Flexible / to confirm";
+      const time = data.get("time")?.toString() || "Flexible / to confirm";
+      const guests = data.get("guests")?.toString() || "To be confirmed";
+      const pickup = data.get("pickup")?.toString() || "To be confirmed";
+      const dropoff = data.get("dropoff")?.toString() || "To be confirmed";
+      const notes = data.get("notes")?.toString() || "-";
+      const message = [
+        `Hello, I want to book ${title}.`,
+        "",
+        `Package type: ${type}`,
+        `Price from: ${price}`,
+        `Duration: ${duration}`,
+        `Travel date: ${date}`,
+        `Preferred time: ${time}`,
+        `Guests: ${guests}`,
+        `Pickup point: ${pickup}`,
+        `Drop-off / return: ${dropoff}`,
+        `Custom request: ${notes}`,
+        "",
+        "Please confirm availability, final price, and recommended itinerary.",
+      ].join("\n");
+
+      return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    };
+
+    const updateLink = () => {
+      if (link) {
+        link.href = buildUrl();
+      }
+    };
+
+    form.addEventListener("input", updateLink);
+    form.addEventListener("change", updateLink);
+    updateLink();
+  });
+</script>

@@ -18,14 +18,16 @@ const schema = [organizationSchema, localBusinessSchema, breadcrumbSchema(breadc
 <BaseLayout title="Contact" description="Contact the premium private taxi and island tour service through WhatsApp, phone, or email." canonical="/contact" schema={schema}>
   <ContactHero />
   <Breadcrumb items={breadcrumbs} />
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="Contact options" title="Reach the travel concierge" description="Keep the first contact path simple while leaving room for future CMS/API-powered contact details." />
-    <div class="mt-8">
-      <ContactCards />
+  <section class="editorial-section-dark">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Contact options" title="Reach the travel concierge" description="Keep the first contact path simple while leaving room for future CMS/API-powered contact details." variant="editorial" />
+      <div class="mt-8">
+        <ContactCards />
+      </div>
     </div>
   </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
+  <section class="editorial-section-warm">
+    <div class="editorial-container">
       <WhatsAppPlanner />
     </div>
   </section>

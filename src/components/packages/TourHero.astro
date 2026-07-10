@@ -1,60 +1,34 @@
 ---
-import { Compass, MapPinned, MessageCircle, Sparkles } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { site } from "../../data/site";
 import { heroSlides } from "../../data/media";
 import HeroBackdrop from "../common/HeroBackdrop.astro";
 
 const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(
-  "Hello, I want to check availability for a private island tour package.",
+  "Hello, I want to check availability for an Activities Package.",
 )}`;
-
-const highlights = [
-  { label: "Private route planning", icon: Compass },
-  { label: "Beach, culture, food stops", icon: MapPinned },
-  { label: "Concierge-style timing", icon: Sparkles },
-];
 ---
 
-<section class="relative overflow-hidden border-b border-white/10 bg-[#0b0c10]">
-  <HeroBackdrop images={heroSlides.islandTour} className="z-0" />
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(6,78,59,0.28),transparent_28rem),linear-gradient(180deg,rgba(11,12,16,0.48),#0b0c10_86%)]"></div>
-  <div class="container-page relative grid min-h-[640px] gap-8 py-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:py-16">
-    <div class="hero-copy">
-      <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">Private island tour</p>
+<section class="activities-hero site-hero-section relative isolate flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-[#0b0c10] text-white">
+  <HeroBackdrop images={heroSlides.islandTour} className="-z-20" />
+  <div class="activities-hero__shade absolute inset-0 -z-10"></div>
+  <div class="site-hero-inner activities-hero__inner container-page relative flex min-h-[100svh] w-full flex-col justify-end py-12 lg:py-16">
+    <div class="hero-copy max-w-4xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">Activities Packages</p>
       <h1 class="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-6xl">
-        Explore Bintan with a private luxury tour rhythm.
+        Private Bintan activities with comfortable transport.
       </h1>
       <p class="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-        Curated island routes for beaches, viewpoints, culture, dinner, and relaxed private movement with WhatsApp-first planning.
+        Choose from shooting, mangrove, fireflies, snorkeling, fishing, golf, shopping, spa, beach, and custom activities with private driver coordination.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a class="luxury-btn-primary" href={href} target="_blank" rel="noreferrer">
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
-          <span>Plan Tour via WhatsApp</span>
+          <span>Plan via WhatsApp</span>
         </a>
         <a class="luxury-btn-secondary" href="#tour-packages">
-          View Tour Packages
+          View Activities
         </a>
-      </div>
-    </div>
-
-    <div class="hero-panel luxury-surface silver-glow rounded-[8px] p-5 sm:p-6">
-      <p class="text-sm font-semibold text-[#e2e8f0]">Tour foundation covers</p>
-      <div class="mt-5 grid gap-3">
-        {highlights.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div class="luxury-card flex items-center gap-3 rounded-[8px] p-4">
-              <Icon className="h-5 w-5 text-[#f8e7a1]/82" aria-hidden="true" />
-              <span class="text-sm font-medium text-slate-300">{item.label}</span>
-            </div>
-          );
-        })}
-      </div>
-      <div class="mt-5 rounded-[8px] border border-[#d6b25e]/34 bg-[#d6b25e]/10 p-4">
-        <p class="text-sm leading-6 text-emerald-100">
-          Send your preferred stops, guest count, duration, and start time. The route can stay structured or flexible depending on the guest pace.
-        </p>
       </div>
     </div>
   </div>

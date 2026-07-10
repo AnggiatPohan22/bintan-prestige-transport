@@ -1,11 +1,18 @@
 ---
+import SwipeControls from "../common/SwipeControls.astro";
+import { site } from "../../data/site";
+
 interface RouteItem {
   title: string;
+  slug: string;
   description: string;
+  image?: string;
+  alt?: string;
   duration?: string;
   capacity?: string;
   category?: string;
   priceFrom?: string;
+  highlights?: string[];
   whatsappMessage?: string;
 }
 
@@ -14,23 +21,93 @@ interface Props {
 }
 
 const { items } = Astro.props;
+
+const getPriceDisplay = (value?: string) => {
+  if (!value) {
+    return null;
+  }
+
+  if (/^Depending Requests$/i.test(value)) {
+    return {
+      label: "Rate",
+      price: "By Request",
+    };
+  }
+
+  const startFromMatch = value.match(/^Start From\s*:\s*(.+)$/i);
+
+  if (startFromMatch) {
+    return {
+      label: "Start From",
+      price: startFromMatch[1],
+    };
+  }
+
+  return {
+    label: "Rate",
+    price: value,
+  };
+};
 ---
 
-<div class="grid gap-4">
-  {items.map((item) => (
-    <article class="rounded-[8px] border border-white/10 bg-[#111827]/72 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.22)]">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div>
-          {item.category && <p class="text-xs font-semibold uppercase tracking-[0.16em] text-[#e2e8f0]/56">{item.category}</p>}
-          <h3 class="mt-1 text-lg font-semibold text-[#e2e8f0]">{item.title}</h3>
-          <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-400">{item.description}</p>
-          <div class="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-slate-300">
-            {item.duration && <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{item.duration}</span>}
-            {item.capacity && <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">{item.capacity}</span>}
+<div class="transfer-route-carousel" data-swipe-carousel>
+  <div class="package-card-grid" data-swipe-track>
+    {items.map((item) => {
+      const priceDisplay = getPriceDisplay(item.priceFrom);
+
+      return (
+        <article class={`package-offer-card package-offer-card--${item.category ?? "route"} group`} data-swipe-item>
+          {item.image && (
+            <div class="package-offer-card__media">
+              <img
+                class="package-offer-card__image"
+                src={item.image}
+                alt={item.alt ?? item.title}
+                loading="lazy"
+              />
+              <div class="package-offer-card__shade" aria-hidden="true"></div>
+              <div class="package-offer-card__badges">
+                {item.category && <span class="package-offer-card__category">{item.category}</span>}
+                {priceDisplay && (
+                  <span class="package-offer-card__price">
+                    <span>{priceDisplay.label}</span>
+                    <strong>{priceDisplay.price}</strong>
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+          <div class="package-offer-card__body">
+            <div class="package-offer-card__copy">
+              <h3 class="package-offer-card__title">{item.title}</h3>
+              <p class="package-offer-card__description">{item.description}</p>
+            </div>
+            <div class="package-offer-card__meta" aria-label="Package basics">
+              {item.duration && <span>{item.duration}</span>}
+              {item.capacity && <span>{item.capacity}</span>}
+            </div>
+            <ul class="package-offer-card__highlights" aria-label="Package highlights">
+              {(item.highlights ?? []).slice(0, 3).map((highlight) => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+            <div class="package-offer-card__actions">
+              <a class="package-offer-card__link package-offer-card__link--secondary" href={`/packages/pick-up-drop/${item.slug}`}>
+                Read more
+              </a>
+              <a
+                class="package-offer-card__link package-offer-card__link--primary"
+                href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(item.whatsappMessage ?? `Hello, I want to ask about ${item.title}.`)}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ask availability
+              </a>
+            </div>
           </div>
-        </div>
-        {item.priceFrom && <span class="w-fit shrink-0 rounded-full bg-[#e2e8f0] px-4 py-2 text-sm font-semibold text-[#0b0c10]">{item.priceFrom}</span>}
-      </div>
-    </article>
-  ))}
+        </article>
+      );
+    })}
+  </div>
+  <SwipeControls count={items.length} label="Transfer packages" className="transfer-swipe-dots" />
 </div>

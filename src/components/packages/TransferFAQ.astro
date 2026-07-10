@@ -6,9 +6,12 @@ const transferFaqs = faqs.filter((item) => ["transfer", "booking", "fleet", "ser
 
 <div class="grid gap-3">
   {transferFaqs.map((item) => (
-    <article class="rounded-[8px] border border-white/10 bg-[#111827]/72 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.22)]">
-      <h3 class="font-semibold text-[#e2e8f0]">{item.question}</h3>
-      <p class="mt-2 text-sm leading-6 text-slate-400">{item.answer}</p>
-    </article>
+    <details class="faq-accordion editorial-card rounded-[8px]">
+      <summary>
+        <span>{item.question}</span>
+        <span class="faq-accordion-icon" aria-hidden="true"></span>
+      </summary>
+      <p>{item.answer}</p>
+    </details>
   ))}
 </div>

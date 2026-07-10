@@ -23,38 +23,44 @@ const schema = [...packageSchema("transfer"), breadcrumbSchema(breadcrumbs)];
 <BaseLayout title="Pick Up & Drop" description="Premium private pick up and drop transfer service for airport, ferry terminal, hotel, dinner, and custom routes." canonical="/packages/pick-up-drop" schema={schema}>
   <TransferHero />
   <Breadcrumb items={breadcrumbs} />
-  <section id="transfer-routes" class="container-page section-padding">
-    <SectionHeader eyebrow="Transfer routes" title="Private routes for arrival, departure, and island movement" description="Start from these common route patterns, then confirm final pickup time, waiting needs, luggage, and vehicle fit through WhatsApp." />
-    <div class="mt-8">
-      <RouteList items={routes} />
+  <section id="transfer-routes" class="editorial-section-dark">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Premium Route Transfer Packages:" title="Journey in Style & Comfort" description="Experience seamless travel across our designated routes with a fleet tailored to your exact needs. Whether you require the reliable comfort of an Avanza or Innova for family trips, the spacious capacity of a HiAce for group excursions, or the elite luxury of an Alphard or Luxury Sedan for VIP business travel, we ensure a smooth, professional, and punctual journey from start to finish." variant="editorial" />
+      <div class="mt-8">
+        <RouteList items={routes} />
+      </div>
     </div>
   </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
-      <SectionHeader eyebrow="Fleet fit" title="Choose the right transfer vehicle" description="Vehicle options stay premium and practical, with clear capacity and luggage guidance before confirmation." />
+  <section class="editorial-section-warm">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Fleet fit" title="Popular transport routes" description="Common private route options for harbour arrivals, airport pickups, and half-day or full-day island movement with practical vehicle matching." tone="light" variant="editorial" />
       <div class="mt-8">
         <TransferFleet />
       </div>
     </div>
   </section>
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="Booking flow" title="From WhatsApp message to private ride" description="No backend booking engine yet. The transfer flow stays fast, clear, and human-confirmed." />
-    <div class="mt-8">
-      <TransferProcess />
+  <section class="editorial-section-dark border-y border-[#bfa46f]/12">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Booking flow" title="From WhatsApp message to private ride" description="No backend booking engine yet. The transfer flow stays fast, clear, and human-confirmed." variant="editorial" />
+      <div class="mt-8">
+        <TransferProcess />
+      </div>
     </div>
   </section>
-  <section class="border-y border-white/10 bg-[#111827]/45">
-    <div class="container-page section-padding">
-      <SectionHeader eyebrow="Details" title="Transfer basics" description="Keep expectations clear before the guest confirms pickup and drop-off timing." />
+  <section class="editorial-section-warm">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="Details" title="Transfer basics" description="Keep expectations clear before the guest confirms pickup and drop-off timing." tone="light" variant="editorial" />
       <div class="mt-8">
         <IncludeExclude />
       </div>
     </div>
   </section>
-  <section class="container-page section-padding">
-    <SectionHeader eyebrow="FAQ" title="Transfer questions answered early" description="Short operational answers for route, vehicle, and booking expectations." />
-    <div class="mt-8">
-      <TransferFAQ />
+  <section class="editorial-section-dark">
+    <div class="editorial-container">
+      <SectionHeader eyebrow="FAQ" title="Transfer questions answered early" description="Short operational answers for route, vehicle, and booking expectations." variant="editorial" />
+      <div class="mt-8">
+        <TransferFAQ />
+      </div>
     </div>
   </section>
   <WhatsAppCTA message="Hello, I want to ask about Pick Up & Drop service." />

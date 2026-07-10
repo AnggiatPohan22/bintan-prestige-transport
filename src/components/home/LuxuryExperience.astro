@@ -4,43 +4,53 @@ const stats = [
   { value: "3", label: "Premium fleet categories" },
   { value: "1", label: "WhatsApp-first booking flow" },
 ];
+
+const moodImage = "/images/cars/luxury-mpv.jpg";
 ---
 
-<section class="container-page section-padding">
-  <div class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
-    <div class="luxury-surface rounded-[8px] p-6 sm:p-8">
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#e2e8f0]/60">Private travel standard</p>
-      <h2 class="mt-4 text-3xl font-semibold leading-tight text-[#e2e8f0] sm:text-4xl">
-        Designed for guests who want the route handled before they arrive.
-      </h2>
-      <p class="mt-5 text-sm leading-7 text-slate-400 sm:text-base">
-        STEP 2 completes the homepage content foundation with sharper positioning for airport transfer,
-        private island tour, VIP driver movement, and flexible concierge-style travel.
-      </p>
-      <div class="mt-7 grid gap-3 sm:grid-cols-3">
-        {stats.map((item) => (
-          <div class="rounded-[8px] border border-white/10 bg-white/[0.03] p-4">
-            <p class="text-2xl font-semibold text-[#e2e8f0]">{item.value}</p>
-            <p class="mt-2 text-xs leading-5 text-slate-500">{item.label}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <div class="relative min-h-80 overflow-hidden rounded-[8px] border border-white/10 bg-[#111827] p-6 shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:p-8">
-      <div class="absolute inset-0 visual-placeholder opacity-80"></div>
-      <div class="absolute inset-0 bg-[linear-gradient(130deg,rgba(11,12,16,0.34),rgba(11,12,16,0.9)_72%)]"></div>
-      <div class="relative flex h-full min-h-64 flex-col justify-end">
-        <span class="w-fit rounded-full border border-white/14 bg-black/24 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#e2e8f0]/80">
-          Eco-luxury inspired
-        </span>
-        <h3 class="mt-5 max-w-xl text-2xl font-semibold leading-tight text-[#e2e8f0] sm:text-3xl">
-          Calm cabin mood, private timing, and island-aware route decisions.
-        </h3>
-        <p class="mt-3 max-w-xl text-sm leading-6 text-slate-400">
-          The homepage now has enough visual and content structure to guide visitors from desire,
-          to service choice, to WhatsApp availability without feeling like a generic travel template.
+<section class="editorial-section-dark">
+  <div class="editorial-container">
+    <div class="grid gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
+      <div class="editorial-card rounded-[8px] p-5 sm:p-6 lg:p-8">
+        <p class="editorial-kicker">Private travel standard</p>
+        <h2 class="editorial-title mt-4 text-[#f8fafc]">
+          Designed for guests who want the route handled before they arrive.
+        </h2>
+        <p class="editorial-copy mt-5 text-slate-400">
+          A calm, concierge-style homepage for premium airport transfer, private driver movement, and island tour planning across Bintan.
         </p>
+        <div class="mt-6 grid gap-3 sm:grid-cols-3">
+          {stats.map((item) => (
+            <div class="rounded-[8px] border border-[#bfa46f]/24 bg-[#071a14]/74 p-3 sm:p-4">
+              <p class="font-[var(--font-editorial-heading)] text-2xl font-medium text-[#f8e7a1] sm:text-3xl">{item.value}</p>
+              <p class="mt-2 text-xs leading-5 text-[#c7d2c3]/72">{item.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="editorial-image-frame min-h-72 p-5 sm:p-6 lg:p-8">
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          role="img"
+          aria-label="Luxury private vehicle service mood"
+          style={`background-image: url('${moodImage}');`}
+        >
+        </div>
+        <div class="absolute inset-0 bg-[linear-gradient(115deg,rgba(11,12,16,0.24),rgba(11,12,16,0.68)_46%,rgba(11,12,16,0.92)_100%),linear-gradient(180deg,rgba(11,12,16,0.05),rgba(11,12,16,0.88)_86%)]"></div>
+        <div class="relative flex h-full min-h-60 flex-col justify-end">
+          <span class="w-fit rounded-full border border-[#bfa46f]/28 bg-black/28 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#f8e7a1] backdrop-blur">
+            Editorial service mood
+          </span>
+          <div class="mt-4 max-w-xl rounded-[8px] border border-[#bfa46f]/16 bg-black/34 p-4 shadow-[0_22px_70px_rgba(0,0,0,0.42)] backdrop-blur-sm">
+            <h3 class="font-[var(--font-editorial-heading)] text-2xl font-medium leading-tight text-[#f8fafc] sm:text-3xl">
+              Calm cabins, private timing, and island-aware route decisions.
+            </h3>
+            <p class="mt-4 text-sm leading-7 text-slate-300">
+              The page now frames each ride like a premium travel feature: image-led, direct, and ready for WhatsApp confirmation.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

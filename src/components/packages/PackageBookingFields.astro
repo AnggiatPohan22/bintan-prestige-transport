@@ -1,0 +1,59 @@
+---
+import { CalendarDays, Clock, MapPin, MessageCircle, Users } from "lucide-react";
+---
+
+<div class="package-booking-grid grid gap-3 sm:grid-cols-2">
+  <label class="package-field package-field-card">
+    <span class="package-field-icon"><CalendarDays className="h-4 w-4" aria-hidden="true" /></span>
+    <span class="package-field-body">
+      <span class="package-field-label">Travel date</span>
+      <input type="date" name="date" />
+    </span>
+  </label>
+
+  <label class="package-field package-field-card">
+    <span class="package-field-icon"><Clock className="h-4 w-4" aria-hidden="true" /></span>
+    <span class="package-field-body">
+      <span class="package-field-label">Preferred time</span>
+      <input type="time" name="time" />
+    </span>
+  </label>
+
+  <label class="package-field package-field-card">
+    <span class="package-field-icon"><Users className="h-4 w-4" aria-hidden="true" /></span>
+    <span class="package-field-body">
+      <span class="package-field-label">Guests</span>
+      <select name="guests">
+        <option>1 guest</option>
+        <option>2 guests</option>
+        <option>3-4 guests</option>
+        <option>5-6 guests</option>
+        <option>7+ guests</option>
+      </select>
+    </span>
+  </label>
+
+  <label class="package-field package-field-card">
+    <span class="package-field-icon"><MapPin className="h-4 w-4" aria-hidden="true" /></span>
+    <span class="package-field-body">
+      <span class="package-field-label">Pickup point</span>
+      <input type="text" name="pickup" placeholder="Hotel, ferry, villa..." />
+    </span>
+  </label>
+
+  <label class="package-field package-field-card sm:col-span-2">
+    <span class="package-field-icon"><MapPin className="h-4 w-4" aria-hidden="true" /></span>
+    <span class="package-field-body">
+      <span class="package-field-label">Drop-off / return plan</span>
+      <input type="text" name="dropoff" placeholder="Same hotel, ferry terminal, dinner venue..." />
+    </span>
+  </label>
+
+  <label class="package-field package-field-card sm:col-span-2">
+    <span class="package-field-icon"><MessageCircle className="h-4 w-4" aria-hidden="true" /></span>
+    <span class="package-field-body">
+      <span class="package-field-label">Custom request</span>
+      <textarea name="notes" rows="4" placeholder="Add preferred stops, activity questions, luggage, child seat, timing, or special request."></textarea>
+    </span>
+  </label>
+</div>

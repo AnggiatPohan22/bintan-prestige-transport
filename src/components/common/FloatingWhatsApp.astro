@@ -1,17 +1,167 @@
 ---
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Send, X } from "lucide-react";
 import { site } from "../../data/site";
 
 const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
+const quickMessages = [
+  {
+    label: "Airport transfer",
+    message: "Hello, I need help checking airport transfer availability in Bintan.",
+  },
+  {
+    label: "Island tour",
+    message: "Hello, I want to plan a private island tour in Bintan.",
+  },
+  {
+    label: "Price estimate",
+    message: "Hello, please help me estimate the price for a private taxi or island tour.",
+  },
+];
 ---
 
-<a
-  class="luxury-btn-primary fixed bottom-4 right-4 z-40 min-h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70 focus:ring-offset-2 focus:ring-offset-[#0b0c10]"
-  href={href}
-  target="_blank"
-  rel="noreferrer"
-  aria-label="Chat on WhatsApp"
+<div
+  class="whatsapp-assistant fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] right-4 z-40 sm:bottom-[5.75rem]"
+  data-whatsapp-assistant
+  data-whatsapp-number={site.whatsappNumber}
+  data-default-message={site.whatsappMessage}
 >
-  <MessageCircle className="h-4 w-4" aria-hidden="true" />
-  <span class="hidden sm:inline">WhatsApp</span>
-</a>
+  <section
+    class="whatsapp-assistant-panel editorial-card mb-3 w-[min(calc(100vw-2rem),360px)] p-4"
+    data-whatsapp-panel
+    hidden
+    aria-label="WhatsApp concierge chat"
+  >
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <p class="editorial-kicker text-[0.68rem]">Concierge Chat</p>
+        <h2 class="mt-1 font-[var(--font-editorial-heading)] text-2xl font-medium leading-tight text-[#f8fafc]">How can we help?</h2>
+      </div>
+      <button
+        class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-slate-200"
+        type="button"
+        data-whatsapp-close
+        aria-label="Close WhatsApp chat"
+      >
+        <X className="h-4 w-4" aria-hidden="true" />
+      </button>
+    </div>
+
+    <div class="mt-4 rounded-[8px] border border-[#bfa46f]/18 bg-black/24 p-3 text-sm leading-6 text-slate-300">
+      Hi, I can prepare your request before opening WhatsApp.
+    </div>
+
+    <div class="mt-3 flex flex-wrap gap-2">
+      {quickMessages.map((item) => (
+        <button
+          class="rounded-full border border-[#bfa46f]/28 bg-[#bfa46f]/10 px-3 py-2 text-xs font-bold text-[#f8e7a1] transition hover:border-[#f8e7a1]/60"
+          type="button"
+          data-whatsapp-quick={item.message}
+        >
+          {item.label}
+        </button>
+      ))}
+    </div>
+
+    <label class="mt-4 block">
+      <span class="sr-only">WhatsApp message</span>
+      <textarea
+        class="whatsapp-assistant-textarea min-h-24 w-full rounded-[8px] border border-[#bfa46f]/22 bg-black/28 p-3 text-sm leading-6 text-slate-100 outline-none transition focus:border-[#f8e7a1]/64"
+        data-whatsapp-message
+      >{site.whatsappMessage}</textarea>
+    </label>
+
+    <a
+      class="editorial-button-primary mt-3 w-full px-4"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      data-whatsapp-link
+    >
+      <Send className="h-4 w-4" aria-hidden="true" />
+      <span>Continue to WhatsApp</span>
+    </a>
+  </section>
+
+  <button
+    class="whatsapp-assistant-toggle editorial-button-primary min-h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70 focus:ring-offset-2 focus:ring-offset-[#0b0c10]"
+    type="button"
+    data-whatsapp-toggle
+    aria-expanded="false"
+    aria-label="Open WhatsApp chat"
+  >
+    <MessageCircle className="h-4 w-4" aria-hidden="true" />
+    <span class="hidden sm:inline">WhatsApp</span>
+  </button>
+</div>
+
+<script>
+  const assistant = document.querySelector<HTMLElement>("[data-whatsapp-assistant]");
+  const panel = assistant?.querySelector<HTMLElement>("[data-whatsapp-panel]");
+  const toggle = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-toggle]");
+  const close = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-close]");
+  const textarea = assistant?.querySelector<HTMLTextAreaElement>("[data-whatsapp-message]");
+  const link = assistant?.querySelector<HTMLAnchorElement>("[data-whatsapp-link]");
+  const quickButtons = assistant?.querySelectorAll<HTMLButtonElement>("[data-whatsapp-quick]");
+  let panelTransitionTimer: number | undefined;
+
+  const updateWhatsAppLink = () => {
+    if (!assistant || !textarea || !link) return;
+
+    const phone = assistant.dataset.whatsappNumber ?? "";
+    const message = textarea.value.trim() || assistant.dataset.defaultMessage || "Hello, I need travel assistance.";
+    link.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  };
+
+  const setPanelOpen = (isOpen: boolean) => {
+    if (!panel || !toggle) return;
+
+    window.clearTimeout(panelTransitionTimer);
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    assistant?.setAttribute("data-open", String(isOpen));
+
+    if (isOpen) {
+      panel.hidden = false;
+      updateWhatsAppLink();
+      window.requestAnimationFrame(() => {
+        panel.dataset.state = "open";
+      });
+      panelTransitionTimer = window.setTimeout(() => {
+        textarea?.focus();
+      }, 180);
+      return;
+    }
+
+    panel.dataset.state = "closed";
+    panelTransitionTimer = window.setTimeout(() => {
+      panel.hidden = true;
+    }, 240);
+  };
+
+  toggle?.addEventListener("click", () => {
+    setPanelOpen(Boolean(panel?.hidden));
+  });
+
+  close?.addEventListener("click", () => {
+    setPanelOpen(false);
+  });
+
+  textarea?.addEventListener("input", updateWhatsAppLink);
+
+  quickButtons?.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!textarea) return;
+
+      textarea.value = button.dataset.whatsappQuick ?? "";
+      updateWhatsAppLink();
+      textarea.focus();
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setPanelOpen(false);
+    }
+  });
+
+  updateWhatsAppLink();
+</script>

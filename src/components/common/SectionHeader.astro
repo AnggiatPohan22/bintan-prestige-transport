@@ -5,16 +5,27 @@ interface Props {
   description?: string;
   align?: "left" | "center";
   tone?: "dark" | "light";
+  variant?: "default" | "editorial";
 }
 
-const { eyebrow, title, description, align = "left", tone = "dark" } = Astro.props;
+const { eyebrow, title, description, align = "left", tone = "dark", variant = "default" } = Astro.props;
 const alignClass = align === "center" ? "mx-auto text-center" : "";
 const titleClass = tone === "light" ? "text-[#0b0c10]" : "text-[#e2e8f0]";
 const bodyClass = tone === "light" ? "text-slate-600" : "text-slate-400";
 ---
 
-<div class={`max-w-2xl ${alignClass}`}>
-  {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#e2e8f0]/70">{eyebrow}</p>}
-  <h2 class={`mt-2 text-2xl font-semibold leading-tight sm:text-3xl lg:text-4xl ${titleClass}`}>{title}</h2>
-  {description && <p class={`mt-3 text-base leading-7 ${bodyClass}`}>{description}</p>}
-</div>
+{
+  variant === "editorial" ? (
+    <div class={`max-w-3xl ${alignClass}`}>
+      {eyebrow && <p class="editorial-kicker">{eyebrow}</p>}
+      <h2 class={`editorial-title mt-2 ${titleClass}`}>{title}</h2>
+      {description && <p class={`editorial-lede mt-4 ${bodyClass}`}>{description}</p>}
+    </div>
+  ) : (
+    <div class={`max-w-2xl ${alignClass}`}>
+      {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.18em] text-[#e2e8f0]/70">{eyebrow}</p>}
+      <h2 class={`mt-2 text-2xl font-semibold leading-tight sm:text-3xl lg:text-4xl ${titleClass}`}>{title}</h2>
+      {description && <p class={`mt-3 text-base leading-7 ${bodyClass}`}>{description}</p>}
+    </div>
+  )
+}
