@@ -8,11 +8,6 @@ const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(
   "Hello, I want to check availability for Pick Up & Drop transfer service.",
 )}`;
 
-const points = [
-  { label: "Airport, ferry, hotel", icon: MapPin },
-  { label: "Private driver timing", icon: Clock },
-  { label: "Luggage-aware vehicle", icon: Luggage },
-];
 ---
 
 <section class="transfer-hero site-hero-section relative isolate flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-[#0b0c10] text-white">
@@ -38,19 +33,5 @@ const points = [
       </div>
     </div>
 
-    <div class="transfer-hero__summary">
-      {points.map((point) => {
-        const Icon = point.icon;
-        return (
-          <div class="transfer-hero__summary-item">
-            <Icon className="h-5 w-5 text-[#f8e7a1]" aria-hidden="true" />
-            <span>{point.label}</span>
-          </div>
-        );
-      })}
-      <p class="transfer-hero__note">
-        Share pickup point, drop point, passenger count, luggage count, and target time through WhatsApp.
-      </p>
-    </div>
   </div>
 </section>

@@ -19,10 +19,10 @@ const staticSeoPages = [
     priority: 0.9,
   },
   {
-    path: "/packages/island-tour",
-    title: "Island Tour",
+    path: "/packages/activities-packages",
+    title: "Activities Packages",
     description:
-      "Premium private island tour packages for beaches, culture, scenic routes, night movement, and custom concierge itineraries.",
+      "Private Bintan activity packages for shooting, mangrove, fireflies, snorkeling, fishing, golf, shopping, spa, beach, and custom tours.",
     priority: 0.9,
   },
   {
@@ -49,7 +49,7 @@ const staticSeoPages = [
 ];
 
 const tourSeoPages = tours.map((tour) => ({
-  path: `/packages/island-tour/${tour.slug}`,
+  path: `/packages/activities-packages/${tour.slug}`,
   title: tour.title,
   description: tour.description,
   priority: 0.8,

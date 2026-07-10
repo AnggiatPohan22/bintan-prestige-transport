@@ -14,8 +14,10 @@ Folder induk semua route publik Astro. Setiap file di sini menjadi halaman atau 
 - `src/pages/blog/[slug].astro`: Blog detail dinamis dari `src/data/blog.ts`.
 - `src/pages/packages/pick-up-drop.astro`: Halaman overview taxi transfer.
 - `src/pages/packages/pick-up-drop/[slug].astro`: Detail paket taxi transfer dinamis dari `src/data/routes.ts`.
-- `src/pages/packages/island-tour.astro`: Halaman overview island tour.
-- `src/pages/packages/island-tour/[slug].astro`: Detail paket island tour dinamis dari `src/data/tours.ts`.
+- `src/pages/packages/activities-packages.astro`: Halaman canonical overview Activities Packages.
+- `src/pages/packages/activities-packages/[slug].astro`: Detail paket Activities Packages dinamis dari `src/data/tours.ts`.
+- `src/pages/packages/island-tour.astro`: Fallback route lama untuk overview Activities Packages.
+- `src/pages/packages/island-tour/[slug].astro`: Fallback route lama untuk detail Activities Packages.
 - `src/pages/robots.txt.ts`: Endpoint robots.txt.
 - `src/pages/sitemap.xml.ts`: Endpoint sitemap.
 
@@ -313,10 +315,11 @@ Catatan penting:
 - Jangan ubah nama field form di `PackageBookingFields.astro` jika tidak ingin mengubah alur WhatsApp.
 - Logic pembentukan WhatsApp link ada di script `PackageBookingForm.astro`.
 
-### Island Tour Overview
+### Activities Packages Overview
 
 File induk:
 
+- `src/pages/packages/activities-packages.astro`
 - `src/pages/packages/island-tour.astro`
 
 Section dan sumber:
@@ -324,6 +327,7 @@ Section dan sumber:
 - Hero: `src/components/packages/TourHero.astro`
 - Breadcrumb: `src/components/common/Breadcrumb.astro`
 - Tour packages: `src/components/packages/TourPackageGrid.astro`
+- Activity card item: `src/components/packages/ActivityPackageCard.astro`
 - Experience: `src/components/packages/TourExperience.astro`
 - Itinerary: `src/components/packages/TourItinerary.astro`
 - FAQ: `src/components/packages/TourFAQ.astro`
@@ -331,7 +335,7 @@ Section dan sumber:
 
 Data:
 
-- Tour cards: `src/data/tours.ts`
+- Activity package cards: `src/data/tours.ts`
 - FAQ: `src/data/faqs.ts`
 - Hero images: `src/data/media.ts` lewat `heroSlides.islandTour`
 - Schema: `src/data/schema.ts`
@@ -340,19 +344,32 @@ CSS utama:
 
 - `.package-card-grid`
 - `.package-offer-card`
+- `.activities-package-carousel`
+- `.activities-package-track`
+- `.activities-package-page`
+- `.activities-package-controls`
 - `.faq-accordion`
 - shared `.editorial-section-*`, `.editorial-card`
 
-### Island Tour Detail
+Responsive behavior:
+
+- Mobile: one package card per swipe.
+- Tablet: swipeable page carousel, 2 columns x 2 rows per page, navigation via dots without page refresh.
+- Desktop: swipeable page carousel, 4 columns x 2 rows per page, navigation via dots plus left/right buttons without page refresh.
+- Last pagination pages keep the same card width and natural card height; do not stretch 1-2 remaining cards to fill empty grid space.
+
+### Activities Packages Detail
 
 File induk:
 
+- `src/pages/packages/activities-packages/[slug].astro`
 - `src/pages/packages/island-tour/[slug].astro`
 
 Routing:
 
 - `getStaticPaths()` membaca `tours` dari `src/data/tours.ts`.
-- Setiap object tour dengan `slug` akan menjadi `/packages/island-tour/{slug}`.
+- Setiap object activity dengan `slug` akan menjadi `/packages/activities-packages/{slug}`.
+- Route lama `/packages/island-tour/{slug}` tetap tersedia sebagai fallback compatibility.
 
 Section dan sumber:
 
@@ -365,7 +382,7 @@ Section dan sumber:
 
 Data:
 
-- Semua detail package tour: `src/data/tours.ts`
+- Semua detail package Activities: `src/data/tours.ts`
 - WhatsApp/site config: `src/data/site.ts`
 - SEO URL helper: `src/data/seo.ts`
 - Schema: `src/data/schema.ts`
@@ -433,7 +450,7 @@ Jika ingin mengubah:
 
 - Gambar hero Home: edit `heroSlides.home`, atau set `PUBLIC_HERO_IMAGES`.
 - Gambar hero Pick Up & Drop: edit `heroSlides.transfer`.
-- Gambar hero Island Tour: edit `heroSlides.islandTour`.
+- Gambar hero Activities Packages: edit `heroSlides.islandTour`.
 - Gambar hero About: edit `heroSlides.about`.
 - Gambar hero Contact: edit `heroSlides.contact`.
 
@@ -447,7 +464,7 @@ Catatan gambar:
 Fungsi:
 
 - Data ringkas untuk Home `Signature services`.
-- Saat ini berisi dua service utama: Taxi Transfer dan Island Tour.
+- Saat ini berisi dua service utama: Taxi Transfer dan Activities Packages.
 - File ini import `routes` dan `tours`, lalu memasukkannya ke field `items`.
 
 Dipakai oleh:
@@ -503,22 +520,26 @@ Jika ingin mengganti gambar taxi card:
 
 Fungsi:
 
-- Source of truth package island tour.
-- Dipakai untuk halaman Island Tour overview, detail dynamic tour, dan Home Featured Routes.
+- Source of truth package Activities Packages.
+- Dipakai untuk halaman Activities Packages overview, detail dynamic activities, fallback island-tour routes, dan Home Featured Routes.
 
 Dipakai oleh:
 
+- `src/pages/packages/activities-packages.astro`
+- `src/pages/packages/activities-packages/[slug].astro`
 - `src/pages/packages/island-tour.astro`
 - `src/pages/packages/island-tour/[slug].astro`
 - `src/components/packages/TourPackageGrid.astro`
+- `src/components/packages/ActivityPackageCard.astro`
 - `src/components/home/RouteHighlights.astro`
 - `src/data/packages.ts`
 
 Field penting:
 
 - Sama pola dengan `routes.ts`: `title`, `slug`, `description`, `overview`, `image`, `alt`, `priceFrom`, `duration`, `capacity`, `highlights`, `itinerary`, `includes`, `bookingNotes`, `whatsappMessage`.
+- Field tambahan untuk detail Activities: `heroImages`, `location`, `excludes`, `whyChoose`, dan `terms`.
 
-Jika ingin mengganti gambar tour card:
+Jika ingin mengganti gambar Activities card:
 
 - Ubah `image`.
 - Pastikan file gambar ada di `public/images/tours/...`.
@@ -756,7 +777,7 @@ Selector utama:
 
 Fungsi:
 
-- Format kartu product service untuk taxi transfer, island tour, Home Signature Services, Home Featured Routes, Pick Up & Drop cards, dan Island Tour cards.
+- Format kartu product service untuk taxi transfer, Activities Packages, Home Signature Services, Home Featured Routes, Pick Up & Drop cards, dan Activities cards.
 
 Komponen terkait:
 
@@ -764,6 +785,7 @@ Komponen terkait:
 - `src/components/home/RouteHighlights.astro`
 - `src/components/packages/RouteList.astro`
 - `src/components/packages/TourPackageGrid.astro`
+- `src/components/packages/ActivityPackageCard.astro`
 
 Catatan:
 
@@ -771,7 +793,27 @@ Catatan:
 - Jika hanya Home Signature Services, edit `.package-offer-card--home-service`.
 - Jika hanya Home Featured Routes, edit `.package-offer-card--home-route`.
 - Jika hanya taxi image crop, edit `.package-offer-card--taxi` atau `.package-offer-card--taxi-transfer`.
-- Jika hanya island tour image crop, edit `.package-offer-card--tour` atau `.package-offer-card--island-tour`.
+- Jika hanya Activities image crop, edit `.package-offer-card--activities-package`, `.package-offer-card--tour`, atau `.package-offer-card--island-tour`.
+
+### Activities Package Pagination
+
+Selector utama:
+
+- `.activities-package-carousel`
+- `.activities-package-carousel--mobile`
+- `.activities-package-carousel--tablet`
+- `.activities-package-carousel--desktop`
+- `.activities-package-track`
+- `.activities-package-page`
+- `.activities-package-controls`
+
+Fungsi:
+
+- `TourPackageGrid.astro` membuat tiga carousel responsif dari `src/data/tours.ts`.
+- Mobile menampilkan satu card per swipe.
+- Tablet menampilkan halaman 2x2, tetap bisa swipe, dan berpindah page via dots tanpa refresh.
+- Desktop menampilkan halaman 4x2, tetap bisa swipe, dan berpindah page via dots serta tombol kiri/kanan tanpa refresh.
+- Halaman terakhir dengan 1 atau 2 card harus tetap memakai ukuran card normal dan tinggi natural, bukan dilebarkan atau dipanjangkan untuk mengisi area kosong.
 
 ### Home Card Swipe dan Dot Pagination
 
@@ -828,6 +870,7 @@ Selector utama:
 - `.package-offer-card--home-route .route-image-frame`
 - `.package-offer-card--home-route .package-offer-card__image`
 - `.package-offer-card--home-route.package-offer-card--taxi-transfer .package-offer-card__image`
+- `.package-offer-card--home-route.package-offer-card--activities-package .package-offer-card__image`
 - `.package-offer-card--home-route.package-offer-card--island-tour .package-offer-card__image`
 
 Komponen terkait:
@@ -1055,7 +1098,7 @@ Gunakan breakpoint ini sebelum menambah breakpoint baru agar pattern CSS tetap k
 ### Ganti gambar Featured Routes Home
 
 1. Untuk taxi route: buka `src/data/routes.ts`.
-2. Untuk island tour route: buka `src/data/tours.ts`.
+2. Untuk activities route: buka `src/data/tours.ts`.
 3. Edit `image`.
 4. Jika crop perlu disesuaikan, cek CSS `.package-offer-card--home-route`.
 
@@ -1068,7 +1111,7 @@ Gunakan breakpoint ini sebelum menambah breakpoint baru agar pattern CSS tetap k
 ### Ganti gambar detail package
 
 1. Untuk taxi transfer: buka `src/data/routes.ts`.
-2. Untuk island tour: buka `src/data/tours.ts`.
+2. Untuk Activities Packages: buka `src/data/tours.ts`.
 3. Edit `heroImages` untuk hero detail.
 4. Edit `image` untuk card utama.
 
@@ -1098,7 +1141,7 @@ Gunakan breakpoint ini sebelum menambah breakpoint baru agar pattern CSS tetap k
 ### WhatsApp per package
 
 - Taxi transfer: `src/data/routes.ts` field `whatsappMessage`.
-- Island tour: `src/data/tours.ts` field `whatsappMessage`.
+- Activities Packages: `src/data/tours.ts` field `whatsappMessage`.
 - Home Signature Services: `src/data/packages.ts` field `whatsappMessage`.
 
 ### Booking Information form
@@ -1117,7 +1160,7 @@ Gunakan daftar ini saat ragu harus edit di mana:
 - Home page order: `src/pages/index.astro`
 - Home Signature Services data: `src/data/packages.ts`
 - Transfer package data: `src/data/routes.ts`
-- Island tour package data: `src/data/tours.ts`
+- Activities package data: `src/data/tours.ts`
 - Fleet Home data: `src/data/carTypes.ts`
 - Hero slide images: `src/data/media.ts`
 - Gallery Home data: `src/data/gallery.ts`

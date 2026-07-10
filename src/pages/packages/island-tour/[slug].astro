@@ -18,8 +18,8 @@ export const getStaticPaths = () =>
 const { tour } = Astro.props;
 const breadcrumbs = [
   { label: "Home", href: "/" },
-  { label: "Island Tour", href: "/packages/island-tour" },
-  { label: tour.title, href: `/packages/island-tour/${tour.slug}` },
+  { label: "Activities Packages", href: "/packages/activities-packages" },
+  { label: tour.title, href: `/packages/activities-packages/${tour.slug}` },
 ];
 const schema = [
   organizationSchema,
@@ -29,7 +29,7 @@ const schema = [
     name: tour.title,
     description: tour.overview,
     image: absoluteUrl(tour.image),
-    url: absoluteUrl(`/packages/island-tour/${tour.slug}`),
+    url: absoluteUrl(`/packages/activities-packages/${tour.slug}`),
     provider: { "@id": organizationSchema["@id"] },
     offers: {
       "@type": "Offer",
@@ -41,11 +41,11 @@ const schema = [
 ];
 ---
 
-<BaseLayout title={tour.title} description={tour.description} canonical={`/packages/island-tour/${tour.slug}`} ogImage={tour.image} schema={schema}>
-  <PackageDetailHero item={tour} parentLabel="Island Tour Package" />
+<BaseLayout title={tour.title} description={tour.description} canonical={`/packages/activities-packages/${tour.slug}`} ogImage={tour.image} schema={schema}>
+  <PackageDetailHero item={tour} parentLabel="Activities Package" />
   <Breadcrumb items={breadcrumbs} />
   <PackageDetailContent item={tour} />
-  <PackageBookingForm item={tour} typeLabel="Island Tour Package" />
+  <PackageBookingForm item={tour} typeLabel="Activities Package" />
   <WhatsAppCTA
     title={`Ready to plan ${tour.title}?`}
     description="Send your preferred date, pickup point, guest count, and custom route request through WhatsApp."

@@ -6,8 +6,11 @@ interface DetailItem {
   highlights?: string[];
   itinerary?: string[];
   includes?: string[];
+  excludes?: string[];
   bookingNotes?: string[];
   goodFor?: string[];
+  whyChoose?: string[];
+  terms?: string[];
   packageDetails?: {
     title: string;
     value?: string;
@@ -94,6 +97,16 @@ const showMobileSwipeControls = enableMobileSwipeControls && detailCards.length 
           </div>
         ))}
       </div>
+      {item.excludes?.length ? (
+        <div class="mt-7">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#8a6a22]">Package Excludes</p>
+          <ul class="mt-4 grid gap-3">
+            {item.excludes.map((exclude) => (
+              <li class="rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4 text-sm font-semibold leading-6 text-[#4b5563]">{exclude}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </div>
 
     <div class="editorial-card editorial-card-warm p-5 sm:p-7">
@@ -107,3 +120,33 @@ const showMobileSwipeControls = enableMobileSwipeControls && detailCards.length 
     </div>
   </div>
 </section>
+
+{(item.whyChoose?.length || item.terms?.length) && (
+  <section class="editorial-section-warm border-t border-[#d8c6a3]/40">
+    <div class="editorial-container grid gap-6 lg:grid-cols-2">
+      {item.whyChoose?.length && (
+        <div class="editorial-card editorial-card-warm p-5 sm:p-7">
+          <p class="editorial-kicker">Why Choose Bintan Prestige Transport?</p>
+          <h2 class="editorial-title mt-3">Private service with reliable support.</h2>
+          <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+            {item.whyChoose.map((reason) => (
+              <li class="rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4 text-sm font-semibold leading-6 text-[#111827]">{reason}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {item.terms?.length && (
+        <div class="editorial-card editorial-card-warm p-5 sm:p-7">
+          <p class="editorial-kicker">Terms & Conditions</p>
+          <h2 class="editorial-title mt-3">Please confirm before booking.</h2>
+          <ul class="mt-6 grid gap-3">
+            {item.terms.map((term) => (
+              <li class="rounded-[8px] border border-[#e5e0d6] bg-white/70 p-4 text-sm leading-6 text-[#4b5563]">{term}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+)}

@@ -81,15 +81,15 @@ export const serviceSchemas = [
   },
   {
     "@type": "Service",
-    "@id": `${absoluteUrl("/packages/island-tour")}#service`,
-    name: "Premium Private Island Tour",
-    serviceType: "Private island tour",
+    "@id": `${absoluteUrl("/packages/activities-packages")}#service`,
+    name: "Premium Private Activities Packages",
+    serviceType: "Private Bintan activities",
     provider: { "@id": organizationSchema["@id"] },
     areaServed: site.address,
-    url: absoluteUrl("/packages/island-tour"),
+    url: absoluteUrl("/packages/activities-packages"),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Island tour packages",
+      name: "Activities packages",
       itemListElement: tours.map((tour) => ({
         "@type": "Offer",
         name: tour.title,

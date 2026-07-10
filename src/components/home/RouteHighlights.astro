@@ -7,7 +7,7 @@ import { site } from "../../data/site";
 const items = [...routes.slice(0, 2), ...tours.slice(0, 2)];
 
 const getItemHref = (item: (typeof items)[number]) =>
-  item.category === "taxi-transfer" ? `/packages/pick-up-drop/${item.slug}` : `/packages/island-tour/${item.slug}`;
+  item.category === "taxi-transfer" ? `/packages/pick-up-drop/${item.slug}` : `/packages/activities-packages/${item.slug}`;
 
 const getPriceDisplay = (value?: string) => {
   if (!value) {

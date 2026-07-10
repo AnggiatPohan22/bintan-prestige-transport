@@ -1,57 +1,43 @@
 ---
-import { site } from "../../data/site";
+import SwipeControls from "../common/SwipeControls.astro";
+import ActivityPackageCard from "./ActivityPackageCard.astro";
 import { tours } from "../../data/tours";
+
+const chunkItems = <T,>(items: T[], pageSize: number) =>
+  Array.from({ length: Math.ceil(items.length / pageSize) }, (_, index) =>
+    items.slice(index * pageSize, (index + 1) * pageSize),
+  );
+
+const pageSets = [
+  {
+    key: "mobile",
+    label: "Activities packages mobile",
+    pages: tours.map((tour) => [tour]),
+  },
+  {
+    key: "tablet",
+    label: "Activities packages tablet",
+    pages: chunkItems(tours, 4),
+  },
+  {
+    key: "desktop",
+    label: "Activities packages desktop",
+    pages: chunkItems(tours, 8),
+  },
+];
 ---
 
-<div class="package-card-grid">
-  {tours.map((tour) => (
-    <article class={`package-offer-card package-offer-card--${tour.category} group`}>
-      <div class="package-offer-card__media">
-        <img
-          class="package-offer-card__image"
-          src={tour.image}
-          alt={tour.alt}
-          loading="lazy"
-        />
-        <div class="package-offer-card__shade" aria-hidden="true"></div>
-        <div class="package-offer-card__badges">
-          <span class="package-offer-card__category">{tour.category}</span>
-          <span class="package-offer-card__price">
-            <strong>{tour.priceFrom}</strong>
-          </span>
-        </div>
-      </div>
-      <div class="package-offer-card__body">
-        <div class="package-offer-card__copy">
-          <h3 class="package-offer-card__title">{tour.title}</h3>
-          <p class="package-offer-card__description">{tour.description}</p>
-        </div>
-        <div class="package-offer-card__meta" aria-label="Package basics">
-          <span>{tour.duration}</span>
-          <span>{tour.capacity}</span>
-        </div>
-        <ul class="package-offer-card__highlights" aria-label="Package highlights">
-          {tour.highlights.slice(0, 3).map((highlight) => (
-            <li>{highlight}</li>
+{pageSets.map((set) => (
+  <div class={`activities-package-carousel activities-package-carousel--${set.key}`} data-swipe-carousel>
+    <div class="activities-package-track" data-swipe-track>
+      {set.pages.map((page, pageIndex) => (
+        <div class="activities-package-page package-card-grid" data-swipe-item aria-label={`Activities page ${pageIndex + 1}`}>
+          {page.map((tour) => (
+            <ActivityPackageCard tour={tour} />
           ))}
-        </ul>
-        <div class="package-offer-card__actions">
-          <a
-            class="package-offer-card__link package-offer-card__link--secondary"
-            href={`/packages/island-tour/${tour.slug}`}
-          >
-            Read more
-          </a>
-          <a
-            class="package-offer-card__link package-offer-card__link--primary"
-            href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(tour.whatsappMessage)}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Ask availability
-          </a>
         </div>
-      </div>
-    </article>
-  ))}
-</div>
+      ))}
+    </div>
+    <SwipeControls count={set.pages.length} label={set.label} breakpoint="all" className="activities-package-controls" />
+  </div>
+))}

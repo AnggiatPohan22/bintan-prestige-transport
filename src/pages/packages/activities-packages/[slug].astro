@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../../components/common/Breadcrumb.astro";
+import PackageBookingForm from "../../../components/packages/PackageBookingForm.astro";
+import PackageDetailContent from "../../../components/packages/PackageDetailContent.astro";
+import PackageDetailHero from "../../../components/packages/PackageDetailHero.astro";
+import WhatsAppCTA from "../../../components/common/WhatsAppCTA.astro";
+import { breadcrumbSchema, organizationSchema, localBusinessSchema } from "../../../data/schema";
+import { absoluteUrl } from "../../../data/seo";
+import { tours } from "../../../data/tours";
+
+export const getStaticPaths = () =>
+  tours.map((tour) => ({
+    params: { slug: tour.slug },
+    props: { tour },
+  }));
+
+const { tour } = Astro.props;
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Activities Packages", href: "/packages/activities-packages" },
+  { label: tour.title, href: `/packages/activities-packages/${tour.slug}` },
+];
+const schema = [
+  organizationSchema,
+  localBusinessSchema,
+  {
+    "@type": "TouristTrip",
+    name: tour.title,
+    description: tour.overview,
+    image: absoluteUrl(tour.image),
+    url: absoluteUrl(`/packages/activities-packages/${tour.slug}`),
+    provider: { "@id": organizationSchema["@id"] },
+    offers: {
+      "@type": "Offer",
+      priceSpecification: tour.priceFrom,
+      availability: "https://schema.org/InStock",
+    },
+  },
+  breadcrumbSchema(breadcrumbs),
+];
+---
+
+<BaseLayout title={tour.title} description={tour.description} canonical={`/packages/activities-packages/${tour.slug}`} ogImage={tour.image} schema={schema}>
+  <PackageDetailHero item={tour} parentLabel="Activities Package" />
+  <Breadcrumb items={breadcrumbs} />
+  <PackageDetailContent item={tour} />
+  <PackageBookingForm item={tour} typeLabel="Activities Package" />
+  <WhatsAppCTA
+    title={`Ready to plan ${tour.title}?`}
+    description="Send your preferred date, pickup point, guest count, and custom activity request through WhatsApp."
+    message={tour.whatsappMessage}
+  />
+</BaseLayout>
