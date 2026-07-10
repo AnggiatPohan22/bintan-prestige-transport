@@ -1,0 +1,37 @@
+---
+const highlights = [
+  "Airport and ferry arrival coordination",
+  "Private route planning for resorts, beaches, and city stops",
+  "Activity support for tours, snorkeling, spa, golf, and custom requests",
+  "Straightforward WhatsApp confirmation before the trip starts",
+];
+---
+
+<section class="editorial-section-dark border-t border-[#bfa46f]/12">
+  <div class="editorial-container grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+    <div class="max-w-3xl">
+      <p class="editorial-kicker">Why travel with us</p>
+      <h2 class="editorial-title mt-3 text-[#f8fafc]">
+        A private Bintan trip feels better when transport is already understood.
+      </h2>
+      <p class="editorial-lede mt-5 text-slate-400">
+        Bintan Prestige helps guests avoid unclear pickup timing, route confusion, and last-minute transport stress. Share the plan once, then receive private driver support for the movement that matters most.
+      </p>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a class="luxury-btn-primary" href="/contact">Plan with us</a>
+        <a class="luxury-btn-secondary" href="/packages/pick-up-drop">See packages</a>
+      </div>
+    </div>
+
+    <div class="grid gap-3">
+      {highlights.map((item, index) => (
+        <article class="editorial-card grid grid-cols-[auto_1fr] gap-4 rounded-[8px] p-4">
+          <span class="flex h-9 w-9 items-center justify-center rounded-[8px] border border-[#bfa46f]/28 bg-[#bfa46f]/10 text-xs font-extrabold text-[#f8e7a1]">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <p class="pt-1 text-sm font-semibold leading-6 text-slate-300">{item}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

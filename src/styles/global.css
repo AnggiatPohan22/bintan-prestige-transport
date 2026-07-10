@@ -243,11 +243,32 @@ a:focus-visible {
     linear-gradient(90deg, rgba(11, 12, 16, 0.78) 0%, rgba(11, 12, 16, 0.48) 50%, rgba(11, 12, 16, 0.14) 100%);
 }
 
+.about-hero__shade {
+  background:
+    linear-gradient(180deg, rgba(11, 12, 16, 0.24) 0%, rgba(11, 12, 16, 0.46) 48%, rgba(11, 12, 16, 0.92) 100%),
+    linear-gradient(90deg, rgba(11, 12, 16, 0.78) 0%, rgba(11, 12, 16, 0.46) 50%, rgba(11, 12, 16, 0.16) 100%);
+}
+
+.contact-hero__shade {
+  background:
+    linear-gradient(180deg, rgba(11, 12, 16, 0.22) 0%, rgba(11, 12, 16, 0.48) 48%, rgba(11, 12, 16, 0.92) 100%),
+    radial-gradient(circle at 76% 18%, rgba(6, 78, 59, 0.24), transparent 28rem),
+    linear-gradient(90deg, rgba(11, 12, 16, 0.8) 0%, rgba(11, 12, 16, 0.44) 50%, rgba(11, 12, 16, 0.18) 100%);
+}
+
 .transfer-hero__inner {
   padding-top: max(var(--hero-navbar-space), 7rem);
 }
 
 .activities-hero__inner {
+  padding-top: max(var(--hero-navbar-space), 7rem);
+}
+
+.about-hero__inner {
+  padding-top: max(var(--hero-navbar-space), 7rem);
+}
+
+.contact-hero__inner {
   padding-top: max(var(--hero-navbar-space), 7rem);
 }
 
@@ -257,8 +278,22 @@ a:focus-visible {
   max-width: 58rem;
 }
 
+.about-hero__summary {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 58rem;
+}
+
+.contact-hero__summary {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 58rem;
+}
+
 .transfer-hero__summary-item,
-.transfer-hero__note {
+.transfer-hero__note,
+.about-hero__summary-item,
+.contact-hero__summary-item {
   border: 1px solid rgba(248, 231, 161, 0.16);
   border-radius: 8px;
   background: rgba(5, 16, 13, 0.58);
@@ -2609,6 +2644,252 @@ a:focus-visible {
     inset 0 1px 0 rgba(255, 255, 255, 0.96);
 }
 
+.contact-planner {
+  scroll-margin-top: 7rem;
+}
+
+.contact-planner--light {
+  border: 1px solid rgba(191, 164, 111, 0.28);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(214, 178, 94, 0.18), transparent 24rem),
+    radial-gradient(circle at 12% 86%, rgba(191, 164, 111, 0.16), transparent 28rem),
+    linear-gradient(180deg, #fbf8f1 0%, #f4ead8 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    0 22px 70px rgba(44, 34, 16, 0.12);
+}
+
+.contact-planner--flush {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.contact-planner__grid {
+  overflow: hidden;
+  gap: 1px;
+  border: 1px solid rgba(191, 164, 111, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.1), transparent 34%, rgba(248, 231, 161, 0.05)),
+    rgba(248, 231, 161, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    0 16px 48px rgba(0, 0, 0, 0.14);
+}
+
+.contact-planner__field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.05rem);
+  min-width: 0;
+  align-items: stretch;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.05), transparent 10rem),
+    linear-gradient(145deg, rgba(11, 31, 24, 0.82), rgba(4, 13, 10, 0.78));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  padding: clamp(1.05rem, 2vw, 1.25rem);
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.contact-planner__field:has(input[type="date"]),
+.contact-planner__field:has(input[type="time"]) {
+  cursor: pointer;
+}
+
+.contact-planner__field:hover,
+.contact-planner__field:focus-within {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.08), transparent 10rem),
+    linear-gradient(145deg, rgba(12, 38, 29, 0.9), rgba(5, 17, 13, 0.84));
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    inset 0 0 0 1px rgba(248, 231, 161, 0.12);
+}
+
+.contact-planner__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  border: 1px solid rgba(248, 231, 161, 0.22);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(248, 231, 161, 0.14), rgba(6, 78, 59, 0.28)),
+    rgba(191, 164, 111, 0.08);
+  color: rgba(248, 231, 161, 0.86);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.12),
+    0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+.contact-planner__body {
+  display: grid;
+  align-content: start;
+  gap: 0.58rem;
+  min-width: 0;
+}
+
+.contact-planner__label {
+  display: block;
+  color: rgba(248, 231, 161, 0.76);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.contact-planner__field input,
+.contact-planner__field select,
+.contact-planner__field textarea {
+  width: 100%;
+  min-height: 3.05rem;
+  border: 1px solid rgba(248, 231, 161, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+    linear-gradient(145deg, rgba(2, 9, 7, 0.76), rgba(5, 21, 16, 0.54));
+  color: rgba(248, 250, 252, 0.92);
+  color-scheme: dark;
+  font: inherit;
+  font-size: 0.93rem;
+  font-weight: 720;
+  letter-spacing: 0;
+  line-height: 1.35;
+  outline: 0;
+  padding: 0.86rem 0.9rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 -18px 34px rgba(0, 0, 0, 0.1);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.contact-planner__field textarea {
+  min-height: 8.25rem;
+  resize: vertical;
+}
+
+.contact-planner__field input::placeholder,
+.contact-planner__field textarea::placeholder {
+  color: rgba(226, 232, 240, 0.42);
+  font-weight: 700;
+}
+
+.contact-planner__field select option {
+  background: #07100d;
+  color: #f8fafc;
+}
+
+.contact-planner__field input:hover,
+.contact-planner__field select:hover,
+.contact-planner__field textarea:hover,
+.contact-planner__field input:focus-visible,
+.contact-planner__field select:focus-visible,
+.contact-planner__field textarea:focus-visible {
+  border-color: rgba(248, 231, 161, 0.5);
+  background:
+    radial-gradient(circle at 88% 0%, rgba(248, 231, 161, 0.08), transparent 8rem),
+    linear-gradient(145deg, rgba(3, 12, 9, 0.92), rgba(7, 26, 20, 0.76));
+  color: #f8fafc;
+  box-shadow:
+    0 0 0 3px rgba(248, 231, 161, 0.11),
+    0 0 30px rgba(214, 178, 94, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.contact-planner--light .contact-planner__grid {
+  border-color: rgba(191, 164, 111, 0.24);
+  background: rgba(191, 164, 111, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    0 16px 48px rgba(44, 34, 16, 0.08);
+}
+
+.contact-planner--light .contact-planner__field {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(214, 178, 94, 0.07), transparent 10rem),
+    rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+}
+
+.contact-planner--light .contact-planner__field:hover,
+.contact-planner--light .contact-planner__field:focus-within {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(214, 178, 94, 0.11), transparent 10rem),
+    rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    inset 0 0 0 1px rgba(191, 164, 111, 0.18);
+}
+
+.contact-planner--light .contact-planner__icon {
+  border-color: rgba(191, 164, 111, 0.28);
+  background:
+    linear-gradient(145deg, rgba(255, 244, 189, 0.72), rgba(214, 178, 94, 0.16)),
+    rgba(255, 255, 255, 0.58);
+  color: #8a6a22;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 10px 26px rgba(44, 34, 16, 0.08);
+}
+
+.contact-planner--light .contact-planner__label {
+  color: #8a6a22;
+}
+
+.contact-planner--light .contact-planner__field input,
+.contact-planner--light .contact-planner__field select,
+.contact-planner--light .contact-planner__field textarea {
+  border-color: rgba(191, 164, 111, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(250, 247, 241, 0.9));
+  color: #111827;
+  color-scheme: light;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -14px 28px rgba(191, 164, 111, 0.04);
+}
+
+.contact-planner--light .contact-planner__field input::placeholder,
+.contact-planner--light .contact-planner__field textarea::placeholder {
+  color: rgba(75, 85, 99, 0.58);
+}
+
+.contact-planner--light .contact-planner__field select option {
+  background: #fffaf0;
+  color: #111827;
+}
+
+.contact-planner--light .contact-planner__field input:hover,
+.contact-planner--light .contact-planner__field select:hover,
+.contact-planner--light .contact-planner__field textarea:hover,
+.contact-planner--light .contact-planner__field input:focus-visible,
+.contact-planner--light .contact-planner__field select:focus-visible,
+.contact-planner--light .contact-planner__field textarea:focus-visible {
+  border-color: rgba(138, 106, 34, 0.38);
+  background: #ffffff;
+  color: #111827;
+  box-shadow:
+    0 0 0 3px rgba(214, 178, 94, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.contact-planner__cta {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 20px 56px rgba(214, 178, 94, 0.26);
+}
+
 /* Mobile compact untuk Booking Information agar field tidak terasa terlalu panjang. */
 @media (max-width: 639px) {
   .package-booking-section .editorial-container {
@@ -2623,7 +2904,16 @@ a:focus-visible {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .contact-planner__field {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .package-field-icon {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .contact-planner__icon {
     width: 2.35rem;
     height: 2.35rem;
   }
@@ -3909,6 +4199,16 @@ a:focus-visible {
     max-width: none;
   }
 
+  .about-hero__summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: none;
+  }
+
+  .contact-hero__summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: none;
+  }
+
   .transfer-hero__note {
     grid-column: 1 / -1;
   }
@@ -3954,6 +4254,14 @@ a:focus-visible {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .about-hero__summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .contact-hero__summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .transfer-hero__note {
     grid-column: auto;
   }
@@ -3981,6 +4289,14 @@ a:focus-visible {
   }
 
   .activities-hero__inner {
+    justify-content: flex-end;
+  }
+
+  .about-hero__inner {
+    justify-content: flex-end;
+  }
+
+  .contact-hero__inner {
     justify-content: flex-end;
   }
 
