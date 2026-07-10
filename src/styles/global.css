@@ -231,6 +231,51 @@ a:focus-visible {
     linear-gradient(90deg, rgba(11, 12, 16, 0.48), rgba(11, 12, 16, 0.12), rgba(11, 12, 16, 0.46));
 }
 
+.transfer-hero__shade {
+  background:
+    linear-gradient(180deg, rgba(11, 12, 16, 0.22) 0%, rgba(11, 12, 16, 0.42) 45%, rgba(11, 12, 16, 0.92) 100%),
+    linear-gradient(90deg, rgba(11, 12, 16, 0.76) 0%, rgba(11, 12, 16, 0.44) 48%, rgba(11, 12, 16, 0.16) 100%);
+}
+
+.transfer-hero__inner {
+  padding-top: max(var(--hero-navbar-space), 7rem);
+}
+
+.transfer-hero__summary {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 58rem;
+}
+
+.transfer-hero__summary-item,
+.transfer-hero__note {
+  border: 1px solid rgba(248, 231, 161, 0.16);
+  border-radius: 8px;
+  background: rgba(5, 16, 13, 0.58);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 54px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(14px);
+}
+
+.transfer-hero__summary-item {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.transfer-hero__note {
+  color: #d1fae5;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  padding: 1rem;
+}
+
 .editorial-kicker {
   color: var(--editorial-gold-bright);
   font-size: 0.75rem;
@@ -3573,6 +3618,15 @@ a:focus-visible {
   .site-page-hero-inner {
     min-height: clamp(35rem, 68svh, 42rem);
   }
+
+  .transfer-hero__summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: none;
+  }
+
+  .transfer-hero__note {
+    grid-column: 1 / -1;
+  }
 }
 
 /* Desktop hero spacing. */
@@ -3588,6 +3642,14 @@ a:focus-visible {
 
   .site-page-hero-inner {
     min-height: clamp(38rem, 72svh, 46rem);
+  }
+
+  .transfer-hero__summary {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .transfer-hero__note {
+    grid-column: auto;
   }
 }
 
@@ -3606,6 +3668,10 @@ a:focus-visible {
 
   .site-home-hero-inner .hero-copy {
     padding-top: clamp(0.5rem, 4vw, 1.25rem);
+  }
+
+  .transfer-hero__inner {
+    gap: 1.5rem;
   }
 
   .whatsapp-assistant {

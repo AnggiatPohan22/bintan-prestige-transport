@@ -15,11 +15,11 @@ const points = [
 ];
 ---
 
-<section class="site-hero-section relative overflow-hidden border-b border-white/10 bg-[#0b0c10]">
-  <HeroBackdrop images={heroSlides.transfer} className="z-0" />
-  <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,12,16,0.58),#0b0c10_88%)]"></div>
-  <div class="site-hero-inner site-page-hero-inner container-page relative grid min-h-[620px] gap-8 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-16">
-    <div class="hero-copy">
+<section class="transfer-hero site-hero-section relative isolate flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-[#0b0c10] text-white">
+  <HeroBackdrop images={heroSlides.transfer} className="-z-20" />
+  <div class="transfer-hero__shade absolute inset-0 -z-10"></div>
+  <div class="site-hero-inner transfer-hero__inner container-page relative flex min-h-[100svh] w-full flex-col justify-end gap-8 py-12 lg:py-16">
+    <div class="hero-copy max-w-4xl">
       <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">Premium transfer service</p>
       <h1 class="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-6xl">
         Pick Up & Drop with private driver comfort.
@@ -38,24 +38,19 @@ const points = [
       </div>
     </div>
 
-    <div class="hero-panel luxury-surface silver-glow rounded-[8px] p-5 sm:p-6">
-      <p class="text-sm font-semibold text-[#e2e8f0]">Transfer ready for</p>
-      <div class="mt-5 grid gap-3">
-        {points.map((point) => {
-          const Icon = point.icon;
-          return (
-            <div class="luxury-card flex items-center gap-3 rounded-[8px] p-4">
-              <Icon className="h-5 w-5 text-[#f8e7a1]/82" aria-hidden="true" />
-              <span class="text-sm font-medium text-slate-300">{point.label}</span>
-            </div>
-          );
-        })}
-      </div>
-      <div class="mt-5 rounded-[8px] border border-[#d6b25e]/34 bg-[#d6b25e]/10 p-4">
-        <p class="text-sm leading-6 text-emerald-100">
-          Share pickup point, drop point, passenger count, luggage count, and target time. The first booking flow stays simple through WhatsApp.
-        </p>
-      </div>
+    <div class="transfer-hero__summary">
+      {points.map((point) => {
+        const Icon = point.icon;
+        return (
+          <div class="transfer-hero__summary-item">
+            <Icon className="h-5 w-5 text-[#f8e7a1]" aria-hidden="true" />
+            <span>{point.label}</span>
+          </div>
+        );
+      })}
+      <p class="transfer-hero__note">
+        Share pickup point, drop point, passenger count, luggage count, and target time through WhatsApp.
+      </p>
     </div>
   </div>
 </section>
