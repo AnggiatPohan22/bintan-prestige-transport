@@ -1,20 +1,38 @@
 ---
-import { MessageCircle, Send, X } from "lucide-react";
+import { ArrowUpRight, Bot, MessageCircle, Send, Sparkles, X } from "lucide-react";
 import { site } from "../../data/site";
 
 const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
 const quickMessages = [
   {
-    label: "Airport transfer",
-    message: "Hello, I need help checking airport transfer availability in Bintan.",
+    label: "Check transfer price",
+    answer: "I can help prepare a price request. Please add your pickup, drop-off, date, time, and guest count.",
+    message:
+      "Hello Bintan Prestige, I want to check the price for a private transfer.\n\nPickup point: -\nDrop-off point: -\nTravel date: -\nPreferred time: -\nGuests: -\nLuggage: -\n\nPlease confirm availability and estimated price.",
   },
   {
-    label: "Island tour",
-    message: "Hello, I want to plan a private island tour in Bintan.",
+    label: "Plan activities",
+    answer: "Good choice. I can prepare an activity request for Bintan highlights, beach stops, snorkeling, spa, golf, or custom routes.",
+    message:
+      "Hello Bintan Prestige, I want to plan an activities package in Bintan.\n\nPreferred activity: -\nPickup point: -\nTravel date: -\nPreferred time: -\nGuests: -\n\nPlease recommend a suitable package and confirm availability.",
   },
   {
-    label: "Price estimate",
-    message: "Hello, please help me estimate the price for a private taxi or island tour.",
+    label: "Need recommendation",
+    answer: "Tell us your arrival point and schedule. We can suggest the route, vehicle, and package that fits best.",
+    message:
+      "Hello Bintan Prestige, I need a recommendation for private taxi or tour service.\n\nArrival / pickup point: -\nDestination or places I want to visit: -\nTravel date: -\nPreferred time: -\nGuests: -\n\nPlease suggest the best option.",
+  },
+  {
+    label: "Airport or ferry pickup",
+    answer: "I can prepare a pickup request. Share arrival point, arrival time, destination, and guest count.",
+    message:
+      "Hello Bintan Prestige, I want to arrange airport or ferry pickup.\n\nArrival point: -\nArrival date: -\nArrival time: -\nDestination: -\nGuests: -\nLuggage: -\n\nPlease confirm pickup availability.",
+  },
+  {
+    label: "Custom route",
+    answer: "Custom routes are possible. Add your preferred stops and we will help shape the timing.",
+    message:
+      "Hello Bintan Prestige, I want to request a custom private route.\n\nPickup point: -\nPreferred stops: -\nDrop-off / return plan: -\nTravel date: -\nGuests: -\n\nPlease help arrange the route and estimate the price.",
   },
 ];
 ---
@@ -25,70 +43,55 @@ const quickMessages = [
   data-whatsapp-number={site.whatsappNumber}
   data-default-message={site.whatsappMessage}
 >
-  <section
-    class="whatsapp-assistant-panel editorial-card mb-3 w-[min(calc(100vw-2rem),360px)] p-4"
-    data-whatsapp-panel
-    hidden
-    aria-label="WhatsApp concierge chat"
-  >
-    <div class="flex items-start justify-between gap-4">
-      <div>
-        <p class="editorial-kicker text-[0.68rem]">Concierge Chat</p>
-        <h2 class="mt-1 font-[var(--font-editorial-heading)] text-2xl font-medium leading-tight text-[#f8fafc]">How can we help?</h2>
+  <section class="whatsapp-assistant-panel" data-whatsapp-panel hidden aria-label="WhatsApp concierge chat">
+    <div class="whatsapp-assistant-panel__glow" aria-hidden="true"></div>
+    <div class="whatsapp-assistant-panel__header">
+      <div class="whatsapp-assistant-avatar" aria-hidden="true">
+        <Bot className="h-5 w-5" />
       </div>
-      <button
-        class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-slate-200"
-        type="button"
-        data-whatsapp-close
-        aria-label="Close WhatsApp chat"
-      >
+      <div class="min-w-0">
+        <p class="whatsapp-assistant-kicker">Bintan Prestige Concierge</p>
+        <h2 class="whatsapp-assistant-title">How can we help?</h2>
+        <p class="whatsapp-assistant-status"><span></span> Online assistant template</p>
+      </div>
+      <button class="whatsapp-assistant-close" type="button" data-whatsapp-close aria-label="Close WhatsApp chat">
         <X className="h-4 w-4" aria-hidden="true" />
       </button>
     </div>
 
-    <div class="mt-4 rounded-[8px] border border-[#bfa46f]/18 bg-black/24 p-3 text-sm leading-6 text-slate-300">
-      Hi, I can prepare your request before opening WhatsApp.
+    <div class="whatsapp-assistant-bubble" data-whatsapp-answer>
+      Hi, choose a question below and I will prepare a clean WhatsApp message for you.
     </div>
 
-    <div class="mt-3 flex flex-wrap gap-2">
+    <div class="whatsapp-assistant-quick-grid">
       {quickMessages.map((item) => (
         <button
-          class="rounded-full border border-[#bfa46f]/28 bg-[#bfa46f]/10 px-3 py-2 text-xs font-bold text-[#f8e7a1] transition hover:border-[#f8e7a1]/60"
+          class="whatsapp-assistant-quick"
           type="button"
           data-whatsapp-quick={item.message}
+          data-whatsapp-answer-text={item.answer}
         >
-          {item.label}
+          <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+          <span>{item.label}</span>
         </button>
       ))}
     </div>
 
-    <label class="mt-4 block">
+    <label class="whatsapp-assistant-field">
       <span class="sr-only">WhatsApp message</span>
-      <textarea
-        class="whatsapp-assistant-textarea min-h-24 w-full rounded-[8px] border border-[#bfa46f]/22 bg-black/28 p-3 text-sm leading-6 text-slate-100 outline-none transition focus:border-[#f8e7a1]/64"
-        data-whatsapp-message
-      >{site.whatsappMessage}</textarea>
+      <textarea class="whatsapp-assistant-textarea" data-whatsapp-message>{site.whatsappMessage}</textarea>
     </label>
 
-    <a
-      class="editorial-button-primary mt-3 w-full px-4"
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      data-whatsapp-link
-    >
+    <a class="whatsapp-assistant-submit" href={href} target="_blank" rel="noreferrer" data-whatsapp-link>
       <Send className="h-4 w-4" aria-hidden="true" />
       <span>Continue to WhatsApp</span>
+      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
     </a>
   </section>
 
-  <button
-    class="whatsapp-assistant-toggle editorial-button-primary min-h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70 focus:ring-offset-2 focus:ring-offset-[#0b0c10]"
-    type="button"
-    data-whatsapp-toggle
-    aria-expanded="false"
-    aria-label="Open WhatsApp chat"
-  >
+  <button class="whatsapp-assistant-toggle" type="button" data-whatsapp-toggle aria-expanded="false" aria-label="Open WhatsApp chat">
+    <span class="whatsapp-assistant-toggle__pulse" aria-hidden="true"></span>
+    <span class="whatsapp-assistant-toggle__badge" aria-hidden="true"></span>
     <MessageCircle className="h-4 w-4" aria-hidden="true" />
     <span class="hidden sm:inline">WhatsApp</span>
   </button>
@@ -101,6 +104,7 @@ const quickMessages = [
   const close = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-close]");
   const textarea = assistant?.querySelector<HTMLTextAreaElement>("[data-whatsapp-message]");
   const link = assistant?.querySelector<HTMLAnchorElement>("[data-whatsapp-link]");
+  const answer = assistant?.querySelector<HTMLElement>("[data-whatsapp-answer]");
   const quickButtons = assistant?.querySelectorAll<HTMLButtonElement>("[data-whatsapp-quick]");
   let panelTransitionTimer: number | undefined;
 
@@ -152,6 +156,13 @@ const quickMessages = [
       if (!textarea) return;
 
       textarea.value = button.dataset.whatsappQuick ?? "";
+      if (answer) {
+        answer.textContent = button.dataset.whatsappAnswerText ?? "I prepared a WhatsApp message for you.";
+        answer.dataset.updated = "true";
+        window.setTimeout(() => {
+          delete answer.dataset.updated;
+        }, 360);
+      }
       updateWhatsAppLink();
       textarea.focus();
     });

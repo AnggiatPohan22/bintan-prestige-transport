@@ -1,5 +1,5 @@
 ---
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { navigation } from "../../data/navigation";
 import { site } from "../../data/site";
 import MobileNav from "./MobileNav.astro";
@@ -17,25 +17,25 @@ const isActive = (href: string) => {
 };
 ---
 
-<header class="fixed inset-x-0 top-0 z-[80] border-b border-[#f8e7a1]/14 bg-[#07100d]/82 text-white shadow-[0_18px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-colors">
-  <nav class="editorial-container flex min-h-[4.25rem] items-center justify-between gap-4 py-2.5 md:min-h-[4.75rem] md:py-3">
-    <a href="/" class="group flex min-w-0 items-center gap-3" aria-label={`${site.shortName} home`}>
+<header class="site-header">
+  <nav class="site-header__nav editorial-container">
+    <a href="/" class="site-header__brand group" aria-label={`${site.shortName} home`}>
       {
         site.logoImage ? (
-          <img class="h-10 w-auto max-w-[146px] object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.42)] transition duration-200 group-hover:opacity-90 sm:h-11 sm:max-w-[210px]" src={site.logoImage} alt={`${site.shortName} logo`} />
+          <img class="site-header__logo" src={site.logoImage} alt={`${site.shortName} logo`} />
         ) : (
-          <span class="flex min-w-0 flex-col">
-            <span class="font-[var(--font-editorial-heading)] text-xl font-medium leading-none tracking-wide text-[#f8fafc] drop-shadow-[0_10px_26px_rgba(0,0,0,0.5)]">{site.shortName}</span>
-            <span class="mt-1 hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-[#bfa46f] sm:block">{site.tagline}</span>
+          <span class="site-header__wordmark">
+            <span>{site.shortName}</span>
+            <small>{site.tagline}</small>
           </span>
         )
       }
     </a>
 
-    <div class="hidden items-center gap-1.5 rounded-[8px] border border-[#f8e7a1]/18 bg-[#050807]/72 px-2 py-1.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#f8fafc] shadow-[0_18px_54px_rgba(0,0,0,0.3)] backdrop-blur-xl md:flex lg:gap-2">
+    <div class="site-header__links">
       {navigation.map((item) => (
         <a
-          class={`relative rounded-[6px] px-3 py-2 text-shadow-sm transition duration-200 hover:bg-[#f8e7a1]/12 hover:!text-[#fff4bd] ${isActive(item.href) ? "bg-[#f8e7a1]/92 !text-[#080705] shadow-[inset_0_1px_0_rgba(255,255,255,0.54),0_10px_24px_rgba(214,178,94,0.16)]" : "text-[#f8fafc]/92"}`}
+          class:list={["site-header__link", isActive(item.href) && "is-active"]}
           href={item.href}
           aria-current={isActive(item.href) ? "page" : undefined}
         >
@@ -44,13 +44,14 @@ const isActive = (href: string) => {
       ))}
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="site-header__actions">
       <a
-        class="hidden min-h-11 items-center justify-center gap-2 rounded-[8px] border border-[#f8e7a1]/75 bg-[#f8e7a1] px-4 text-sm font-extrabold !text-[#080705] shadow-[0_16px_42px_rgba(214,178,94,0.22)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#fff4bd] hover:!text-[#080705] hover:shadow-[0_20px_54px_rgba(214,178,94,0.3)] sm:inline-flex"
+        class="site-header__cta"
         href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`}
         target="_blank"
         rel="noreferrer"
       >
+        <MessageCircle className="site-header__cta-icon" aria-hidden="true" />
         <span>Book Now</span>
         <ArrowUpRight className="h-4 w-4 text-current" aria-hidden="true" />
       </a>

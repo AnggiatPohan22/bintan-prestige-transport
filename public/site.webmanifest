@@ -1,0 +1,16 @@
+{
+  "name": "Bintan Prestige Transport",
+  "short_name": "Bintan Prestige",
+  "description": "Private taxi, transfers, and curated Bintan activities.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0c10",
+  "theme_color": "#0b0c10",
+  "icons": [
+    {
+      "src": "/images/brand/bintan-prestige-gold-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

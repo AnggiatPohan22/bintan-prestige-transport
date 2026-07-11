@@ -59,10 +59,12 @@ const { items } = Astro.props;
   const galleryDescription = galleryLightbox?.querySelector<HTMLElement>("[data-gallery-preview-description]");
   const galleryPhotos = document.querySelectorAll<HTMLButtonElement>("[data-gallery-src]");
   const galleryCloseButtons = document.querySelectorAll<HTMLButtonElement>("[data-gallery-close]");
+  const galleryDialog = galleryLightbox?.querySelector<HTMLElement>("[role='dialog']");
   const galleryTrack = document.querySelector<HTMLElement>("[data-gallery-track]");
   const galleryCards = Array.from(document.querySelectorAll<HTMLElement>("[data-gallery-card]"));
 
   let galleryFrame = 0;
+  let lastGalleryTrigger: HTMLButtonElement | null = null;
   let isGalleryPointerDown = false;
   let galleryDragStartX = 0;
   let galleryDragStartScroll = 0;
@@ -131,6 +133,8 @@ const { items } = Astro.props;
 
     galleryLightbox.hidden = true;
     document.documentElement.classList.remove("gallery-is-open");
+    lastGalleryTrigger?.focus();
+    lastGalleryTrigger = null;
   };
 
   galleryPhotos.forEach((photo) => {
@@ -146,8 +150,10 @@ const { items } = Astro.props;
       galleryPreview.alt = photo.dataset.galleryAlt ?? "";
       galleryTitle.textContent = photo.dataset.galleryTitle ?? "";
       galleryDescription.textContent = photo.dataset.galleryDescription ?? "";
+      lastGalleryTrigger = photo;
       galleryLightbox.hidden = false;
       document.documentElement.classList.add("gallery-is-open");
+      galleryCloseButtons[0]?.focus();
     });
   });
 
@@ -156,8 +162,35 @@ const { items } = Astro.props;
   });
 
   document.addEventListener("keydown", (event) => {
+    if (!galleryLightbox || galleryLightbox.hidden) return;
+
     if (event.key === "Escape") {
       closeGallery();
+      return;
+    }
+
+    if (event.key !== "Tab" || !galleryDialog) return;
+
+    const focusableElements = Array.from(
+      galleryDialog.querySelectorAll<HTMLElement>(
+        "a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])",
+      ),
+    ).filter((element) => element.offsetParent !== null);
+
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+      return;
+    }
+
+    if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
     }
   });
 

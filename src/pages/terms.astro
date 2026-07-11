@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+
+const description =
+  "Terms and booking information for Bintan Prestige private taxi, transfers, tours, and Bintan activities.";
+---
+
+<BaseLayout title="Terms and Conditions" description={description} canonical="/terms">
+  <section class="legal-page">
+    <div class="legal-page__inner">
+      <div>
+        <p class="legal-page__eyebrow">Terms & Conditions</p>
+        <h1>Please confirm details before booking.</h1>
+      </div>
+      <p class="legal-page__intro">
+        These terms help guests understand how {site.shortName} coordinates private transport, routes, tours, and
+        activities across Bintan.
+      </p>
+
+      <div class="legal-page__content">
+        <article class="legal-page__panel">
+          <h2>Reservations</h2>
+          <p>
+            Bookings are confirmed after our team verifies availability, pickup details, service scope, quoted price, and
+            any special requests through WhatsApp, phone, or email.
+          </p>
+        </article>
+        <article class="legal-page__panel">
+          <h2>Pricing and Inclusions</h2>
+          <ul>
+            <li>Prices are quoted in Indonesian Rupiah (IDR), unless stated otherwise.</li>
+            <li>Entrance tickets, activity tickets, meals, parking, ferry tickets, and third-party fees are excluded unless confirmed in writing.</li>
+            <li>Rates may vary during public holidays, peak seasons, late-night service, or customized itineraries.</li>
+          </ul>
+        </article>
+        <article class="legal-page__panel">
+          <h2>Service Conditions</h2>
+          <p>
+            Route timing can be affected by weather, traffic, ferry schedules, resort access rules, activity availability,
+            and local operating conditions.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

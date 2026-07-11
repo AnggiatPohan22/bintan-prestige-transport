@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+
+const description =
+  "Cancellation guidance for Bintan Prestige private taxi, transfer, tour, and activity arrangements.";
+---
+
+<BaseLayout title="Cancellation Policy" description={description} canonical="/cancellation">
+  <section class="legal-page">
+    <div class="legal-page__inner">
+      <div>
+        <p class="legal-page__eyebrow">Cancellation Policy</p>
+        <h1>Tell us early so we can help adjust the plan.</h1>
+      </div>
+      <p class="legal-page__intro">
+        We understand travel plans can change. Contact {site.shortName} as soon as possible so our team can check the
+        best available option for your booking.
+      </p>
+
+      <div class="legal-page__content">
+        <article class="legal-page__panel">
+          <h2>Before Service Time</h2>
+          <p>
+            Cancellation or reschedule requests should be sent before the confirmed pickup or activity time. Available
+            options depend on the booking type, driver assignment, and partner activity rules.
+          </p>
+        </article>
+        <article class="legal-page__panel">
+          <h2>Late Changes</h2>
+          <p>
+            Late cancellations, no-shows, or changes after a driver or operator has been assigned may be subject to fees,
+            especially for custom tours, peak periods, and third-party activities.
+          </p>
+        </article>
+        <article class="legal-page__panel">
+          <h2>Weather and Operating Conditions</h2>
+          <p>
+            If weather, safety, ferry timing, or operator conditions affect the original plan, our team will help propose
+            a practical reschedule or alternative where available.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

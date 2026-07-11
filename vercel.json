@@ -1,6 +1,18 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/packages/island-tour",
+      "destination": "/packages/activities-packages",
+      "permanent": true
+    },
+    {
+      "source": "/packages/island-tour/:slug",
+      "destination": "/packages/activities-packages/:slug",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/_astro/(.*)",

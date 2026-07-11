@@ -27,50 +27,50 @@ const isActive = (href: string) => {
 
 <details class="mobile-menu relative z-[90] md:hidden">
   <summary
-    class="relative z-[92] inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[8px] border border-[#f8e7a1]/36 bg-[#06100d]/82 text-[#f8fafc] shadow-[0_12px_34px_rgba(0,0,0,0.36)] backdrop-blur-xl transition hover:border-[#f8e7a1]/64 hover:bg-[#f8e7a1]/12 focus:outline-none focus:ring-2 focus:ring-[#f8e7a1]/70"
+    class="mobile-menu-trigger"
     aria-label="Toggle navigation menu"
   >
     <Menu className="mobile-menu-open-icon h-5 w-5" aria-hidden="true" />
     <X className="mobile-menu-close-icon h-5 w-5" aria-hidden="true" />
   </summary>
 
-  <div class="fixed inset-0 z-[88] bg-[#020617]/84 backdrop-blur-sm md:hidden"></div>
-  <div class="mobile-menu-panel fixed inset-x-3 top-[5rem] z-[89] overflow-hidden rounded-[8px] border border-[#bfa46f]/30 bg-[#090a0d]/98 shadow-[0_34px_110px_rgba(0,0,0,0.64)] backdrop-blur-xl md:hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(248,231,161,0.16),transparent_16rem),linear-gradient(135deg,rgba(191,164,111,0.08),transparent_42%)]"></div>
-    <div class="relative border-b border-[#bfa46f]/18 px-5 py-4">
-      <p class="text-[10px] font-extrabold uppercase tracking-[0.26em] text-[#d6b46a]">Luxury Navigation</p>
-      <p class="mt-2 font-[var(--font-editorial-heading)] text-2xl font-medium leading-none text-[#f8fafc]">
+  <div class="mobile-menu-backdrop md:hidden"></div>
+  <div class="mobile-menu-panel md:hidden">
+    <div class="mobile-menu-panel__glow"></div>
+    <div class="mobile-menu-panel__header">
+      <p class="mobile-menu-panel__kicker">Bintan Prestige</p>
+      <p class="mobile-menu-panel__title">
         {site.shortName}
       </p>
-      <p class="mt-2 text-xs leading-5 text-slate-400">Private taxi, transfer, and island tour concierge.</p>
+      <p class="mobile-menu-panel__copy">Private taxi, tour, transfer, and activity planning.</p>
     </div>
 
-    <div class="relative grid gap-2 p-3">
+    <div class="mobile-menu-panel__links">
       {navigation.map((item, index) => (
         <a
-          class={`group grid grid-cols-[2.25rem_1fr_auto] items-center gap-3 rounded-[8px] border px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition hover:border-[#d6b46a]/58 hover:bg-[#172033]/86 hover:!text-[#f8e7a1] ${isActive(item.href) ? "border-[#d6b46a]/56 bg-[#f8e7a1]/10 !text-[#f8e7a1]" : "border-white/10 bg-[#111827]/74 text-[#f8fafc]"}`}
+          class:list={["mobile-menu-link group", isActive(item.href) && "is-active"]}
           href={item.href}
           aria-current={isActive(item.href) ? "page" : undefined}
         >
-          <span class={`flex h-8 w-8 items-center justify-center rounded-[8px] border text-[11px] font-bold ${isActive(item.href) ? "border-[#f8e7a1]/50 bg-[#f8e7a1]/16 text-[#fff4bd]" : "border-[#bfa46f]/24 bg-[#bfa46f]/10 text-[#f8e7a1]"}`}>
+          <span class="mobile-menu-link__index">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <span class="min-w-0">
-            <span class="block text-sm font-bold leading-5">{item.label}</span>
-            <span class={`block truncate text-[11px] font-medium uppercase tracking-[0.14em] ${isActive(item.href) ? "text-[#d6b46a]" : "text-slate-500"}`}>{menuDescriptions[item.href] ?? "Explore"}</span>
+          <span class="mobile-menu-link__body">
+            <span>{item.label}</span>
+            <small>{menuDescriptions[item.href] ?? "Explore"}</small>
           </span>
-          <ArrowUpRight className={`h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 ${isActive(item.href) ? "text-[#f8e7a1] opacity-100" : "text-[#bfa46f] opacity-70"}`} aria-hidden="true" />
+          <ArrowUpRight className="mobile-menu-link__icon" aria-hidden="true" />
         </a>
       ))}
 
-      <a class="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#f8e7a1]/75 bg-[#f8e7a1] px-5 text-sm font-extrabold text-[#080705] shadow-[0_18px_48px_rgba(214,180,106,0.24)] transition hover:bg-[#fff4bd]" href={whatsappHref} rel="noreferrer" target="_blank">
+      <a class="mobile-menu-whatsapp" href={whatsappHref} rel="noreferrer" target="_blank">
         <MessageCircle className="h-4 w-4" aria-hidden="true" />
         <span>Chat on WhatsApp</span>
       </a>
 
-      <div class="flex items-center justify-between px-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+      <div class="mobile-menu-panel__meta">
         <span>{site.responseWindow}</span>
-        <span class="text-[#bfa46f]">Premium Service</span>
+        <span>Premium Service</span>
       </div>
     </div>
   </div>
