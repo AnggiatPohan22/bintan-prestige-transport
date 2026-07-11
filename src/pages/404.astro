@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const description =
+  "The page you are looking for could not be found. Return to Bintan Prestige Transport to plan a private taxi, transfer, or activity in Bintan.";
+---
+
+<BaseLayout title="Page Not Found" description={description} canonical="/404" noindex={true}>
+  <section class="legal-page">
+    <div class="legal-page__inner">
+      <div>
+        <p class="legal-page__eyebrow">404</p>
+        <h1>Page not found.</h1>
+      </div>
+      <p class="legal-page__intro">
+        This link may have moved or no longer exists. You can return to the main site or contact our team to check taxi,
+        transfer, and activity availability.
+      </p>
+      <div class="legal-page__actions">
+        <a href="/">Back to Home</a>
+        <a href="/contact">Contact Bintan Prestige</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

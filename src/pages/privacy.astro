@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+
+const description =
+  "Privacy information for Bintan Prestige Transport visitors who contact us for private taxi, transfer, and activity reservations.";
+---
+
+<BaseLayout title="Privacy Policy" description={description} canonical="/privacy">
+  <section class="legal-page">
+    <div class="legal-page__inner">
+      <div>
+        <p class="legal-page__eyebrow">Privacy Policy</p>
+        <h1>We keep travel enquiries simple and respectful.</h1>
+      </div>
+      <p class="legal-page__intro">
+        This page explains how {site.shortName} handles information shared through our website, WhatsApp planner,
+        phone, email, and direct reservation conversations.
+      </p>
+
+      <div class="legal-page__content">
+        <article class="legal-page__panel">
+          <h2>Information We Receive</h2>
+          <p>
+            We may receive your name, contact details, travel date, pickup and drop-off points, guest count, itinerary
+            notes, and service preferences when you submit a form or open a WhatsApp booking message.
+          </p>
+        </article>
+        <article class="legal-page__panel">
+          <h2>How We Use It</h2>
+          <ul>
+            <li>To confirm availability, route details, pricing, inclusions, and pickup timing.</li>
+            <li>To coordinate drivers, vehicles, activity operators, and customer support before or during service.</li>
+            <li>To improve website content and service clarity using non-sensitive usage insights when analytics are enabled.</li>
+          </ul>
+        </article>
+        <article class="legal-page__panel">
+          <h2>Sharing</h2>
+          <p>
+            We only share reservation details with trusted service partners when needed to provide the requested taxi,
+            transfer, tour, or activity arrangement.
+          </p>
+        </article>
+        <article class="legal-page__panel">
+          <h2>Contact</h2>
+          <p>
+            For privacy questions or correction requests, contact us at {site.email} or {site.phone}.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

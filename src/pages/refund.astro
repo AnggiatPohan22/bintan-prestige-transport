@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+
+const description =
+  "Refund guidance for Bintan Prestige reservations, third-party activity tickets, and customized transport arrangements.";
+---
+
+<BaseLayout title="Refund Policy" description={description} canonical="/refund">
+  <section class="legal-page">
+    <div class="legal-page__inner">
+      <div>
+        <p class="legal-page__eyebrow">Refund Policy</p>
+        <h1>Refunds depend on the confirmed booking arrangement.</h1>
+      </div>
+      <p class="legal-page__intro">
+        Because many Bintan services involve private drivers, partner operators, and date-specific availability, refund
+        eligibility should be confirmed before payment.
+      </p>
+
+      <div class="legal-page__content">
+        <article class="legal-page__panel">
+          <h2>Transport Bookings</h2>
+          <p>
+            Refund options for taxi, transfer, and private driver bookings depend on notice period, service preparation,
+            and whether the assigned driver has already started coordination for the route.
+          </p>
+        </article>
+        <article class="legal-page__panel">
+          <h2>Activity and Partner Fees</h2>
+          <p>
+            Activity tickets, entrance tickets, operator deposits, and special reservations may follow partner refund
+            rules and can be non-refundable after confirmation.
+          </p>
+        </article>
+        <article class="legal-page__panel">
+          <h2>How To Request</h2>
+          <p>
+            Send your booking details to {site.phone} or {site.email}. Our team will review the confirmed arrangement and
+            explain the available option clearly.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

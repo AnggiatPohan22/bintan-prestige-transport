@@ -25,7 +25,7 @@ interface Props {
 }
 
 const { item, enableMobileSwipeControls = false, tone = "default" } = Astro.props;
-const detailCards = item.packageDetails ?? item.highlights?.map((highlight) => ({
+const detailCards: NonNullable<DetailItem["packageDetails"]> = item.packageDetails ?? item.highlights?.map((highlight) => ({
   title: "Package highlight",
   description: highlight,
 })) ?? [];

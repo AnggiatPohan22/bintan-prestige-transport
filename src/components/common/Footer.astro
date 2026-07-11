@@ -3,47 +3,72 @@ import { navigation } from "../../data/navigation";
 import { site } from "../../data/site";
 
 const footerLogo = site.logoImage || "/images/brand/bintan-prestige-white-logo.png";
+const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
+const trustItems = [
+  "Private driver coordination",
+  "Taxi, tour, and activity support",
+  "Clear WhatsApp confirmation",
+];
+
+const policyLinks = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
+  { href: "/cancellation", label: "Cancellation" },
+  { href: "/refund", label: "Refund" },
+];
 ---
 
-<footer class="border-t border-[#bfa46f]/16 bg-[#08090d] text-white">
-  <div class="editorial-container grid gap-10 py-12 md:grid-cols-[1.25fr_0.7fr_0.9fr_1fr] lg:py-16">
-    <div class="max-w-xl">
-      <img class="h-46 w-auto max-w-86 object-contain" src={footerLogo} alt={`${site.shortName} logo`} loading="lazy" />
-      <p class="editorial-copy mt-5 text-slate-400">{site.defaultDescription}</p>
-    </div>
-
-    <div>
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#bfa46f]">Explore</p>
-      <div class="mt-4 grid gap-2 text-sm text-slate-400">
-        {navigation.map((item) => <a class="transition hover:text-[#f8e7a1]" href={item.href}>{item.label}</a>)}
+<footer class="site-footer">
+  <div class="site-footer__glow" aria-hidden="true"></div>
+  <div class="site-footer__inner editorial-container">
+    <div class="site-footer__brand">
+      <img class="site-footer__logo" src={footerLogo} alt={`${site.shortName} logo`} loading="lazy" />
+      <p class="site-footer__copy">{site.defaultDescription}</p>
+      <div class="site-footer__cta-row">
+        <a class="site-footer__primary" href={whatsappHref} target="_blank" rel="noreferrer">Chat on WhatsApp</a>
+        <a class="site-footer__secondary" href="/contact">Plan a route</a>
       </div>
     </div>
 
-    <div>
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#bfa46f]">Contact</p>
-      <div class="mt-4 grid gap-2 text-sm leading-6 text-slate-400">
-        <a class="transition hover:text-[#f8e7a1]" href={`tel:${site.phone}`}>{site.phone}</a>
-        <a class="transition hover:text-[#f8e7a1]" href={`mailto:${site.email}`}>{site.email}</a>
+    <div class="site-footer__column">
+      <p class="site-footer__heading">Explore</p>
+      <div class="site-footer__links">
+        {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+      </div>
+    </div>
+
+    <div class="site-footer__column">
+      <p class="site-footer__heading">Contact</p>
+      <div class="site-footer__links site-footer__links--contact">
+        <a href={`tel:${site.phone}`}>{site.phone}</a>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
         <span>{site.address}</span>
         <span>{site.responseWindow}</span>
       </div>
     </div>
 
-    <div class="trusted-frame rounded-[8px] border border-[#bfa46f]/20 bg-[#071a14]/72 p-5">
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#bfa46f]">Trusted Website</p>
-      <div class="mt-4 grid gap-3 text-sm leading-6 text-slate-300">
-        <span class="flex items-start gap-3"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-[#f8e7a1]"></span> WhatsApp-first booking confirmation</span>
-        <span class="flex items-start gap-3"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-[#f8e7a1]"></span> Transparent route and package details</span>
-        <span class="flex items-start gap-3"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-[#f8e7a1]"></span> Static, fast, and mobile-friendly website</span>
+    <div class="site-footer__promise">
+      <p class="site-footer__heading">Bintan Prestige</p>
+      <div class="site-footer__promise-list">
+        {trustItems.map((item) => (
+          <span>
+            <i aria-hidden="true"></i>
+            {item}
+          </span>
+        ))}
       </div>
     </div>
   </div>
-  <div class="border-t border-white/10 py-5">
-    <div class="editorial-container flex flex-col gap-2 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+
+  <div class="site-footer__bottom">
+    <div class="editorial-container">
       <p>Copyright {new Date().getFullYear()} {site.shortName}. All rights reserved.</p>
+      <nav class="site-footer__legal" aria-label="Policy links">
+        {policyLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      </nav>
       <p>
-        Design & Maintanance by{" "}
-        <a class="font-semibold text-[#bfa46f] transition hover:text-[#f8e7a1]" href="https://www.giatteh.com" target="_blank" rel="noreferrer">
+        Design & Maintenance by{" "}
+        <a href="https://www.giatteh.com" target="_blank" rel="noreferrer">
           Giattech
         </a>
       </p>
