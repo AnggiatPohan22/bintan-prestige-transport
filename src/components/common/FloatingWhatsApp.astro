@@ -107,6 +107,31 @@ const quickMessages = [
   const answer = assistant?.querySelector<HTMLElement>("[data-whatsapp-answer]");
   const quickButtons = assistant?.querySelectorAll<HTMLButtonElement>("[data-whatsapp-quick]");
   let panelTransitionTimer: number | undefined;
+  let lockedScrollY = 0;
+
+  const lockPageScroll = () => {
+    if (document.documentElement.classList.contains("whatsapp-scroll-locked")) return;
+
+    lockedScrollY = window.scrollY;
+    document.documentElement.classList.add("whatsapp-scroll-locked");
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+  };
+
+  const unlockPageScroll = () => {
+    if (!document.documentElement.classList.contains("whatsapp-scroll-locked")) return;
+
+    document.documentElement.classList.remove("whatsapp-scroll-locked");
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    window.scrollTo(0, lockedScrollY);
+  };
 
   const updateWhatsAppLink = () => {
     if (!assistant || !textarea || !link) return;
@@ -124,18 +149,22 @@ const quickMessages = [
     assistant?.setAttribute("data-open", String(isOpen));
 
     if (isOpen) {
+      lockPageScroll();
       panel.hidden = false;
       updateWhatsAppLink();
       window.requestAnimationFrame(() => {
         panel.dataset.state = "open";
       });
       panelTransitionTimer = window.setTimeout(() => {
-        textarea?.focus();
+        if (window.matchMedia("(min-width: 640px)").matches) {
+          textarea?.focus();
+        }
       }, 180);
       return;
     }
 
     panel.dataset.state = "closed";
+    unlockPageScroll();
     panelTransitionTimer = window.setTimeout(() => {
       panel.hidden = true;
     }, 240);
@@ -175,4 +204,5 @@ const quickMessages = [
   });
 
   updateWhatsAppLink();
+  window.addEventListener("pagehide", unlockPageScroll);
 </script>
