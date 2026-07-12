@@ -1,0 +1,77 @@
+---
+import { ArrowUpRight, Menu, MessageCircle, X } from "lucide-react";
+import { navigation } from "@data/navigation";
+import { site } from "@data/site";
+
+const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const menuDescriptions: Record<string, string> = {
+  "/": "Editorial overview",
+  "/packages/pick-up-drop": "Private transfer",
+  "/packages/activities-packages": "Activities",
+  "/blog": "Travel guides",
+  "/about": "Brand story",
+  "/contact": "Concierge contact",
+};
+
+const isActive = (href: string) => {
+  const normalizedHref = href.replace(/\/$/, "") || "/";
+
+  if (normalizedHref === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath === normalizedHref || currentPath.startsWith(`${normalizedHref}/`);
+};
+---
+
+<details class="mobile-menu relative z-[90] md:hidden">
+  <summary
+    class="mobile-menu-trigger"
+    aria-label="Toggle navigation menu"
+  >
+    <Menu className="mobile-menu-open-icon h-5 w-5" aria-hidden="true" />
+    <X className="mobile-menu-close-icon h-5 w-5" aria-hidden="true" />
+  </summary>
+
+  <div class="mobile-menu-backdrop md:hidden"></div>
+  <div class="mobile-menu-panel md:hidden">
+    <div class="mobile-menu-panel__glow"></div>
+    <div class="mobile-menu-panel__header">
+      <p class="mobile-menu-panel__kicker">Bintan Prestige</p>
+      <p class="mobile-menu-panel__title">
+        {site.shortName}
+      </p>
+      <p class="mobile-menu-panel__copy">Private taxi, tour, transfer, and activity planning.</p>
+    </div>
+
+    <div class="mobile-menu-panel__links">
+      {navigation.map((item, index) => (
+        <a
+          class:list={["mobile-menu-link group", isActive(item.href) && "is-active"]}
+          href={item.href}
+          aria-current={isActive(item.href) ? "page" : undefined}
+        >
+          <span class="mobile-menu-link__index">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span class="mobile-menu-link__body">
+            <span>{item.label}</span>
+            <small>{menuDescriptions[item.href] ?? "Explore"}</small>
+          </span>
+          <ArrowUpRight className="mobile-menu-link__icon" aria-hidden="true" />
+        </a>
+      ))}
+
+      <a class="mobile-menu-whatsapp" href={whatsappHref} rel="noreferrer" target="_blank">
+        <MessageCircle className="h-4 w-4" aria-hidden="true" />
+        <span>Chat on WhatsApp</span>
+      </a>
+
+      <div class="mobile-menu-panel__meta">
+        <span>{site.responseWindow}</span>
+        <span>Premium Service</span>
+      </div>
+    </div>
+  </div>
+</details>

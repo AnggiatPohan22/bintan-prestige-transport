@@ -1,0 +1,18 @@
+---
+import type { BlogGalleryImage } from "@data/blog";
+
+interface Props {
+  images: BlogGalleryImage[];
+}
+
+const { images } = Astro.props;
+---
+
+<div class="grid gap-3 sm:grid-cols-3">
+  {images.map((image, index) => (
+    <figure class={`article-gallery-frame relative overflow-hidden rounded-[8px] border border-[#bfa46f]/18 bg-[#071a14] ${index === 0 ? "sm:col-span-2" : ""}`}>
+      <img class="absolute inset-0 h-full w-full object-cover object-center" src={image.src} alt={image.alt} loading="lazy" />
+      <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,12,16,0.02),rgba(11,12,16,0.42))]"></div>
+    </figure>
+  ))}
+</div>

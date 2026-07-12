@@ -1,0 +1,43 @@
+---
+import SwipeControls from "@components/core/SwipeControls.astro";
+import ActivityPackageCard from "./ActivityPackageCard.astro";
+import { tours } from "@data/tours";
+
+const chunkItems = <T,>(items: T[], pageSize: number) =>
+  Array.from({ length: Math.ceil(items.length / pageSize) }, (_, index) =>
+    items.slice(index * pageSize, (index + 1) * pageSize),
+  );
+
+const pageSets = [
+  {
+    key: "mobile",
+    label: "Activities packages mobile",
+    pages: tours.map((tour) => [tour]),
+  },
+  {
+    key: "tablet",
+    label: "Activities packages tablet",
+    pages: chunkItems(tours, 4),
+  },
+  {
+    key: "desktop",
+    label: "Activities packages desktop",
+    pages: chunkItems(tours, 8),
+  },
+];
+---
+
+{pageSets.map((set) => (
+  <div class={`activities-package-carousel activities-package-carousel--${set.key}`} data-swipe-carousel>
+    <div class="activities-package-track" data-swipe-track>
+      {set.pages.map((page, pageIndex) => (
+        <div class="activities-package-page package-card-grid" data-swipe-item aria-label={`Activities page ${pageIndex + 1}`}>
+          {page.map((tour) => (
+            <ActivityPackageCard tour={tour} />
+          ))}
+        </div>
+      ))}
+    </div>
+    <SwipeControls count={set.pages.length} label={set.label} breakpoint="all" className="activities-package-controls" />
+  </div>
+))}

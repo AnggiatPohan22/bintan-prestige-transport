@@ -1,16 +1,16 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Breadcrumb from "../../components/common/Breadcrumb.astro";
-import SectionHeader from "../../components/common/SectionHeader.astro";
-import RouteList from "../../components/packages/RouteList.astro";
-import IncludeExclude from "../../components/packages/IncludeExclude.astro";
-import WhatsAppCTA from "../../components/common/WhatsAppCTA.astro";
-import TransferFAQ from "../../components/packages/TransferFAQ.astro";
-import TransferFleet from "../../components/packages/TransferFleet.astro";
-import TransferHero from "../../components/packages/TransferHero.astro";
-import TransferProcess from "../../components/packages/TransferProcess.astro";
-import { routes } from "../../data/routes";
-import { breadcrumbSchema, packageSchema } from "../../data/schema";
+import Breadcrumb from "@components/core/Breadcrumb.astro";
+import SectionHeader from "@components/core/SectionHeader.astro";
+import RouteList from "@components/features/packages/RouteList.astro";
+import IncludeExclude from "@components/features/packages/IncludeExclude.astro";
+import WhatsAppCTA from "@components/core/WhatsAppCTA.astro";
+import TransferFAQ from "@components/features/packages/TransferFAQ.astro";
+import TransferFleet from "@components/sections/packages/TransferFleet.astro";
+import TransferHero from "@components/sections/packages/TransferHero.astro";
+import TransferProcess from "@components/sections/packages/TransferProcess.astro";
+import { routes } from "@data/routes";
+import { breadcrumbSchema, packageSchema } from "@data/schema";
 
 const breadcrumbs = [
   { label: "Home", href: "/" },

@@ -1,14 +1,14 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Breadcrumb from "../../components/common/Breadcrumb.astro";
-import SectionHeader from "../../components/common/SectionHeader.astro";
-import TourItinerary from "../../components/packages/TourItinerary.astro";
-import WhatsAppCTA from "../../components/common/WhatsAppCTA.astro";
-import TourExperience from "../../components/packages/TourExperience.astro";
-import TourFAQ from "../../components/packages/TourFAQ.astro";
-import TourHero from "../../components/packages/TourHero.astro";
-import TourPackageGrid from "../../components/packages/TourPackageGrid.astro";
-import { breadcrumbSchema, packageSchema } from "../../data/schema";
+import Breadcrumb from "@components/core/Breadcrumb.astro";
+import SectionHeader from "@components/core/SectionHeader.astro";
+import TourItinerary from "@components/features/packages/TourItinerary.astro";
+import WhatsAppCTA from "@components/core/WhatsAppCTA.astro";
+import TourExperience from "@components/sections/packages/TourExperience.astro";
+import TourFAQ from "@components/features/packages/TourFAQ.astro";
+import TourHero from "@components/sections/packages/TourHero.astro";
+import TourPackageGrid from "@components/features/packages/TourPackageGrid.astro";
+import { breadcrumbSchema, packageSchema } from "@data/schema";
 
 const itinerary = [
   "Private pickup with activity timing confirmation",

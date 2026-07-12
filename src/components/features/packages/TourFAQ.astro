@@ -1,0 +1,17 @@
+---
+import { faqs } from "@data/faqs";
+
+const tourFaqs = faqs.filter((item) => ["tour", "booking", "service", "fleet"].includes(item.category));
+---
+
+<div class="grid gap-3">
+  {tourFaqs.map((item) => (
+    <details class="faq-accordion editorial-card rounded-[8px]">
+      <summary>
+        <span>{item.question}</span>
+        <span class="faq-accordion-icon" aria-hidden="true"></span>
+      </summary>
+      <p>{item.answer}</p>
+    </details>
+  ))}
+</div>

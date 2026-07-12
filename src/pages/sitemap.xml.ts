@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { absoluteUrl, seoPages } from "../data/seo";
+import { absoluteUrl, seoPages } from "@data/seo";
 
 export const GET: APIRoute = () => {
   const lastmod = new Date().toISOString();

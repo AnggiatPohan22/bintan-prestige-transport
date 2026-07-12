@@ -1,0 +1,165 @@
+---
+import { CalendarDays, Clock, MapPin, MessageCircle, Send, Users } from "lucide-react";
+import { site } from "@data/site";
+
+const defaultMessage = "Hello Bintan Prestige, I want to plan a private taxi or tour in Bintan.";
+const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`;
+---
+
+<div id="whatsapp-planner" class="contact-planner contact-planner--light contact-planner--flush">
+  <div class="grid gap-7 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+    <div>
+      <p class="editorial-kicker">Message template</p>
+      <h2 class="mt-3 font-[var(--font-editorial-heading)] text-3xl font-medium leading-tight text-[#111827] sm:text-4xl">
+        Prepare your request before opening WhatsApp.
+      </h2>
+      <p class="mt-4 text-sm leading-7 text-[#4b5563]">
+        Fill in the details once. The planner will arrange your request into a clean WhatsApp message for Bintan Prestige, so you can ask availability without typing everything manually.
+      </p>
+      <div class="mt-6 grid gap-3 text-sm font-semibold text-[#8a6a22]">
+        <span class="rounded-[8px] border border-[#d8c6a3]/70 bg-white/62 p-3">Private taxi and tour planning</span>
+        <span class="rounded-[8px] border border-[#d8c6a3]/70 bg-white/62 p-3">Useful for ferry, airport, hotel, and activity routes</span>
+      </div>
+    </div>
+
+    <form
+      class="contact-planner__form"
+      action={href}
+      data-contact-planner
+      data-whatsapp-number={site.whatsappNumber}
+    >
+      <div class="contact-planner__grid grid gap-3 sm:grid-cols-2">
+        <label class="contact-planner__field">
+          <span class="contact-planner__icon"><MessageCircle className="h-4 w-4" aria-hidden="true" /></span>
+          <span class="contact-planner__body">
+            <span class="contact-planner__label">Service type</span>
+            <select name="service">
+              <option>Private taxi / transfer</option>
+              <option>Activities package</option>
+              <option>Custom Bintan tour</option>
+              <option>Airport / ferry pickup</option>
+              <option>Need recommendation</option>
+            </select>
+          </span>
+        </label>
+
+        <label class="contact-planner__field">
+          <span class="contact-planner__icon"><Users className="h-4 w-4" aria-hidden="true" /></span>
+          <span class="contact-planner__body">
+            <span class="contact-planner__label">Guest count</span>
+            <select name="guests">
+              <option>1 guest</option>
+              <option>2 guests</option>
+              <option>3-4 guests</option>
+              <option>5-6 guests</option>
+              <option>7+ guests</option>
+            </select>
+          </span>
+        </label>
+
+        <label class="contact-planner__field">
+          <span class="contact-planner__icon"><CalendarDays className="h-4 w-4" aria-hidden="true" /></span>
+          <span class="contact-planner__body">
+            <span class="contact-planner__label">Travel date</span>
+            <input type="date" name="date" />
+          </span>
+        </label>
+
+        <label class="contact-planner__field">
+          <span class="contact-planner__icon"><Clock className="h-4 w-4" aria-hidden="true" /></span>
+          <span class="contact-planner__body">
+            <span class="contact-planner__label">Preferred time</span>
+            <input type="time" name="time" />
+          </span>
+        </label>
+
+        <label class="contact-planner__field">
+          <span class="contact-planner__icon"><MapPin className="h-4 w-4" aria-hidden="true" /></span>
+          <span class="contact-planner__body">
+            <span class="contact-planner__label">Pickup point</span>
+            <input type="text" name="pickup" placeholder="Hotel, ferry, airport, villa..." />
+          </span>
+        </label>
+
+        <label class="contact-planner__field">
+          <span class="contact-planner__icon"><MapPin className="h-4 w-4" aria-hidden="true" /></span>
+          <span class="contact-planner__body">
+            <span class="contact-planner__label">Drop-off / route</span>
+            <input type="text" name="dropoff" placeholder="Resort, beach, city, activity stop..." />
+          </span>
+        </label>
+
+        <label class="contact-planner__field sm:col-span-2">
+          <span class="contact-planner__icon"><MessageCircle className="h-4 w-4" aria-hidden="true" /></span>
+          <span class="contact-planner__body">
+            <span class="contact-planner__label">Custom request</span>
+            <textarea name="notes" rows="4" placeholder="Tell us about luggage, child seat, waiting time, preferred stops, vehicle type, or anything you want to ask."></textarea>
+          </span>
+        </label>
+      </div>
+
+      <a class="contact-planner__cta editorial-button-primary mt-5 min-h-12 w-full px-6" href={href} target="_blank" rel="noreferrer" data-contact-planner-link>
+        <Send className="h-4 w-4" aria-hidden="true" />
+        <span>Open WhatsApp Planner</span>
+      </a>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-contact-planner]").forEach((form) => {
+    const link = form.querySelector<HTMLAnchorElement>("[data-contact-planner-link]");
+    const fields = form.querySelectorAll<HTMLLabelElement>(".contact-planner__field");
+
+    const formatValue = (value: FormDataEntryValue | null, fallback: string) => {
+      const text = value?.toString().trim();
+      return text && text.length > 0 ? text : fallback;
+    };
+
+    const buildUrl = () => {
+      const data = new FormData(form);
+      const phone = form.dataset.whatsappNumber ?? "";
+      const message = [
+        "Hello Bintan Prestige, I want to plan a private taxi or tour in Bintan.",
+        "",
+        "Request details:",
+        `Service type: ${formatValue(data.get("service"), "Need recommendation")}`,
+        `Travel date: ${formatValue(data.get("date"), "Flexible / to confirm")}`,
+        `Preferred time: ${formatValue(data.get("time"), "Flexible / to confirm")}`,
+        `Guest count: ${formatValue(data.get("guests"), "To be confirmed")}`,
+        `Pickup point: ${formatValue(data.get("pickup"), "To be confirmed")}`,
+        `Drop-off / route: ${formatValue(data.get("dropoff"), "To be confirmed")}`,
+        `Custom request: ${formatValue(data.get("notes"), "-")}`,
+        "",
+        "Please confirm availability, suggested route, vehicle option, and estimated price.",
+      ].join("\n");
+
+      return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    };
+
+    const updateLink = () => {
+      if (link) {
+        link.href = buildUrl();
+      }
+    };
+
+    form.addEventListener("input", updateLink);
+    form.addEventListener("change", updateLink);
+    fields.forEach((field) => {
+      field.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement;
+        if (target.closest("input, select, textarea, button, a")) {
+          return;
+        }
+
+        const control = field.querySelector<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>("input, select, textarea");
+        control?.focus();
+
+        if (control instanceof HTMLInputElement && (control.type === "date" || control.type === "time")) {
+          control.showPicker?.();
+        }
+      });
+    });
+    updateLink();
+  });
+</script>

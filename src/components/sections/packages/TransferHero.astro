@@ -1,0 +1,37 @@
+---
+import { MessageCircle } from "lucide-react";
+import { site } from "@data/site";
+import { heroSlides } from "@data/media";
+import HeroBackdrop from "@components/core/HeroBackdrop.astro";
+
+const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(
+  "Hello, I want to check availability for Pick Up & Drop transfer service.",
+)}`;
+
+---
+
+<section class="transfer-hero site-hero-section relative isolate flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-[#0b0c10] text-white">
+  <HeroBackdrop images={heroSlides.transfer} className="-z-20" />
+  <div class="transfer-hero__shade absolute inset-0 -z-10"></div>
+  <div class="site-hero-inner transfer-hero__inner container-page relative flex min-h-[100svh] w-full flex-col justify-end gap-8 py-12 lg:py-16">
+    <div class="hero-copy max-w-4xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">Premium transfer service</p>
+      <h1 class="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-6xl">
+        Pick Up & Drop with private driver comfort.
+      </h1>
+      <p class="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
+        Airport, ferry terminal, resort, dinner, and custom point-to-point movement for guests who want the route handled clearly before they arrive.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a class="luxury-btn-primary" href={href} target="_blank" rel="noreferrer">
+          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          <span>Check Availability</span>
+        </a>
+        <a class="luxury-btn-secondary" href="#transfer-routes">
+          View Transfer Routes
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,14 +1,14 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import Breadcrumb from "../../../components/common/Breadcrumb.astro";
-import PackageBookingForm from "../../../components/packages/PackageBookingForm.astro";
-import PackageDetailContent from "../../../components/packages/PackageDetailContent.astro";
-import PackageDetailHero from "../../../components/packages/PackageDetailHero.astro";
-import WhatsAppCTA from "../../../components/common/WhatsAppCTA.astro";
-import { breadcrumbSchema, organizationSchema, localBusinessSchema } from "../../../data/schema";
-import { absoluteUrl } from "../../../data/seo";
-import { routes } from "../../../data/routes";
-import { transportRoutes } from "../../../data/transportRoutes";
+import Breadcrumb from "@components/core/Breadcrumb.astro";
+import PackageBookingForm from "@components/features/booking/PackageBookingForm.astro";
+import PackageDetailContent from "@components/features/packages/PackageDetailContent.astro";
+import PackageDetailHero from "@components/features/packages/PackageDetailHero.astro";
+import WhatsAppCTA from "@components/core/WhatsAppCTA.astro";
+import { breadcrumbSchema, organizationSchema, localBusinessSchema } from "@data/schema";
+import { absoluteUrl } from "@data/seo";
+import { routes } from "@data/routes";
+import { transportRoutes } from "@data/transportRoutes";
 
 export const getStaticPaths = () =>
   [...routes, ...transportRoutes].map((route) => ({

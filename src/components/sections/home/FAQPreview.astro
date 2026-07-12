@@ -1,0 +1,15 @@
+---
+import { faqs } from "@data/faqs";
+---
+
+<div class="grid gap-3">
+  {faqs.slice(0, 5).map((item) => (
+    <details class="faq-accordion editorial-card rounded-[8px]">
+      <summary>
+        <span>{item.question}</span>
+        <span class="faq-accordion-icon" aria-hidden="true"></span>
+      </summary>
+      <p>{item.answer}</p>
+    </details>
+  ))}
+</div>

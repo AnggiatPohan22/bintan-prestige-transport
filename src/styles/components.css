@@ -1,0 +1,2889 @@
+/* Reusable component-level styling: packages, controls, WhatsApp, booking, and blog UI. */
+
+/* --------------------------------------------------------------------------
+   04. Package Detail Hero & Legacy Transfer Route Cards
+   --------------------------------------------------------------------------
+   `.package-detail-*` dipakai di halaman detail package:
+   - `/packages/pick-up-drop/[slug]`
+   - `/packages/island-tour/[slug]`
+   `.transfer-route-card` adalah card transfer/image overlay lama yang masih
+   dipakai untuk beberapa blok route/fleet transfer.
+*/
+.package-detail-hero {
+  min-height: 100svh;
+}
+
+.package-detail-hero .visual-placeholder {
+  background: #0b0c10;
+}
+
+.package-detail-hero__shade {
+  background:
+    linear-gradient(90deg, rgba(11, 12, 16, 0.76) 0%, rgba(11, 12, 16, 0.44) 48%, rgba(11, 12, 16, 0.24) 100%),
+    linear-gradient(180deg, rgba(11, 12, 16, 0.18) 0%, rgba(11, 12, 16, 0.5) 68%, rgba(11, 12, 16, 0.82) 100%);
+}
+
+.package-detail-hero__inner {
+  min-height: 100svh;
+  padding-block: clamp(8.25rem, 14vw, 10.5rem) clamp(4.25rem, 8vw, 6.5rem);
+}
+
+.package-detail-hero__inner--with-summary {
+  min-height: max(100svh, 38rem);
+}
+
+.package-detail-hero__inner--full {
+  min-height: 100svh;
+}
+
+.transfer-route-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 14.5rem;
+  border: 1px solid rgba(191, 164, 111, 0.2);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.08), transparent 14rem),
+    linear-gradient(145deg, rgba(7, 26, 20, 0.9), rgba(11, 12, 16, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.1),
+    0 20px 58px rgba(0, 0, 0, 0.22);
+  transition:
+    border-color 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.transfer-route-card:hover {
+  border-color: rgba(248, 231, 161, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.14),
+    0 24px 68px rgba(0, 0, 0, 0.28);
+  transform: translateY(-2px);
+}
+
+.transfer-route-card__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #07100d;
+  pointer-events: none;
+}
+
+.transfer-route-card__media::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 26, 20, 0.97) 0%, rgba(7, 26, 20, 0.86) 48%, rgba(7, 26, 20, 0.94) 100%),
+    linear-gradient(90deg, rgba(7, 26, 20, 0.98) 0%, rgba(7, 26, 20, 0.86) 54%, rgba(7, 26, 20, 0.46) 100%);
+  content: "";
+}
+
+.transfer-route-card__image {
+  position: absolute;
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.36;
+  transform: scale(1.01);
+  transition:
+    opacity 420ms ease,
+    transform 520ms ease;
+}
+
+.transfer-route-card:hover .transfer-route-card__image {
+  opacity: 0.46;
+  transform: scale(1.035);
+}
+
+.transfer-route-card__body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: inherit;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 2vw, 1.6rem);
+}
+
+.transfer-route-card__actions {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.transfer-route-card__price,
+.transfer-route-card__link {
+  display: inline-flex;
+  min-width: 6.25rem;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding-inline: 0.85rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.transfer-route-card__price {
+  background: #f8fafc;
+  color: #0b0c10;
+  font-size: 0.86rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+}
+
+.transfer-route-card__link {
+  border: 1px solid rgba(248, 231, 161, 0.36);
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.13), rgba(6, 78, 59, 0.32)),
+    rgba(7, 26, 20, 0.82);
+  color: #f8e7a1 !important;
+  font-size: 0.86rem;
+  font-weight: 850;
+  line-height: 1;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.transfer-route-card__link:hover {
+  border-color: rgba(248, 231, 161, 0.6);
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.18), rgba(6, 78, 59, 0.42)),
+    rgba(7, 26, 20, 0.92);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   05. Package Offer Cards
+   --------------------------------------------------------------------------
+   Card system utama untuk product/package cards.
+
+   Dipakai oleh:
+   - Home Signature Services: `components/sections/home/ServiceCards.astro`
+   - Home Featured Routes: `components/sections/home/RouteHighlights.astro`
+   - Pick Up & Drop cards: `components/features/packages/RouteList.astro`
+   - Island Tour cards: `components/features/packages/TourPackageGrid.astro`
+
+   Bagian penting:
+   - `.package-card-grid`: layout grid desktop/tablet.
+   - `.package-offer-card`: shell kartu.
+   - `__media` + `__image`: frame gambar dan crop.
+   - `__badges`: category dan price badge di atas gambar.
+   - `__body`, `__copy`, `__meta`, `__highlights`, `__actions`: isi bawah card.
+   - modifier `--taxi`, `--taxi-transfer`, `--tour`, `--island-tour`: crop image
+     per tipe asset.
+*/
+.package-card-grid {
+  display: grid;
+  gap: clamp(1rem, 1.7vw, 1.35rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.25rem), 1fr));
+  align-items: stretch;
+}
+
+.package-offer-card {
+  display: grid;
+  overflow: hidden;
+  min-height: 100%;
+  grid-template-rows: auto 1fr;
+  border: 1px solid rgba(191, 164, 111, 0.24);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.08), transparent 12rem),
+    linear-gradient(145deg, rgba(7, 26, 20, 0.88), rgba(8, 10, 12, 0.96) 62%),
+    var(--surface-emerald);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.1),
+    0 22px 60px rgba(0, 0, 0, 0.24);
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.package-offer-card:hover {
+  border-color: rgba(248, 231, 161, 0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.14),
+    0 26px 74px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.package-offer-card__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: #07100d;
+}
+
+/*
+  Image crop baseline untuk semua package cards.
+  Gunakan object-position dan transform scale di modifier jika gambar terasa:
+  - terlalu kecil di frame,
+  - terlalu tinggi/rendah crop-nya,
+  - butuh treatment berbeda antara taxi dan tour.
+*/
+.package-offer-card__image {
+  position: absolute;
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.01);
+  transition:
+    filter 360ms ease,
+    opacity 360ms ease,
+    transform 560ms ease;
+}
+
+.package-offer-card:hover .package-offer-card__image {
+  filter: saturate(1.05) contrast(1.03);
+  transform: scale(1.045);
+}
+
+.package-offer-card--taxi .package-offer-card__image,
+.package-offer-card--taxi-transfer .package-offer-card__image {
+  object-position: center bottom;
+  transform: scale(1.16);
+}
+
+.package-offer-card--tour .package-offer-card__image,
+.package-offer-card--island-tour .package-offer-card__image,
+.package-offer-card--activities-package .package-offer-card__image {
+  transform: scale(1.04);
+}
+
+.package-offer-card--taxi:hover .package-offer-card__image,
+.package-offer-card--taxi-transfer:hover .package-offer-card__image {
+  transform: scale(1.2);
+}
+
+.package-offer-card--tour:hover .package-offer-card__image,
+.package-offer-card--island-tour:hover .package-offer-card__image,
+.package-offer-card--activities-package:hover .package-offer-card__image {
+  transform: scale(1.075);
+}
+
+.package-offer-card__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11, 12, 16, 0.08) 0%, rgba(11, 12, 16, 0.12) 46%, rgba(11, 12, 16, 0.56) 100%),
+    linear-gradient(135deg, rgba(7, 26, 20, 0.24), rgba(7, 26, 20, 0.02) 48%, rgba(11, 12, 16, 0.32));
+  pointer-events: none;
+}
+
+/*
+  Badges di atas gambar card:
+  - `__category` untuk tipe service/package.
+  - `__price` untuk harga ringkas.
+  Jaga max-width agar mobile card tidak pecah saat text panjang.
+*/
+.package-offer-card__badges {
+  position: absolute;
+  inset: 1rem 1rem auto;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.package-offer-card__category,
+.package-offer-card__price {
+  display: inline-flex;
+  min-height: 2.15rem;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 0.54rem;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.package-offer-card__category {
+  max-width: min(5.5rem, 35%);
+  border: 1px solid rgba(248, 250, 252, 0.16);
+  background:
+    linear-gradient(135deg, rgba(226, 232, 240, 0.16), rgba(7, 26, 20, 0.54)),
+    rgba(11, 12, 16, 0.5);
+  color: rgba(248, 250, 252, 0.9);
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  overflow: hidden;
+  padding-inline: 0.9rem;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+}
+
+.package-offer-card__price {
+  flex-direction: column;
+  justify-content: center;
+  min-width: 4.75rem;
+  max-width: min(8.75rem, 65%);
+  background: linear-gradient(135deg, #fff6c5, #d6b25e 58%, #fff8d5);
+  color: #080705;
+  font-weight: 750;
+  padding: 0.38rem 0.78rem;
+  text-align: center;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.76),
+    0 14px 32px rgba(0, 0, 0, 0.18);
+}
+
+.package-offer-card__price span {
+  color: rgba(8, 7, 5, 0.68);
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.package-offer-card__price strong {
+  display: block;
+  overflow: hidden;
+  max-width: 100%;
+  font-size: 0.78rem;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+}
+
+/*
+  Body card dibuat dengan grid rows yang stabil:
+  title/description, meta chips, highlights, dan action buttons tetap sejajar
+  antar card meskipun panjang text berbeda.
+*/
+.package-offer-card__body {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 0.95rem;
+  padding: clamp(1rem, 1.6vw, 1.25rem);
+}
+
+.package-offer-card__copy {
+  min-width: 0;
+}
+
+.package-offer-card__title {
+  display: -webkit-box;
+  min-height: 3.25rem;
+  overflow: hidden;
+  color: #f8fafc;
+  font-family: var(--font-editorial-heading);
+  font-size: clamp(1.28rem, 1.5vw, 1.55rem);
+  font-weight: 550;
+  letter-spacing: 0;
+  line-height: 1.12;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.package-offer-card__description {
+  display: -webkit-box;
+  min-height: 4.35rem;
+  margin-top: 0.7rem;
+  overflow: hidden;
+  color: rgba(203, 213, 225, 0.78);
+  font-size: 0.92rem;
+  line-height: 1.58;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Meta chips untuk duration/capacity. Text pendek akan terlihat seperti pill premium. */
+.package-offer-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  min-height: 1.85rem;
+}
+
+.package-offer-card__meta span {
+  display: inline-flex;
+  min-height: 1.85rem;
+  align-items: center;
+  border: 1px solid rgba(248, 231, 161, 0.22);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.1), rgba(6, 78, 59, 0.28)),
+    rgba(7, 26, 20, 0.7);
+  color: #f8e7a1;
+  font-size: 0.76rem;
+  font-weight: 850;
+  line-height: 1;
+  padding-inline: 0.75rem;
+}
+
+/*
+  Highlights list di card. Tinggi minimum dan line clamp menjaga semua card
+  tetap sejajar. Jika ingin menampilkan lebih banyak bullet, cek efeknya pada
+  `.package-offer-card__actions` di mobile.
+*/
+.package-offer-card__highlights {
+  display: grid;
+  align-content: start;
+  gap: 0.52rem;
+  min-height: 5.2rem;
+  margin: 0;
+  padding: 0;
+  color: rgba(226, 232, 240, 0.76);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  list-style: none;
+}
+
+.package-offer-card__highlights li {
+  display: -webkit-box;
+  position: relative;
+  overflow: hidden;
+  padding-left: 1rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.package-offer-card__highlights li::before {
+  position: absolute;
+  top: 0.56em;
+  left: 0;
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 999px;
+  background: #d6b25e;
+  box-shadow: 0 0 14px rgba(214, 178, 94, 0.36);
+  content: "";
+}
+
+/* Action area: tombol Read more + Ask availability. */
+.package-offer-card__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.2fr);
+  gap: 0.65rem;
+  align-items: stretch;
+}
+
+.package-offer-card__link {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 2.8rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 850;
+  line-height: 1.15;
+  padding-inline: 0.75rem;
+  text-align: center;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.package-offer-card__link:hover,
+.package-offer-card__link:focus-visible {
+  transform: translateY(-1px);
+}
+
+.package-offer-card__link--primary {
+  border: 1px solid rgba(248, 231, 161, 0.76);
+  background: linear-gradient(135deg, #fff8d5 0%, #f8e7a1 32%, #d6b25e 72%, #fffaf0 100%);
+  color: #080705 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 14px 34px rgba(214, 178, 94, 0.2);
+}
+
+.package-offer-card__link--secondary {
+  border: 1px solid rgba(248, 231, 161, 0.26);
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.1), rgba(6, 78, 59, 0.28)),
+    rgba(7, 26, 20, 0.76);
+  color: #f8e7a1 !important;
+}
+
+/* Compact fixes untuk layar sangat kecil agar badge, text, dan CTA tidak overflow. */
+@media (max-width: 420px) {
+  .package-card-grid {
+    gap: 1rem;
+  }
+
+  .package-offer-card__media {
+    aspect-ratio: 16 / 11;
+  }
+
+  .package-offer-card__badges {
+    inset: 0.85rem 0.85rem auto;
+    gap: 0.55rem;
+  }
+
+  .package-offer-card__category,
+  .package-offer-card__price {
+    min-height: 2rem;
+  }
+
+  .package-offer-card__category {
+    padding-inline: 0.72rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .package-offer-card__price {
+    min-width: 4.25rem;
+    padding-inline: 0.64rem;
+  }
+
+  .package-offer-card__price strong {
+    font-size: 0.74rem;
+  }
+
+  .package-offer-card__body {
+    gap: 0.82rem;
+    padding: 1rem;
+  }
+
+  .package-offer-card__title {
+    min-height: 3rem;
+    font-size: 1.26rem;
+  }
+
+  .package-offer-card__description {
+    min-height: 4.05rem;
+    font-size: 0.88rem;
+  }
+
+  .package-offer-card__highlights {
+    min-height: 4.75rem;
+    font-size: 0.78rem;
+  }
+
+  .package-offer-card__actions {
+    gap: 0.5rem;
+  }
+
+  .package-offer-card__link {
+    min-height: 2.65rem;
+    padding-inline: 0.58rem;
+    font-size: 0.76rem;
+  }
+}
+
+/* Transfer/Fleet cards untuk halaman Pick Up & Drop overview. */
+.fleet-route-card {
+  overflow: hidden;
+  border: 1px solid rgba(191, 164, 111, 0.2);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(11, 12, 16, 0.95), rgba(7, 26, 20, 0.88)),
+    #0b0c10;
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    0 20px 58px rgba(0, 0, 0, 0.2);
+  transition:
+    border-color 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.fleet-route-card:hover {
+  border-color: rgba(248, 231, 161, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.12),
+    0 24px 68px rgba(0, 0, 0, 0.26);
+  transform: translateY(-2px);
+}
+
+.fleet-route-card__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #0b0c10;
+}
+
+.fleet-route-card__image {
+  position: absolute;
+  inset: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.01);
+  transition:
+    filter 420ms ease,
+    transform 560ms ease;
+}
+
+.fleet-route-card:hover .fleet-route-card__image {
+  filter: saturate(1.04) contrast(1.02);
+  transform: scale(1.045);
+}
+
+.fleet-route-card__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11, 12, 16, 0.02) 36%, rgba(11, 12, 16, 0.44) 100%),
+    linear-gradient(90deg, rgba(11, 12, 16, 0.24), rgba(11, 12, 16, 0.02) 55%);
+  pointer-events: none;
+}
+
+/* Transfer overview page: roomier package cards and mobile swipe treatment. */
+#transfer-routes .package-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+#transfer-routes .package-offer-card__media {
+  aspect-ratio: 16 / 9;
+}
+
+#transfer-routes .package-offer-card__body {
+  gap: 1rem;
+  padding: clamp(1.1rem, 1.8vw, 1.45rem);
+}
+
+.transfer-route-carousel,
+.transfer-fleet-carousel {
+  min-width: 0;
+}
+
+.activities-package-carousel {
+  display: none;
+  min-width: 0;
+}
+
+.activities-package-carousel--mobile {
+  display: block;
+}
+
+.activities-package-track {
+  display: flex;
+  align-items: flex-start;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(191, 164, 111, 0.5) transparent;
+}
+
+.activities-package-page {
+  flex: 0 0 100%;
+  align-self: flex-start;
+  align-items: start;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  padding-bottom: 0.85rem;
+  scroll-snap-align: start;
+}
+
+.activities-package-page .package-offer-card {
+  min-height: 0;
+}
+
+.activities-package-controls {
+  display: flex !important;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.activities-package-controls .swipe-pagination-arrows {
+  display: none;
+}
+
+.activities-package-controls .swipe-pagination-dots {
+  max-width: max-content;
+  overflow: hidden;
+  gap: 0.35rem;
+  border: 1px solid rgba(191, 164, 111, 0.18);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.06), rgba(6, 78, 59, 0.22)),
+    rgba(5, 16, 13, 0.72);
+  padding: 0.42rem;
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    0 12px 30px rgba(0, 0, 0, 0.16);
+}
+
+.activities-package-controls .swipe-pagination-dot {
+  height: 0.95rem;
+  min-height: 0.95rem;
+  width: 0.95rem;
+  background: rgba(248, 231, 161, 0.34);
+  transition:
+    width 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.activities-package-controls .swipe-pagination-dot::after {
+  position: absolute;
+  inset: 0.25rem;
+  border-radius: inherit;
+  background: rgba(5, 16, 13, 0.62);
+  content: "";
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.activities-package-controls .swipe-pagination-dot.is-active {
+  width: 2.55rem;
+  background: linear-gradient(135deg, #fff4bd, #d6b25e);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.66),
+    0 10px 24px rgba(214, 178, 94, 0.2);
+}
+
+.activities-package-controls .swipe-pagination-dot.is-active::after {
+  opacity: 1;
+}
+
+.transfer-swipe-dots {
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.transfer-swipe-dots .swipe-pagination-arrows {
+  display: none;
+}
+
+.transfer-swipe-dots .swipe-pagination-dots {
+  max-width: max-content;
+  overflow: hidden;
+  gap: 0.35rem;
+  border: 1px solid rgba(191, 164, 111, 0.18);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.06), rgba(6, 78, 59, 0.22)),
+    rgba(5, 16, 13, 0.72);
+  padding: 0.42rem;
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    0 12px 30px rgba(0, 0, 0, 0.16);
+}
+
+.transfer-swipe-dots .swipe-pagination-dot {
+  height: 0.95rem;
+  min-height: 0.95rem;
+  width: 0.95rem;
+  background: rgba(248, 231, 161, 0.34);
+  transition:
+    width 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.transfer-swipe-dots .swipe-pagination-dot::after {
+  position: absolute;
+  inset: 0.25rem;
+  border-radius: inherit;
+  background: rgba(5, 16, 13, 0.62);
+  content: "";
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.transfer-swipe-dots .swipe-pagination-dot.is-active {
+  width: 2.55rem;
+  background: linear-gradient(135deg, #fff4bd, #d6b25e);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.66),
+    0 10px 24px rgba(214, 178, 94, 0.2);
+}
+
+.transfer-swipe-dots .swipe-pagination-dot.is-active::after {
+  opacity: 1;
+}
+
+/*
+  Package detail content cards:
+  Dipakai di halaman detail transfer/tour untuk package details, itinerary,
+  includes, dan booking notes. Di mobile area ini bisa menjadi horizontal swipe.
+*/
+.package-detail-card-row {
+  display: grid;
+  gap: 1rem;
+}
+
+.package-detail-card {
+  border: 1px solid rgba(191, 164, 111, 0.2);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.1), transparent 12rem),
+    linear-gradient(145deg, rgba(7, 26, 20, 0.9), rgba(11, 12, 16, 0.9));
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.1),
+    0 20px 58px rgba(0, 0, 0, 0.22);
+  min-height: 13.5rem;
+  padding: clamp(1.25rem, 2vw, 1.55rem);
+}
+
+.package-detail-swipe-ui {
+  display: none;
+}
+
+.activity-detail-support-section {
+  border-color: rgba(191, 164, 111, 0.16);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(248, 231, 161, 0.1), transparent 24rem),
+    radial-gradient(circle at 12% 86%, rgba(6, 78, 59, 0.26), transparent 28rem),
+    linear-gradient(180deg, rgba(11, 12, 16, 0.98), rgba(4, 11, 9, 0.98)),
+    var(--color-black);
+}
+
+.activity-detail-support-card {
+  border-color: rgba(191, 164, 111, 0.22);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.1), transparent 14rem),
+    linear-gradient(145deg, rgba(7, 26, 20, 0.9), rgba(8, 10, 12, 0.96) 62%),
+    var(--surface-emerald);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.1),
+    0 24px 72px rgba(0, 0, 0, 0.26);
+}
+
+.activity-detail-support-card .editorial-title {
+  color: #f8fafc;
+}
+
+.activity-detail-support-item {
+  border-color: rgba(248, 231, 161, 0.16) !important;
+  background:
+    linear-gradient(145deg, rgba(11, 31, 24, 0.82), rgba(4, 13, 10, 0.78)) !important;
+  color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: inset 0 1px 0 rgba(248, 231, 161, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   06. Detail Swipe Controls
+   --------------------------------------------------------------------------
+   Komponen terkait: `components/core/SwipeControls.astro`.
+   Dipakai untuk dot/arrow controls pada detail cards dan beberapa mobile
+   carousel. Jangan hilangkan `position: relative` dan `overflow: hidden` pada
+   dot karena pseudo-element dot pernah menyebabkan area klik melebar.
+*/
+.swipe-pagination-ui {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.swipe-pagination-ui[hidden] {
+  display: none !important;
+}
+
+.swipe-pagination-dots,
+.swipe-pagination-arrows {
+  display: flex;
+  align-items: center;
+}
+
+.swipe-pagination-dots {
+  max-width: min(52vw, 14rem);
+  gap: 0.55rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding-block: 0.2rem;
+  scrollbar-width: none;
+}
+
+.swipe-pagination-dots::-webkit-scrollbar {
+  display: none;
+}
+
+.swipe-pagination-arrows {
+  flex: 0 0 auto;
+  gap: 0.65rem;
+}
+
+.swipe-pagination-dot {
+  position: relative;
+  flex: 0 0 auto;
+  height: 0.72rem;
+  width: 0.72rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(226, 232, 240, 0.24);
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+  transition:
+    width 220ms ease,
+    background-color 220ms ease,
+    transform 220ms ease;
+}
+
+.swipe-pagination-dot.is-active {
+  width: 2.5rem;
+  background: linear-gradient(135deg, #fff5bf, #d7b85c);
+}
+
+.swipe-pagination-dot:hover,
+.swipe-pagination-dot:focus-visible {
+  background: rgba(248, 231, 161, 0.72);
+  transform: translateY(-1px);
+}
+
+.swipe-pagination-arrow {
+  display: inline-flex;
+  height: 2.85rem;
+  width: 2.85rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(191, 164, 111, 0.34);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 32% 22%, rgba(248, 231, 161, 0.12), transparent 1.15rem),
+    rgba(5, 54, 42, 0.58);
+  color: #f8e7a1;
+  cursor: pointer;
+  font-size: 1.9rem;
+  font-weight: 300;
+  line-height: 1;
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease,
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.swipe-pagination-arrow:hover,
+.swipe-pagination-arrow:focus-visible {
+  border-color: rgba(248, 231, 161, 0.76);
+  background-color: rgba(9, 79, 61, 0.72);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px);
+}
+
+.swipe-pagination-arrow:disabled {
+  cursor: default;
+  opacity: 0.4;
+  transform: none;
+}
+
+@media (max-width: 1023px) {
+  .swipe-pagination-ui[data-swipe-breakpoint="tablet"],
+  .swipe-pagination-ui[data-swipe-breakpoint="all"] {
+    display: flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .transfer-route-card {
+    min-height: 12.75rem;
+  }
+
+  .transfer-route-card__media::after {
+    background:
+      linear-gradient(90deg, rgba(7, 26, 20, 0.99) 0%, rgba(7, 26, 20, 0.94) 44%, rgba(7, 26, 20, 0.68) 68%, rgba(7, 26, 20, 0.24) 100%),
+      linear-gradient(180deg, rgba(7, 26, 20, 0.08), rgba(7, 26, 20, 0.76));
+  }
+
+  .transfer-route-card__image {
+    opacity: 0.5;
+    object-position: 82% center;
+  }
+
+  .transfer-route-card:hover .transfer-route-card__image {
+    opacity: 0.62;
+  }
+
+  .transfer-route-card__body {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 19rem);
+    align-items: end;
+  }
+
+  .transfer-route-card__actions {
+    justify-content: flex-end;
+  }
+
+  .package-detail-card-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .transfer-fleet-grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-block: 0.25rem 0.85rem;
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(191, 164, 111, 0.5) transparent;
+  }
+
+  .transfer-fleet-grid .fleet-route-card {
+    flex: 0 0 min(31rem, 78%);
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 420px) {
+  .transfer-route-card__actions {
+    gap: 0.55rem;
+  }
+
+  .transfer-route-card__price,
+  .transfer-route-card__link {
+    min-width: 5.75rem;
+    min-height: 2.4rem;
+    padding-inline: 0.72rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .package-detail-hero__shade {
+    background:
+      linear-gradient(90deg, rgba(11, 12, 16, 0.8) 0%, rgba(11, 12, 16, 0.5) 62%, rgba(11, 12, 16, 0.28) 100%),
+      linear-gradient(180deg, rgba(11, 12, 16, 0.16) 0%, rgba(11, 12, 16, 0.58) 72%, rgba(11, 12, 16, 0.88) 100%);
+  }
+
+  .package-detail-hero__inner {
+    padding-block: clamp(7.75rem, 28vw, 9.5rem) clamp(3rem, 12vw, 4.5rem);
+  }
+
+  .package-detail-card-row {
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-block: 0.25rem 0.85rem;
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(191, 164, 111, 0.5) transparent;
+  }
+
+  .package-detail-card {
+    scroll-snap-align: start;
+  }
+
+  .swipe-pagination-ui[data-swipe-breakpoint="mobile"] {
+    display: flex;
+  }
+
+  .package-detail-swipe-ui {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .package-detail-swipe-dots,
+  .package-detail-swipe-arrows {
+    display: flex;
+    align-items: center;
+  }
+
+  .package-detail-swipe-dots {
+    gap: 0.55rem;
+  }
+
+  .package-detail-swipe-arrows {
+    gap: 0.65rem;
+  }
+
+  .package-detail-swipe-dot {
+    height: 0.72rem;
+    width: 0.72rem;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(226, 232, 240, 0.24);
+    cursor: pointer;
+    padding: 0;
+    transition:
+      width 220ms ease,
+      background-color 220ms ease,
+      transform 220ms ease;
+  }
+
+  .package-detail-swipe-dot.is-active {
+    width: 2.5rem;
+    background: linear-gradient(135deg, #fff5bf, #d7b85c);
+  }
+
+  .package-detail-swipe-dot:hover,
+  .package-detail-swipe-dot:focus-visible {
+    background: rgba(248, 231, 161, 0.72);
+    transform: translateY(-1px);
+  }
+
+  .package-detail-swipe-arrow {
+    display: inline-flex;
+    height: 2.85rem;
+    width: 2.85rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(191, 164, 111, 0.34);
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 32% 22%, rgba(248, 231, 161, 0.12), transparent 1.15rem),
+      rgba(5, 54, 42, 0.58);
+    color: #f8e7a1;
+    cursor: pointer;
+    font-size: 1.9rem;
+    font-weight: 300;
+    line-height: 1;
+    transition:
+      border-color 220ms ease,
+      background-color 220ms ease,
+      box-shadow 220ms ease,
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .package-detail-swipe-arrow:hover,
+  .package-detail-swipe-arrow:focus-visible {
+    border-color: rgba(248, 231, 161, 0.76);
+    background-color: rgba(9, 79, 61, 0.72);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+    transform: translateY(-1px);
+  }
+
+  .package-detail-swipe-arrow:disabled {
+    cursor: default;
+    opacity: 0.4;
+    transform: none;
+  }
+
+  #transfer-routes .package-card-grid,
+  .transfer-fleet-grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-block: 0.25rem 0.85rem;
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(191, 164, 111, 0.5) transparent;
+  }
+
+  #transfer-routes .package-offer-card,
+  .transfer-fleet-grid .fleet-route-card {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  #transfer-routes .package-offer-card__media {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swipe-pagination-dot,
+  .swipe-pagination-arrow,
+  .package-detail-swipe-dot,
+  .package-detail-swipe-arrow {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   07. Hero Animation & Home Booking Mini Form
+   --------------------------------------------------------------------------
+   `.hero-slide` mengatur crossfade gambar/video hero.
+   `.booking-*` di bawahnya adalah form cepat di Home hero, bukan form detail
+   Booking Information di halaman package.
+*/
+.hero-slide {
+  opacity: 0;
+  transform: scale(1.02);
+  animation: heroCrossfade 18s ease-in-out infinite;
+}
+
+.hero-slide:first-child {
+  opacity: 1;
+}
+
+.hero-slide-static {
+  opacity: 1;
+  animation: none;
+}
+
+.hero-copy > *,
+.hero-panel {
+  animation: fadeUp 0.78s ease-out both;
+}
+
+.hero-copy > :nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.hero-copy > :nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.hero-copy > :nth-child(4) {
+  animation-delay: 240ms;
+}
+
+.hero-panel {
+  animation-delay: 280ms;
+}
+
+.booking-float-shell {
+  position: relative;
+  z-index: 45;
+  margin-top: clamp(-3rem, -4vw, -1.25rem);
+  padding-bottom: clamp(2.25rem, 4vw, 4rem);
+  overflow: visible;
+}
+
+.booking-floating-form {
+  position: relative;
+  overflow: visible;
+  animation: bookingFloatIn 620ms ease-out 160ms both;
+}
+
+.booking-floating-form .booking-filter-card,
+.booking-floating-form .availability-submit {
+  animation: bookingItemIn 520ms ease-out both;
+}
+
+.booking-floating-form .booking-filter-card:nth-child(1) {
+  animation-delay: 260ms;
+}
+
+.booking-floating-form .booking-filter-card:nth-child(2) {
+  animation-delay: 320ms;
+}
+
+.booking-floating-form .booking-filter-card:nth-child(3) {
+  animation-delay: 380ms;
+}
+
+.booking-floating-form .booking-filter-card:nth-child(4) {
+  animation-delay: 440ms;
+}
+
+.booking-floating-form .availability-submit {
+  animation-delay: 500ms;
+}
+
+.booking-filter-card {
+  overflow: visible;
+  z-index: 2;
+}
+
+.booking-filter-card[data-open="true"] {
+  z-index: 30;
+}
+
+.booking-filter-trigger {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 0;
+  background: transparent;
+  color: #e2e8f0;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.35;
+  outline: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.booking-filter-trigger:focus-visible {
+  outline: 2px solid rgba(248, 231, 161, 0.58);
+  outline-offset: 4px;
+}
+
+.booking-filter-chevron {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
+  transform: rotate(45deg) translateY(-2px);
+  border-bottom: 2px solid rgba(248, 231, 161, 0.76);
+  border-right: 2px solid rgba(248, 231, 161, 0.76);
+  transition: transform 180ms ease;
+}
+
+.booking-filter-card[data-open="true"] .booking-filter-chevron {
+  transform: rotate(225deg) translate(-2px, -1px);
+}
+
+.booking-filter-menu {
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  left: -0.25rem;
+  right: -0.25rem;
+  z-index: 40;
+  overflow: hidden;
+  border: 1px solid rgba(248, 231, 161, 0.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(13, 36, 27, 0.98), rgba(11, 12, 16, 0.98)),
+    var(--surface-emerald);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 22px 58px rgba(0, 0, 0, 0.5);
+  padding: 0.35rem;
+  animation: bookingMenuReveal 150ms ease-out both;
+}
+
+.booking-date-menu {
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  left: -0.25rem;
+  right: -0.25rem;
+  z-index: 40;
+  border: 1px solid rgba(248, 231, 161, 0.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(13, 36, 27, 0.98), rgba(11, 12, 16, 0.98)),
+    var(--surface-emerald);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 22px 58px rgba(0, 0, 0, 0.5);
+  padding: 0.7rem;
+  animation: bookingMenuReveal 150ms ease-out both;
+}
+
+.booking-date-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: rgba(248, 231, 161, 0.72);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.booking-date-field {
+  width: 100%;
+  min-height: 2.85rem;
+  border: 1px solid rgba(248, 231, 161, 0.2);
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.08), rgba(226, 232, 240, 0.03)),
+    rgba(11, 12, 16, 0.74);
+  color: #e2e8f0;
+  color-scheme: dark;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  outline: 0;
+  padding: 0.65rem 0.78rem;
+}
+
+.booking-date-field:focus-visible {
+  border-color: rgba(248, 231, 161, 0.62);
+  box-shadow: 0 0 0 3px rgba(248, 231, 161, 0.12);
+}
+
+.booking-date-field::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(92%) sepia(22%) saturate(1155%) hue-rotate(349deg) brightness(105%) contrast(95%);
+}
+
+.booking-filter-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #e2e8f0;
+  font-size: 0.88rem;
+  font-weight: 750;
+  line-height: 1.35;
+  padding: 0.72rem 0.78rem;
+  text-align: left;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.booking-filter-option:hover,
+.booking-filter-option:focus-visible,
+.booking-filter-option[aria-selected="true"] {
+  background: linear-gradient(135deg, rgba(248, 231, 161, 0.18), rgba(214, 178, 94, 0.08));
+  color: #f8e7a1;
+  outline: 0;
+}
+
+.booking-filter-option[aria-selected="true"]::after {
+  width: 0.42rem;
+  height: 0.72rem;
+  transform: rotate(45deg);
+  border-bottom: 2px solid #f8e7a1;
+  border-right: 2px solid #f8e7a1;
+  content: "";
+}
+
+.booking-date-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  border: 1px solid rgba(248, 231, 161, 0.58);
+  border-radius: 3px;
+  box-shadow: inset 0 3px 0 rgba(248, 231, 161, 0.24);
+}
+
+@keyframes bookingFloatIn {
+  from {
+    opacity: 0;
+    transform: translateY(1.4rem) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bookingItemIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.65rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bookingMenuReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   08. Floating WhatsApp Assistant
+   --------------------------------------------------------------------------
+   Komponen terkait: `components/site/FloatingWhatsApp.astro`.
+   Mengatur panel floating, toggle button, shine hover, open state, dan textarea.
+*/
+.whatsapp-assistant-panel {
+  position: relative;
+  width: min(calc(100vw - 2rem), 25rem);
+  max-height: min(34rem, calc(100svh - 7.75rem - env(safe-area-inset-bottom)));
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-bottom: 0.9rem;
+  border: 1px solid rgba(191, 164, 111, 0.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(8, 10, 13, 0.98), rgba(5, 16, 13, 0.96)),
+    #08090d;
+  padding: 1rem;
+  opacity: 0;
+  transform: translateY(1rem) scale(0.94);
+  transform-origin: bottom right;
+  filter: blur(4px);
+  pointer-events: none;
+  transition:
+    opacity 260ms ease,
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 260ms ease;
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.1),
+    0 30px 96px rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(22px);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(191, 164, 111, 0.5) transparent;
+}
+
+.whatsapp-scroll-locked {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.whatsapp-assistant-panel::-webkit-scrollbar {
+  width: 0.35rem;
+}
+
+.whatsapp-assistant-panel::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(191, 164, 111, 0.48);
+}
+
+.whatsapp-assistant-panel[data-state="open"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+.whatsapp-assistant-panel__glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(248, 231, 161, 0.13), transparent 13rem),
+    radial-gradient(circle at 100% 20%, rgba(6, 78, 59, 0.2), transparent 13rem);
+  pointer-events: none;
+}
+
+.whatsapp-assistant-panel__header {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: start;
+}
+
+.whatsapp-assistant-avatar {
+  display: inline-flex;
+  width: 2.55rem;
+  height: 2.55rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(248, 231, 161, 0.26);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 34% 18%, rgba(248, 231, 161, 0.24), transparent 1.2rem),
+    rgba(191, 164, 111, 0.1);
+  color: #f8e7a1;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 14px 34px rgba(0, 0, 0, 0.22);
+}
+
+.whatsapp-assistant-kicker {
+  color: #d6b46a;
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.17em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.whatsapp-assistant-title {
+  margin-top: 0.35rem;
+  color: #f8fafc;
+  font-family: var(--font-editorial-heading);
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.whatsapp-assistant-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+  color: rgba(203, 213, 225, 0.72);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.whatsapp-assistant-status span {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #25d366;
+  box-shadow: 0 0 16px rgba(37, 211, 102, 0.54);
+}
+
+.whatsapp-assistant-close {
+  display: inline-flex;
+  width: 2.2rem;
+  height: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(226, 232, 240, 0.88);
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.whatsapp-assistant-close:hover,
+.whatsapp-assistant-close:focus-visible {
+  border-color: rgba(248, 231, 161, 0.34);
+  background: rgba(248, 231, 161, 0.08);
+  color: #f8e7a1;
+  transform: translateY(-1px);
+}
+
+.whatsapp-assistant-bubble {
+  position: relative;
+  margin-top: 1rem;
+  border: 1px solid rgba(191, 164, 111, 0.18);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(11, 31, 24, 0.82), rgba(4, 13, 10, 0.78));
+  color: rgba(226, 232, 240, 0.84);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  padding: 0.85rem 0.9rem;
+}
+
+.whatsapp-assistant-bubble[data-updated="true"] {
+  animation: whatsappAnswerPulse 360ms ease both;
+}
+
+.whatsapp-assistant-quick-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+
+.whatsapp-assistant-quick {
+  display: flex;
+  min-width: 0;
+  min-height: 2.6rem;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(191, 164, 111, 0.22);
+  border-radius: 8px;
+  background: rgba(248, 231, 161, 0.07);
+  color: #f8e7a1;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 850;
+  line-height: 1.15;
+  padding: 0.65rem 0.7rem;
+  text-align: left;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.whatsapp-assistant-quick:hover,
+.whatsapp-assistant-quick:focus-visible {
+  border-color: rgba(248, 231, 161, 0.5);
+  background: rgba(248, 231, 161, 0.13);
+  color: #fff4bd;
+  transform: translateY(-1px);
+}
+
+.whatsapp-assistant-quick svg {
+  flex: 0 0 auto;
+}
+
+.whatsapp-assistant-field {
+  position: relative;
+  display: block;
+  margin-top: 0.85rem;
+}
+
+.whatsapp-assistant-toggle {
+  position: relative;
+  display: inline-flex;
+  min-height: 3.15rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(248, 231, 161, 0.78);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 32% 18%, rgba(255, 255, 255, 0.38), transparent 1rem),
+    linear-gradient(135deg, #fff8d5 0%, #f8e7a1 36%, #d6b25e 78%, #fffaf0 100%);
+  color: #080705;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 900;
+  isolation: isolate;
+  overflow: hidden;
+  padding-inline: 1.05rem;
+  transform-origin: center;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    0 20px 56px rgba(214, 178, 94, 0.28);
+}
+
+.whatsapp-assistant-toggle > * {
+  position: relative;
+  z-index: 1;
+}
+
+.whatsapp-assistant-toggle::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+  inset: -45% -32%;
+  background: linear-gradient(120deg, transparent 28%, rgba(255, 255, 255, 0.42), transparent 72%);
+  transform: translateX(-120%) rotate(10deg);
+  transition: transform 520ms ease;
+}
+
+.whatsapp-assistant-toggle:hover,
+.whatsapp-assistant[data-open="true"] .whatsapp-assistant-toggle {
+  transform: translateY(-0.28rem) scale(1.025);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 24px 62px rgba(214, 178, 94, 0.42);
+}
+
+.whatsapp-assistant:not([data-open="true"]) .whatsapp-assistant-toggle svg {
+  animation: whatsappIconNudge 3.8s ease-in-out infinite;
+}
+
+.whatsapp-assistant-toggle__pulse {
+  position: absolute;
+  inset: -0.45rem;
+  z-index: 0;
+  border: 1px solid rgba(248, 231, 161, 0.34);
+  border-radius: inherit;
+  animation: whatsappTogglePulse 2.6s ease-out infinite;
+}
+
+.whatsapp-assistant-toggle__badge {
+  position: absolute;
+  top: 0.22rem;
+  right: 0.24rem;
+  z-index: 2;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 2px solid #fff8d5;
+  border-radius: 999px;
+  background: #25d366;
+  box-shadow:
+    0 0 0 0 rgba(37, 211, 102, 0.44),
+    0 0 18px rgba(37, 211, 102, 0.52);
+  animation: whatsappBadgePing 2.4s ease-out infinite;
+}
+
+.whatsapp-assistant[data-open="true"] .whatsapp-assistant-toggle__badge {
+  animation: none;
+  opacity: 0;
+}
+
+.whatsapp-assistant-toggle:hover::after,
+.whatsapp-assistant[data-open="true"] .whatsapp-assistant-toggle::after {
+  transform: translateX(120%) rotate(10deg);
+}
+
+.whatsapp-assistant-textarea {
+  width: 100%;
+  min-height: 6rem;
+  max-height: 9.5rem;
+  border: 1px solid rgba(191, 164, 111, 0.2);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+    rgba(0, 0, 0, 0.26);
+  color: #f8fafc;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  outline: 0;
+  padding: 0.85rem;
+  resize: vertical;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.whatsapp-assistant-textarea:focus-visible {
+  border-color: rgba(248, 231, 161, 0.56);
+  background: rgba(0, 0, 0, 0.32);
+  box-shadow:
+    0 0 0 3px rgba(248, 231, 161, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.whatsapp-assistant-submit {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+  overflow: hidden;
+  border: 1px solid rgba(248, 231, 161, 0.78);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #fff8d5 0%, #f8e7a1 36%, #d6b25e 78%, #fffaf0 100%);
+  color: #080705 !important;
+  font-size: 0.86rem;
+  font-weight: 900;
+  padding-inline: 1rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 18px 42px rgba(214, 178, 94, 0.22);
+  transition:
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.whatsapp-assistant-submit:hover,
+.whatsapp-assistant-submit:focus-visible {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.96),
+    0 22px 58px rgba(214, 178, 94, 0.3);
+  transform: translateY(-1px);
+}
+
+@keyframes whatsappTogglePulse {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.86);
+  }
+
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.16);
+  }
+}
+
+@keyframes whatsappIconNudge {
+  0%,
+  62%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  66% {
+    transform: rotate(-10deg) scale(1.08);
+  }
+
+  70% {
+    transform: rotate(9deg) scale(1.08);
+  }
+
+  74% {
+    transform: rotate(-7deg) scale(1.06);
+  }
+
+  78% {
+    transform: rotate(5deg) scale(1.04);
+  }
+
+  82% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes whatsappBadgePing {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(37, 211, 102, 0.5),
+      0 0 18px rgba(37, 211, 102, 0.52);
+    transform: scale(1);
+  }
+
+  70%,
+  100% {
+    box-shadow:
+      0 0 0 0.55rem rgba(37, 211, 102, 0),
+      0 0 18px rgba(37, 211, 102, 0.52);
+    transform: scale(1.04);
+  }
+}
+
+@keyframes whatsappAnswerPulse {
+  0% {
+    transform: translateY(0);
+    border-color: rgba(248, 231, 161, 0.18);
+  }
+
+  42% {
+    transform: translateY(-2px);
+    border-color: rgba(248, 231, 161, 0.46);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   09. Booking Information Form
+   --------------------------------------------------------------------------
+   Komponen terkait:
+   - `components/features/booking/PackageBookingForm.astro`
+   - `components/features/booking/PackageBookingFields.astro`
+
+   Area ini khusus untuk section "Booking Information / Customize your request
+   before WhatsApp" di detail package. Jangan disamakan dengan `.booking-*`
+   Home hero form.
+
+   Bagian penting:
+   - `.package-booking-section`: background section.
+   - `.package-booking-summary`: card summary package di sisi kiri.
+   - `.package-booking-form`: panel form utama.
+   - `.package-booking-grid`: wrapper field agar field terasa integrated.
+   - `.package-field-card`: wrapper tiap field.
+   - `.package-field-icon`: kotak icon kiri.
+   - `.package-field input/select/textarea`: styling field asli.
+   - `.package-booking-cta`: tombol submit WhatsApp.
+*/
+.package-booking-section {
+  background:
+    radial-gradient(circle at 86% 6%, rgba(248, 231, 161, 0.11), transparent 24rem),
+    radial-gradient(circle at 10% 78%, rgba(6, 78, 59, 0.24), transparent 28rem),
+    linear-gradient(180deg, rgba(11, 12, 16, 0.96), rgba(4, 11, 9, 0.98)),
+    var(--color-black);
+}
+
+.package-booking-copy {
+  position: relative;
+  padding-block: clamp(0.4rem, 1vw, 0.8rem);
+}
+
+.package-booking-copy .editorial-title {
+  max-width: 13.5ch;
+}
+
+/*
+  Package summary card kiri. Ini harus terasa sinkron dengan panel form kanan,
+  tetapi tetap lebih tenang karena sifatnya informatif.
+*/
+.package-booking-summary {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(191, 164, 111, 0.18);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.1), transparent 12rem),
+    linear-gradient(145deg, rgba(7, 26, 20, 0.7), rgba(11, 12, 16, 0.78));
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.1),
+    0 18px 54px rgba(0, 0, 0, 0.2);
+  color: #cbd5e1;
+  padding: clamp(1rem, 2vw, 1.25rem);
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.package-booking-summary::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(248, 231, 161, 0.12), transparent 34%, rgba(226, 232, 240, 0.04));
+  content: "";
+  pointer-events: none;
+}
+
+.package-booking-summary > * {
+  position: relative;
+}
+
+.package-booking-summary:hover {
+  border-color: rgba(248, 231, 161, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.14),
+    0 22px 64px rgba(0, 0, 0, 0.26);
+  transform: translateY(-1px);
+}
+
+.package-booking-summary__eyebrow {
+  display: block;
+  color: rgba(248, 231, 161, 0.78);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.package-booking-summary strong {
+  display: block;
+  margin-top: 0.45rem;
+  color: #f8fafc;
+  font-family: var(--font-editorial-heading);
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.16;
+}
+
+.package-booking-summary__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.package-booking-summary__meta span {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  border: 1px solid rgba(248, 231, 161, 0.16);
+  border-radius: 999px;
+  background: rgba(248, 231, 161, 0.07);
+  color: rgba(226, 232, 240, 0.72);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+  padding-inline: 0.75rem;
+}
+
+/* Panel form utama. Semua field di dalamnya tetap mengikuti logic Astro/script existing. */
+.package-booking-form {
+  border-color: rgba(191, 164, 111, 0.24);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 96% 0%, rgba(248, 231, 161, 0.14), transparent 16rem),
+    radial-gradient(circle at 0% 100%, rgba(6, 78, 59, 0.24), transparent 18rem),
+    linear-gradient(145deg, rgba(7, 26, 20, 0.92), rgba(8, 13, 11, 0.96) 64%),
+    var(--surface-emerald);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.13),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+    0 28px 90px rgba(0, 0, 0, 0.34),
+    0 18px 70px rgba(6, 78, 59, 0.16);
+}
+
+/*
+  Grid field dibuat dengan gap 1px dan background border halus agar field terasa
+  sebagai satu panel integrated, bukan kotak-kotak terpisah.
+*/
+.package-booking-grid {
+  overflow: hidden;
+  gap: 1px;
+  border: 1px solid rgba(191, 164, 111, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.1), transparent 34%, rgba(248, 231, 161, 0.05)),
+    rgba(248, 231, 161, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    0 16px 48px rgba(0, 0, 0, 0.14);
+}
+
+/* Wrapper field individual: Travel Date, Preferred Time, Guests, Pickup, Drop-off, Custom Request. */
+.package-field {
+  display: grid;
+  min-width: 0;
+}
+
+/* Field card menjaga hubungan visual antara icon box dan input area. */
+.package-field-card {
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.05rem);
+  align-items: stretch;
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.05), transparent 10rem),
+    linear-gradient(145deg, rgba(11, 31, 24, 0.82), rgba(4, 13, 10, 0.78));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  padding: clamp(1.05rem, 2vw, 1.25rem);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.package-field-card:focus-within,
+.package-field-card:hover {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.08), transparent 10rem),
+    linear-gradient(145deg, rgba(12, 38, 29, 0.9), rgba(5, 17, 13, 0.84));
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    inset 0 0 0 1px rgba(248, 231, 161, 0.12);
+  transform: none;
+}
+
+/* Icon box kiri field. Dipakai untuk Calendar, Clock, Users, MapPin, MessageCircle. */
+.package-field-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  border: 1px solid rgba(248, 231, 161, 0.22);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(248, 231, 161, 0.14), rgba(6, 78, 59, 0.28)),
+    rgba(191, 164, 111, 0.08);
+  color: rgba(248, 231, 161, 0.86);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.12),
+    0 10px 28px rgba(0, 0, 0, 0.14);
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.package-field-card:hover .package-field-icon,
+.package-field-card:focus-within .package-field-icon {
+  border-color: rgba(248, 231, 161, 0.36);
+  color: #fff4bd;
+  transform: translateY(-1px);
+}
+
+.package-field-body {
+  display: grid;
+  align-content: start;
+  gap: 0.58rem;
+  min-width: 0;
+}
+
+.package-field-label {
+  display: block;
+  color: rgba(248, 231, 161, 0.76);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/*
+  Native input/select/textarea styling.
+  Field names dan value tetap dari komponen Astro; bagian ini hanya visual.
+*/
+.package-field input,
+.package-field select,
+.package-field textarea {
+  width: 100%;
+  min-height: 3.05rem;
+  border: 1px solid rgba(248, 231, 161, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+    linear-gradient(145deg, rgba(2, 9, 7, 0.76), rgba(5, 21, 16, 0.54));
+  color: rgba(248, 250, 252, 0.92);
+  color-scheme: dark;
+  font: inherit;
+  font-size: 0.93rem;
+  font-weight: 720;
+  letter-spacing: 0;
+  line-height: 1.35;
+  outline: 0;
+  padding: 0.86rem 0.9rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 -18px 34px rgba(0, 0, 0, 0.1);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.package-field select {
+  padding-right: 2.2rem;
+}
+
+.package-field input::placeholder,
+.package-field textarea::placeholder {
+  color: rgba(226, 232, 240, 0.42);
+  font-weight: 700;
+}
+
+.package-field input[type="date"],
+.package-field input[type="time"] {
+  text-transform: lowercase;
+}
+
+.package-field input[type="date"]::-webkit-calendar-picker-indicator,
+.package-field input[type="time"]::-webkit-calendar-picker-indicator {
+  border-radius: 999px;
+  cursor: pointer;
+  filter: invert(91%) sepia(20%) saturate(600%) hue-rotate(354deg);
+  opacity: 0.82;
+}
+
+.package-field select option {
+  background: #07100d;
+  color: #f8fafc;
+}
+
+.package-field input:hover,
+.package-field select:hover,
+.package-field textarea:hover {
+  border-color: rgba(248, 231, 161, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012)),
+    linear-gradient(145deg, rgba(2, 9, 7, 0.86), rgba(5, 21, 16, 0.66));
+  color: #f8fafc;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.075),
+    inset 0 -18px 34px rgba(0, 0, 0, 0.12),
+    0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+.package-field textarea {
+  min-height: 8.25rem;
+  resize: vertical;
+}
+
+.package-field input:focus-visible,
+.package-field select:focus-visible,
+.package-field textarea:focus-visible {
+  border-color: rgba(248, 231, 161, 0.56);
+  background:
+    radial-gradient(circle at 88% 0%, rgba(248, 231, 161, 0.08), transparent 8rem),
+    linear-gradient(145deg, rgba(3, 12, 9, 0.92), rgba(7, 26, 20, 0.76));
+  color: #f8fafc;
+  box-shadow:
+    0 0 0 3px rgba(248, 231, 161, 0.11),
+    0 0 30px rgba(214, 178, 94, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.package-booking-cta {
+  position: relative;
+  min-height: 3.35rem;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 20px 56px rgba(214, 178, 94, 0.26),
+    0 0 0 1px rgba(214, 178, 94, 0.12);
+}
+
+.package-booking-cta:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.96),
+    0 24px 68px rgba(214, 178, 94, 0.34),
+    0 0 0 1px rgba(214, 178, 94, 0.16);
+}
+
+.package-booking-section--light {
+  border-color: rgba(216, 198, 163, 0.54);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(214, 178, 94, 0.18), transparent 24rem),
+    radial-gradient(circle at 12% 86%, rgba(191, 164, 111, 0.16), transparent 28rem),
+    linear-gradient(180deg, #fbf8f1 0%, #f4ead8 100%);
+  color: #111827;
+}
+
+.package-booking-section--light .package-booking-copy .editorial-title {
+  color: #111827;
+}
+
+.package-booking-section--light .package-booking-copy .editorial-lede {
+  color: #4b5563;
+}
+
+.package-booking-section--light .package-booking-summary,
+.package-booking-section--light .package-booking-form {
+  border-color: rgba(191, 164, 111, 0.28);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(214, 178, 94, 0.13), transparent 15rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(250, 244, 232, 0.92));
+  color: #111827;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    0 22px 70px rgba(44, 34, 16, 0.12);
+}
+
+.package-booking-section--light .package-booking-summary::before {
+  background: linear-gradient(135deg, rgba(214, 178, 94, 0.12), transparent 40%, rgba(255, 255, 255, 0.48));
+}
+
+.package-booking-section--light .package-booking-summary__eyebrow {
+  color: #8a6a22;
+}
+
+.package-booking-section--light .package-booking-summary strong {
+  color: #111827;
+}
+
+.package-booking-section--light .package-booking-summary__meta span {
+  border-color: rgba(191, 164, 111, 0.26);
+  background: rgba(255, 255, 255, 0.62);
+  color: #4b5563;
+}
+
+.package-booking-section--light .package-booking-grid {
+  border-color: rgba(191, 164, 111, 0.24);
+  background: rgba(191, 164, 111, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    0 16px 48px rgba(44, 34, 16, 0.08);
+}
+
+.package-booking-section--light .package-field-card {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(214, 178, 94, 0.07), transparent 10rem),
+    rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+}
+
+.package-booking-section--light .package-field-card:focus-within,
+.package-booking-section--light .package-field-card:hover {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(214, 178, 94, 0.11), transparent 10rem),
+    rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    inset 0 0 0 1px rgba(191, 164, 111, 0.18);
+}
+
+.package-booking-section--light .package-field-icon {
+  border-color: rgba(191, 164, 111, 0.28);
+  background:
+    linear-gradient(145deg, rgba(255, 244, 189, 0.72), rgba(214, 178, 94, 0.16)),
+    rgba(255, 255, 255, 0.58);
+  color: #8a6a22;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 10px 26px rgba(44, 34, 16, 0.08);
+}
+
+.package-booking-section--light .package-field-card:hover .package-field-icon,
+.package-booking-section--light .package-field-card:focus-within .package-field-icon {
+  border-color: rgba(138, 106, 34, 0.4);
+  color: #6f5318;
+}
+
+.package-booking-section--light .package-field-label {
+  color: #8a6a22;
+}
+
+.package-booking-section--light .package-field input,
+.package-booking-section--light .package-field select,
+.package-booking-section--light .package-field textarea {
+  border-color: rgba(191, 164, 111, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(250, 247, 241, 0.9));
+  color: #111827;
+  color-scheme: light;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -14px 28px rgba(191, 164, 111, 0.04);
+}
+
+.package-booking-section--light .package-field input::placeholder,
+.package-booking-section--light .package-field textarea::placeholder {
+  color: rgba(75, 85, 99, 0.58);
+}
+
+.package-booking-section--light .package-field input[type="date"]::-webkit-calendar-picker-indicator,
+.package-booking-section--light .package-field input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: sepia(56%) saturate(720%) hue-rotate(359deg) brightness(78%);
+}
+
+.package-booking-section--light .package-field select option {
+  background: #fffaf0;
+  color: #111827;
+}
+
+.package-booking-section--light .package-field input:hover,
+.package-booking-section--light .package-field select:hover,
+.package-booking-section--light .package-field textarea:hover,
+.package-booking-section--light .package-field input:focus-visible,
+.package-booking-section--light .package-field select:focus-visible,
+.package-booking-section--light .package-field textarea:focus-visible {
+  border-color: rgba(138, 106, 34, 0.38);
+  background: #ffffff;
+  color: #111827;
+  box-shadow:
+    0 0 0 3px rgba(214, 178, 94, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.contact-planner {
+  scroll-margin-top: 7rem;
+}
+
+.contact-planner--light {
+  border: 1px solid rgba(191, 164, 111, 0.28);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(214, 178, 94, 0.18), transparent 24rem),
+    radial-gradient(circle at 12% 86%, rgba(191, 164, 111, 0.16), transparent 28rem),
+    linear-gradient(180deg, #fbf8f1 0%, #f4ead8 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    0 22px 70px rgba(44, 34, 16, 0.12);
+}
+
+.contact-planner--flush {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.contact-planner__grid {
+  overflow: hidden;
+  gap: 1px;
+  border: 1px solid rgba(191, 164, 111, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(248, 231, 161, 0.1), transparent 34%, rgba(248, 231, 161, 0.05)),
+    rgba(248, 231, 161, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    0 16px 48px rgba(0, 0, 0, 0.14);
+}
+
+.contact-planner__field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.05rem);
+  min-width: 0;
+  align-items: stretch;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.05), transparent 10rem),
+    linear-gradient(145deg, rgba(11, 31, 24, 0.82), rgba(4, 13, 10, 0.78));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  padding: clamp(1.05rem, 2vw, 1.25rem);
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.contact-planner__field:has(input[type="date"]),
+.contact-planner__field:has(input[type="time"]) {
+  cursor: pointer;
+}
+
+.contact-planner__field:hover,
+.contact-planner__field:focus-within {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.08), transparent 10rem),
+    linear-gradient(145deg, rgba(12, 38, 29, 0.9), rgba(5, 17, 13, 0.84));
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.08),
+    inset 0 0 0 1px rgba(248, 231, 161, 0.12);
+}
+
+.contact-planner__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  border: 1px solid rgba(248, 231, 161, 0.22);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(248, 231, 161, 0.14), rgba(6, 78, 59, 0.28)),
+    rgba(191, 164, 111, 0.08);
+  color: rgba(248, 231, 161, 0.86);
+  box-shadow:
+    inset 0 1px 0 rgba(248, 231, 161, 0.12),
+    0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+.contact-planner__body {
+  display: grid;
+  align-content: start;
+  gap: 0.58rem;
+  min-width: 0;
+}
+
+.contact-planner__label {
+  display: block;
+  color: rgba(248, 231, 161, 0.76);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.contact-planner__field input,
+.contact-planner__field select,
+.contact-planner__field textarea {
+  width: 100%;
+  min-height: 3.05rem;
+  border: 1px solid rgba(248, 231, 161, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+    linear-gradient(145deg, rgba(2, 9, 7, 0.76), rgba(5, 21, 16, 0.54));
+  color: rgba(248, 250, 252, 0.92);
+  color-scheme: dark;
+  font: inherit;
+  font-size: 0.93rem;
+  font-weight: 720;
+  letter-spacing: 0;
+  line-height: 1.35;
+  outline: 0;
+  padding: 0.86rem 0.9rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 -18px 34px rgba(0, 0, 0, 0.1);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.contact-planner__field textarea {
+  min-height: 8.25rem;
+  resize: vertical;
+}
+
+.contact-planner__field input::placeholder,
+.contact-planner__field textarea::placeholder {
+  color: rgba(226, 232, 240, 0.42);
+  font-weight: 700;
+}
+
+.contact-planner__field select option {
+  background: #07100d;
+  color: #f8fafc;
+}
+
+.contact-planner__field input:hover,
+.contact-planner__field select:hover,
+.contact-planner__field textarea:hover,
+.contact-planner__field input:focus-visible,
+.contact-planner__field select:focus-visible,
+.contact-planner__field textarea:focus-visible {
+  border-color: rgba(248, 231, 161, 0.5);
+  background:
+    radial-gradient(circle at 88% 0%, rgba(248, 231, 161, 0.08), transparent 8rem),
+    linear-gradient(145deg, rgba(3, 12, 9, 0.92), rgba(7, 26, 20, 0.76));
+  color: #f8fafc;
+  box-shadow:
+    0 0 0 3px rgba(248, 231, 161, 0.11),
+    0 0 30px rgba(214, 178, 94, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.contact-planner--light .contact-planner__grid {
+  border-color: rgba(191, 164, 111, 0.24);
+  background: rgba(191, 164, 111, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    0 16px 48px rgba(44, 34, 16, 0.08);
+}
+
+.contact-planner--light .contact-planner__field {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(214, 178, 94, 0.07), transparent 10rem),
+    rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+}
+
+.contact-planner--light .contact-planner__field:hover,
+.contact-planner--light .contact-planner__field:focus-within {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(214, 178, 94, 0.11), transparent 10rem),
+    rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    inset 0 0 0 1px rgba(191, 164, 111, 0.18);
+}
+
+.contact-planner--light .contact-planner__icon {
+  border-color: rgba(191, 164, 111, 0.28);
+  background:
+    linear-gradient(145deg, rgba(255, 244, 189, 0.72), rgba(214, 178, 94, 0.16)),
+    rgba(255, 255, 255, 0.58);
+  color: #8a6a22;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 10px 26px rgba(44, 34, 16, 0.08);
+}
+
+.contact-planner--light .contact-planner__label {
+  color: #8a6a22;
+}
+
+.contact-planner--light .contact-planner__field input,
+.contact-planner--light .contact-planner__field select,
+.contact-planner--light .contact-planner__field textarea {
+  border-color: rgba(191, 164, 111, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(250, 247, 241, 0.9));
+  color: #111827;
+  color-scheme: light;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -14px 28px rgba(191, 164, 111, 0.04);
+}
+
+.contact-planner--light .contact-planner__field input::placeholder,
+.contact-planner--light .contact-planner__field textarea::placeholder {
+  color: rgba(75, 85, 99, 0.58);
+}
+
+.contact-planner--light .contact-planner__field select option {
+  background: #fffaf0;
+  color: #111827;
+}
+
+.contact-planner--light .contact-planner__field input:hover,
+.contact-planner--light .contact-planner__field select:hover,
+.contact-planner--light .contact-planner__field textarea:hover,
+.contact-planner--light .contact-planner__field input:focus-visible,
+.contact-planner--light .contact-planner__field select:focus-visible,
+.contact-planner--light .contact-planner__field textarea:focus-visible {
+  border-color: rgba(138, 106, 34, 0.38);
+  background: #ffffff;
+  color: #111827;
+  box-shadow:
+    0 0 0 3px rgba(214, 178, 94, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.contact-planner__cta {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 20px 56px rgba(214, 178, 94, 0.26);
+}
+
+/* Mobile compact untuk Booking Information agar field tidak terasa terlalu panjang. */
+@media (max-width: 639px) {
+  .package-booking-section .editorial-container {
+    width: min(100% - 1.5rem, 1240px);
+  }
+
+  .package-booking-form {
+    padding: 0.9rem;
+  }
+
+  .package-field-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-planner__field {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .package-field-icon {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .contact-planner__icon {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Blog UI
+   --------------------------------------------------------------------------
+   Komponen/halaman terkait:
+   - `pages/blog.astro`
+   - `pages/blog/[slug].astro`
+   - `components/features/blog/BlogCard.astro`
+   - `components/features/blog/ArticleGallery.astro`
+
+   Mengatur chips filter, topic panel, pagination, mobile swipe latest posts,
+   artikel prose, dan frame gallery artikel.
+*/
+.blog-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-height: 1.9rem;
+  border: 1px solid rgba(191, 164, 111, 0.2);
+  border-radius: 999px;
+  background: rgba(191, 164, 111, 0.1);
+  color: rgba(248, 231, 161, 0.86);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0.45rem 0.68rem;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.blog-filter-chip:hover,
+.blog-filter-chip:focus-visible,
+.blog-filter-chip[aria-pressed="true"] {
+  border-color: rgba(248, 231, 161, 0.5);
+  background: rgba(248, 231, 161, 0.16);
+  color: #fff4bd;
+  outline: 0;
+}
+
+.blog-topic-panel {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(248, 231, 161, 0.08), transparent 8rem),
+    linear-gradient(145deg, rgba(7, 26, 20, 0.78), rgba(11, 12, 16, 0.72));
+}
+
+.blog-topic-row {
+  display: grid;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.blog-topic-label {
+  color: rgba(191, 164, 111, 0.86);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.blog-topic-chips {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding-bottom: 0.2rem;
+  scrollbar-width: none;
+}
+
+.blog-topic-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.blog-latest-row {
+  display: grid;
+  gap: 1rem;
+}
+
+.blog-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.blog-pagination[hidden] {
+  display: none;
+}
+
+.blog-pagination-pages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.blog-pagination-button,
+.blog-pagination-page {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(191, 164, 111, 0.24);
+  border-radius: 8px;
+  background: rgba(191, 164, 111, 0.1);
+  color: rgba(248, 231, 161, 0.9);
+  font-size: 0.82rem;
+  font-weight: 900;
+  padding: 0.65rem 0.9rem;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.blog-pagination-page {
+  width: 2.5rem;
+  padding-inline: 0;
+}
+
+.blog-pagination-button:hover,
+.blog-pagination-button:focus-visible,
+.blog-pagination-page:hover,
+.blog-pagination-page:focus-visible,
+.blog-pagination-page[aria-current="page"] {
+  border-color: rgba(248, 231, 161, 0.5);
+  background: rgba(248, 231, 161, 0.16);
+  color: #fff4bd;
+  outline: 0;
+}
+
+.blog-pagination-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+@media (max-width: 767px) {
+  .blog-latest-row {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(17.5rem, calc(100vw - 2rem));
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-block: 0.25rem 0.85rem;
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(191, 164, 111, 0.5) transparent;
+  }
+
+  .blog-latest-row > [data-blog-card] {
+    scroll-snap-align: start;
+  }
+}
+
+.blog-prose {
+  color: #cbd5e1;
+}
+
+.blog-prose .blog-lead {
+  color: #e2e8f0;
+  font-size: clamp(1.06rem, 2vw, 1.22rem);
+  font-weight: 600;
+  line-height: 1.85;
+}
+
+.blog-prose section {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.blog-prose h2 {
+  color: #f8fafc;
+  font-family: var(--font-editorial-heading);
+  font-size: clamp(1.7rem, 4vw, 2.45rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.08;
+}
+
+.blog-prose p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.article-gallery-frame {
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 640px) {
+  .article-gallery-frame:first-child {
+    aspect-ratio: 16 / 9;
+  }
+}

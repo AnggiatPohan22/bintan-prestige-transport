@@ -1,0 +1,46 @@
+---
+import HeroBackdrop from "@components/core/HeroBackdrop.astro";
+
+interface DetailItem {
+  title: string;
+  description: string;
+  overview: string;
+  image: string;
+  alt: string;
+  heroImages?: string[];
+  priceFrom?: string;
+  duration?: string;
+  capacity?: string;
+  category?: string;
+  mood?: string;
+}
+
+interface Props {
+  item: DetailItem;
+  parentLabel: string;
+  showSummaryCard?: boolean;
+}
+
+const { item, parentLabel, showSummaryCard = true } = Astro.props;
+const heroImages = item.heroImages?.length ? item.heroImages : [item.image];
+const innerClass = showSummaryCard
+  ? "package-detail-hero__inner package-detail-hero__inner--with-summary site-hero-inner site-page-hero-inner editorial-container grid items-end gap-8 md:grid-cols-[1fr_0.78fr]"
+  : "package-detail-hero__inner package-detail-hero__inner--full site-hero-inner site-page-hero-inner editorial-container grid items-end gap-8";
+---
+
+<section class:list={["package-detail-hero site-hero-section relative isolate overflow-hidden bg-[#0b0c10] text-white", !showSummaryCard && "package-detail-hero--full"]}>
+  <HeroBackdrop images={heroImages} className="-z-20" />
+  <div class="package-detail-hero__shade absolute inset-0 -z-10"></div>
+  <div class={innerClass}>
+    <div class="max-w-4xl">
+      <p class="editorial-kicker">{parentLabel}</p>
+      <h1 class="editorial-heading mt-4 max-w-[12ch] text-[#f8fafc]">{item.title}</h1>
+      <p class="editorial-lede mt-5 text-slate-300">{item.overview}</p>
+      <div class="mt-7 flex flex-wrap gap-2 text-xs font-bold text-slate-200">
+        {item.priceFrom && <span class="gold-pill rounded-full px-3 py-1">{item.priceFrom}</span>}
+        {item.duration && <span class="rounded-full border border-white/12 bg-black/24 px-3 py-1">{item.duration}</span>}
+        {item.capacity && <span class="rounded-full border border-white/12 bg-black/24 px-3 py-1">{item.capacity}</span>}
+      </div>
+    </div>
+  </div>
+</section>

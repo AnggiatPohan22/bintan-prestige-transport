@@ -1,0 +1,26 @@
+---
+import FeatureCard from "@components/core/FeatureCard.astro";
+
+const features = [
+  {
+    title: "Local Bintan route support",
+    description: "We help arrange airport, ferry, resort, beach, city, and activity routes with practical local timing.",
+  },
+  {
+    title: "Private driver comfort",
+    description: "Every trip is planned around private vehicle movement, clear pickup points, luggage needs, and guest pace.",
+  },
+  {
+    title: "Easy WhatsApp coordination",
+    description: "Share your date, route, guest, and preferences once, then confirm availability without a complicated booking flow.",
+  },
+];
+---
+
+<div class="home-scroll-row home-scroll-row-3 md:grid md:grid-cols-3">
+  {features.map((feature) => (
+    <div class="home-scroll-card">
+      <FeatureCard {...feature} />
+    </div>
+  ))}
+</div>

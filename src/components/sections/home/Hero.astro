@@ -1,0 +1,37 @@
+---
+import { site } from "@data/site";
+import { heroSlides } from "@data/media";
+import HeroBackdrop from "@components/core/HeroBackdrop.astro";
+import MinimalBookingForm from "./MinimalBookingForm.astro";
+---
+
+<section class="site-hero-section relative isolate overflow-hidden bg-[#0b0c10] text-white">
+  <HeroBackdrop images={heroSlides.home} video={site.heroVideo} />
+  <div class="home-hero-shade absolute inset-0 -z-10"></div>
+
+  <div class="site-hero-inner site-home-hero-inner editorial-container flex min-h-[calc(84svh-4rem)] flex-col justify-center py-12 pb-24 md:min-h-[620px] md:py-16 md:pb-28">
+    <div class="hero-copy max-w-5xl">
+      <p class="editorial-kicker">
+        Premium Taxi & Tour Concierge
+      </p>
+      <h1 class="editorial-heading mt-4 text-[#f8fafc]">
+        Trusted Taxi & Island Tour.
+      </h1>
+      <p class="editorial-lede mt-5 text-slate-300">
+        Move through Bintan with calm private transfers, polished vehicle options, and curated tour pacing designed for guests who value comfort, timing, and a human concierge touch.
+      </p>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a class="editorial-button-primary" href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`} target="_blank" rel="noreferrer">Book via WhatsApp</a>
+        <a class="editorial-button-secondary" href="/packages/activities-packages">Explore Packages</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="booking-float-shell">
+  <div class="editorial-container">
+    <div class="hero-panel">
+      <MinimalBookingForm />
+    </div>
+  </div>
+</div>

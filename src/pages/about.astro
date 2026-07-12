@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Breadcrumb from "../components/common/Breadcrumb.astro";
-import SectionHeader from "../components/common/SectionHeader.astro";
-import AboutHero from "../components/about/AboutHero.astro";
-import AboutStory from "../components/about/AboutStory.astro";
-import AboutSoftSell from "../components/about/AboutSoftSell.astro";
-import TrustSignals from "../components/about/TrustSignals.astro";
-import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
-import { breadcrumbSchema, organizationSchema } from "../data/schema";
+import Breadcrumb from "@components/core/Breadcrumb.astro";
+import SectionHeader from "@components/core/SectionHeader.astro";
+import AboutHero from "@components/sections/about/AboutHero.astro";
+import AboutStory from "@components/sections/about/AboutStory.astro";
+import AboutSoftSell from "@components/sections/about/AboutSoftSell.astro";
+import TrustSignals from "@components/sections/about/TrustSignals.astro";
+import WhatsAppCTA from "@components/core/WhatsAppCTA.astro";
+import { breadcrumbSchema, organizationSchema } from "@data/schema";
 
 const breadcrumbs = [
   { label: "Home", href: "/" },

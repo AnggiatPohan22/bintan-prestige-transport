@@ -1,0 +1,61 @@
+---
+import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { navigation } from "@data/navigation";
+import { site } from "@data/site";
+import MobileNav from "./MobileNav.astro";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const isActive = (href: string) => {
+  const normalizedHref = href.replace(/\/$/, "") || "/";
+
+  if (normalizedHref === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath === normalizedHref || currentPath.startsWith(`${normalizedHref}/`);
+};
+---
+
+<header class="site-header">
+  <nav class="site-header__nav editorial-container">
+    <a href="/" class="site-header__brand group" aria-label={`${site.shortName} home`}>
+      {
+        site.logoImage ? (
+          <img class="site-header__logo" src={site.logoImage} alt={`${site.shortName} logo`} />
+        ) : (
+          <span class="site-header__wordmark">
+            <span>{site.shortName}</span>
+            <small>{site.tagline}</small>
+          </span>
+        )
+      }
+    </a>
+
+    <div class="site-header__links">
+      {navigation.map((item) => (
+        <a
+          class:list={["site-header__link", isActive(item.href) && "is-active"]}
+          href={item.href}
+          aria-current={isActive(item.href) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+
+    <div class="site-header__actions">
+      <a
+        class="site-header__cta"
+        href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <MessageCircle className="site-header__cta-icon" aria-hidden="true" />
+        <span>Book Now</span>
+        <ArrowUpRight className="h-4 w-4 text-current" aria-hidden="true" />
+      </a>
+      <MobileNav />
+    </div>
+  </nav>
+</header>

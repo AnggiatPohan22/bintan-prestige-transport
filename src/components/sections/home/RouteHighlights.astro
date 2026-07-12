@@ -1,0 +1,98 @@
+---
+import SwipeControls from "@components/core/SwipeControls.astro";
+import { routes } from "@data/routes";
+import { tours } from "@data/tours";
+import { site } from "@data/site";
+
+const items = [...routes.slice(0, 2), ...tours.slice(0, 2)];
+
+const getItemHref = (item: (typeof items)[number]) =>
+  item.category === "taxi-transfer" ? `/packages/pick-up-drop/${item.slug}` : `/packages/activities-packages/${item.slug}`;
+
+const getPriceDisplay = (value?: string) => {
+  if (!value) {
+    return null;
+  }
+
+  if (/^Depending Requests$/i.test(value)) {
+    return {
+      label: "Rate",
+      price: "By Request",
+    };
+  }
+
+  const startFromMatch = value.match(/^Start From\s*:\s*(.+)$/i);
+
+  if (startFromMatch) {
+    return {
+      label: "Start From",
+      price: startFromMatch[1],
+    };
+  }
+
+  return {
+    label: "",
+    price: value,
+  };
+};
+---
+
+<div class="home-package-carousel" data-swipe-carousel>
+  <div class="home-scroll-row home-scroll-row-4 lg:grid lg:grid-cols-4" data-swipe-track>
+    {items.map((item) => {
+      const priceDisplay = getPriceDisplay(item.priceFrom);
+
+      return (
+        <article class={`package-offer-card package-offer-card--home-route package-offer-card--${item.category} home-scroll-card group`} data-swipe-item>
+          <div class="package-offer-card__media route-image-frame">
+            <img
+              class="package-offer-card__image"
+              src={item.image}
+              alt={item.alt}
+              loading="lazy"
+            />
+            <div class="package-offer-card__shade" aria-hidden="true"></div>
+            <div class="package-offer-card__badges">
+              <span class="package-offer-card__category">{item.category}</span>
+              {priceDisplay && (
+                <span class="package-offer-card__price">
+                  {priceDisplay.label && <span>{priceDisplay.label}</span>}
+                  <strong>{priceDisplay.price}</strong>
+                </span>
+              )}
+            </div>
+          </div>
+          <div class="package-offer-card__body">
+            <div class="package-offer-card__copy">
+              <h3 class="package-offer-card__title">{item.title}</h3>
+              <p class="package-offer-card__description">{item.description}</p>
+            </div>
+            <div class="package-offer-card__meta" aria-label="Route basics">
+              <span>{item.duration}</span>
+              <span>{item.capacity}</span>
+            </div>
+            <ul class="package-offer-card__highlights" aria-label="Route highlights">
+              {item.highlights.slice(0, 3).map((highlight) => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+            <div class="package-offer-card__actions">
+              <a class="package-offer-card__link package-offer-card__link--secondary" href={getItemHref(item)}>
+                Read more
+              </a>
+              <a
+                class="package-offer-card__link package-offer-card__link--primary"
+                href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(item.whatsappMessage)}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ask availability
+              </a>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+  <SwipeControls count={items.length} label="Featured routes" className="home-package-dots" />
+</div>

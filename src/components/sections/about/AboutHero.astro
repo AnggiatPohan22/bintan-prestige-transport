@@ -1,0 +1,28 @@
+---
+import HeroBackdrop from "@components/core/HeroBackdrop.astro";
+import { heroSlides } from "@data/media";
+
+
+---
+
+<section class="about-hero site-hero-section relative isolate flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-[#0b0c10] text-white">
+  <HeroBackdrop images={heroSlides.about} className="-z-20" />
+  <div class="about-hero__shade absolute inset-0 -z-10"></div>
+  <div class="site-hero-inner about-hero__inner container-page relative flex min-h-[100svh] w-full flex-col justify-end py-12 lg:py-16">
+    <div class="hero-copy max-w-4xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[#e2e8f0]/64">About Bintan Prestige</p>
+      <h1 class="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#e2e8f0] sm:text-5xl lg:text-6xl">
+        Private taxi and tour support for premium Bintan travel.
+      </h1>
+      <p class="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
+        Bintan Prestige helps guests move comfortably between ferry terminals, airport pickups, resorts, beaches, city stops, and activity routes with private driver coordination.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a class="luxury-btn-primary" href="/packages/pick-up-drop">View Taxi & Tours</a>
+        <a class="luxury-btn-secondary" href="/packages/activities-packages">Explore Activities</a>
+      </div>
+    </div>
+
+    
+  </div>
+</section>

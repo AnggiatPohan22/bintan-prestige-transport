@@ -1,0 +1,301 @@
+---
+import { CalendarDays, Car, MapPin, Search } from "lucide-react";
+import { site } from "@data/site";
+
+const message =
+  "Hello, I want to check availability. Pick-up: -, Drop-off: -, Date: -, Service type: premium taxi or tour.";
+const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+const fields = [
+  {
+    label: "Pick-up",
+    name: "pickup",
+    icon: MapPin,
+    options: ["Airport", "Hotel", "Ferry terminal", "Resort", "Custom pick-up"],
+  },
+  {
+    label: "Drop-off",
+    name: "dropoff",
+    icon: MapPin,
+    options: ["Resort", "Beach", "City", "Ferry terminal", "Custom drop-off"],
+  },
+];
+
+const serviceOptions = ["Private transfer", "Island tour", "Transfer + island tour", "Hourly private driver"];
+---
+
+<form
+  id="hero-availability-form"
+  class="booking-floating-form luxury-surface mx-auto grid w-full max-w-6xl gap-3 rounded-[8px] p-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr_auto]"
+  action={href}
+  data-whatsapp-number={site.whatsappNumber}
+>
+  {fields.map((field) => {
+    const Icon = field.icon;
+    return (
+      <div class="booking-filter-card luxury-card flex min-h-16 items-center gap-3 rounded-[8px] px-4 transition duration-200 hover:border-[#f8e7a1]/34" data-booking-select>
+        <Icon className="h-5 w-5 shrink-0 text-[#f8e7a1]/82" aria-hidden="true" />
+        <div class="min-w-0 flex-1">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#f8e7a1]/54" id={`${field.name}-label`}>{field.label}</p>
+          <input type="hidden" name={field.name} value={field.options[0]} data-booking-input />
+          <button
+            class="booking-filter-trigger mt-1"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-labelledby={`${field.name}-label`}
+            data-booking-trigger
+          >
+            <span class="truncate" data-booking-value>{field.options[0]}</span>
+            <span class="booking-filter-chevron" aria-hidden="true"></span>
+          </button>
+          <div class="booking-filter-menu" role="listbox" hidden data-booking-menu>
+            {field.options.map((option, index) => (
+              <button
+                class="booking-filter-option"
+                type="button"
+                role="option"
+                aria-selected={index === 0 ? "true" : "false"}
+                data-booking-option={option}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+
+  <div class="booking-filter-card luxury-card flex min-h-16 items-center gap-3 rounded-[8px] px-4 transition duration-200 hover:border-[#f8e7a1]/34" data-booking-date>
+    <CalendarDays className="h-5 w-5 shrink-0 text-[#f8e7a1]/82" aria-hidden="true" />
+    <div class="min-w-0 flex-1">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#f8e7a1]/54" id="travel-date-label">Date</p>
+      <button
+        class="booking-filter-trigger mt-1"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-labelledby="travel-date-label"
+        data-booking-date-trigger
+      >
+        <span class="truncate text-slate-400" data-booking-date-value>Choose travel date</span>
+        <span class="booking-date-icon" aria-hidden="true"></span>
+      </button>
+      <div class="booking-date-menu" hidden data-booking-date-menu>
+        <label class="block">
+          <span class="booking-date-label">Travel date</span>
+          <input class="booking-date-field" type="date" name="date" aria-label="Travel date" data-booking-date-input />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="booking-filter-card luxury-card flex min-h-16 items-center gap-3 rounded-[8px] px-4 transition duration-200 hover:border-[#f8e7a1]/34" data-booking-select>
+    <Car className="h-5 w-5 shrink-0 text-[#f8e7a1]/82" aria-hidden="true" />
+    <div class="min-w-0 flex-1">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#f8e7a1]/54" id="service-label">Service Type</p>
+      <input type="hidden" name="service" value={serviceOptions[0]} data-booking-input />
+      <button
+        class="booking-filter-trigger mt-1"
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        aria-labelledby="service-label"
+        data-booking-trigger
+      >
+        <span class="truncate" data-booking-value>{serviceOptions[0]}</span>
+        <span class="booking-filter-chevron" aria-hidden="true"></span>
+      </button>
+      <div class="booking-filter-menu" role="listbox" hidden data-booking-menu>
+        {serviceOptions.map((option, index) => (
+          <button
+            class="booking-filter-option"
+            type="button"
+            role="option"
+            aria-selected={index === 0 ? "true" : "false"}
+            data-booking-option={option}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="availability-submit luxury-btn-primary min-h-14 rounded-[8px] px-5 sm:col-span-2 lg:col-span-1"
+  >
+    <Search className="h-4 w-4" aria-hidden="true" />
+    <span>Check Availability</span>
+  </button>
+</form>
+
+<script>
+  const availabilityForm = document.querySelector<HTMLFormElement>("#hero-availability-form");
+  const bookingSelects = availabilityForm?.querySelectorAll<HTMLElement>("[data-booking-select]");
+  const bookingDate = availabilityForm?.querySelector<HTMLElement>("[data-booking-date]");
+  const dateInput = bookingDate?.querySelector<HTMLInputElement>("[data-booking-date-input]");
+  const dateTrigger = bookingDate?.querySelector<HTMLButtonElement>("[data-booking-date-trigger]");
+  const dateValue = bookingDate?.querySelector<HTMLElement>("[data-booking-date-value]");
+  const dateMenu = bookingDate?.querySelector<HTMLElement>("[data-booking-date-menu]");
+
+  const buildAvailabilityUrl = () => {
+    if (!availabilityForm) return "";
+
+    const data = new FormData(availabilityForm);
+    const phone = availabilityForm.dataset.whatsappNumber ?? "";
+    const pickup = data.get("pickup")?.toString() || "-";
+    const dropoff = data.get("dropoff")?.toString() || "-";
+    const date = data.get("date")?.toString() || "Flexible / to confirm";
+    const service = data.get("service")?.toString() || "-";
+    const message = [
+      "Hello, I want to check availability.",
+      "",
+      `Pick-up: ${pickup}`,
+      `Drop-off: ${dropoff}`,
+      `Date: ${date}`,
+      `Service type: ${service}`,
+      "",
+      "Please confirm availability, estimated price, and recommended vehicle.",
+    ].join("\n");
+
+    return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  };
+
+  const closeDateMenu = () => {
+    if (!bookingDate || !dateTrigger || !dateMenu) return;
+
+    bookingDate.dataset.open = "false";
+    dateTrigger.setAttribute("aria-expanded", "false");
+    dateMenu.hidden = true;
+  };
+
+  const closeBookingMenus = (except?: HTMLElement) => {
+    bookingSelects?.forEach((select) => {
+      if (select === except) return;
+
+      const trigger = select.querySelector<HTMLButtonElement>("[data-booking-trigger]");
+      const menu = select.querySelector<HTMLElement>("[data-booking-menu]");
+
+      select.dataset.open = "false";
+      trigger?.setAttribute("aria-expanded", "false");
+
+      if (menu) {
+        menu.hidden = true;
+      }
+    });
+
+    if (except !== bookingDate) {
+      closeDateMenu();
+    }
+  };
+
+  bookingSelects?.forEach((select) => {
+    const trigger = select.querySelector<HTMLButtonElement>("[data-booking-trigger]");
+    const input = select.querySelector<HTMLInputElement>("[data-booking-input]");
+    const value = select.querySelector<HTMLElement>("[data-booking-value]");
+    const menu = select.querySelector<HTMLElement>("[data-booking-menu]");
+    const options = select.querySelectorAll<HTMLButtonElement>("[data-booking-option]");
+
+    const setOpen = (isOpen: boolean) => {
+      if (!trigger || !menu) return;
+
+      if (isOpen) {
+        closeBookingMenus(select);
+      }
+
+      select.dataset.open = String(isOpen);
+      trigger.setAttribute("aria-expanded", String(isOpen));
+      menu.hidden = !isOpen;
+    };
+
+    trigger?.addEventListener("click", () => {
+      setOpen(Boolean(menu?.hidden));
+    });
+
+    select.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("[data-booking-option]")) return;
+      if ((event.target as HTMLElement).closest("[data-booking-trigger]")) return;
+
+      trigger?.click();
+    });
+
+    options.forEach((option) => {
+      option.addEventListener("click", () => {
+        const optionValue = option.dataset.bookingOption ?? "";
+
+        if (input) input.value = optionValue;
+        if (value) value.textContent = optionValue;
+
+        options.forEach((item) => item.setAttribute("aria-selected", String(item === option)));
+        setOpen(false);
+        availabilityForm?.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+    });
+  });
+
+  const openDatePicker = () => {
+    closeBookingMenus();
+
+    if (bookingDate && dateTrigger && dateMenu) {
+      bookingDate.dataset.open = "true";
+      dateTrigger.setAttribute("aria-expanded", "true");
+      dateMenu.hidden = false;
+    }
+
+    dateInput?.focus();
+
+    window.setTimeout(() => {
+      if (typeof dateInput?.showPicker === "function") {
+        dateInput.showPicker();
+      }
+    }, 80);
+  };
+
+  dateTrigger?.addEventListener("click", openDatePicker);
+  bookingDate?.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).closest("[data-booking-date-trigger]")) return;
+    if ((event.target as HTMLElement).closest("[data-booking-date-menu]")) return;
+    openDatePicker();
+  });
+
+  dateInput?.addEventListener("change", () => {
+    if (!dateValue || !dateInput.value) return;
+
+    const date = new Date(`${dateInput.value}T00:00:00`);
+    dateValue.textContent = new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(date);
+    dateValue.classList.remove("text-slate-400");
+    availabilityForm?.dispatchEvent(new Event("change", { bubbles: true }));
+    closeDateMenu();
+  });
+
+  document.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).closest("#hero-availability-form")) return;
+    closeBookingMenus();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeBookingMenus();
+    }
+  });
+
+  availabilityForm?.addEventListener("change", () => {
+    availabilityForm.action = buildAvailabilityUrl();
+  });
+
+  availabilityForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const url = buildAvailabilityUrl();
+
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+  });
+</script>

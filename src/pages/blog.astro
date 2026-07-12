@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import BlogCard from "../components/blog/BlogCard.astro";
-import Breadcrumb from "../components/common/Breadcrumb.astro";
-import SectionHeader from "../components/common/SectionHeader.astro";
-import WhatsAppCTA from "../components/common/WhatsAppCTA.astro";
-import { absoluteUrl } from "../data/seo";
-import { blogArticles, blogCategories, blogLocations, blogTags, favoriteBlogArticles } from "../data/blog";
-import { breadcrumbSchema, localBusinessSchema, organizationSchema } from "../data/schema";
+import BlogCard from "@components/features/blog/BlogCard.astro";
+import Breadcrumb from "@components/core/Breadcrumb.astro";
+import SectionHeader from "@components/core/SectionHeader.astro";
+import WhatsAppCTA from "@components/core/WhatsAppCTA.astro";
+import { absoluteUrl } from "@data/seo";
+import { blogArticles, blogCategories, blogLocations, blogTags, favoriteBlogArticles } from "@data/blog";
+import { breadcrumbSchema, localBusinessSchema, organizationSchema } from "@data/schema";
 
 const breadcrumbs = [
   { label: "Home", href: "/" },
