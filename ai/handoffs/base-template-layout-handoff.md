@@ -53,6 +53,7 @@ Older reports and handoffs are preserved under:
 | Design tokens | `src/styles/tokens.css` |
 | Component styling | `src/styles/components.css` |
 | Section and responsive styling | `src/styles/sections.css` |
+| Mobile WhatsApp overlap with Home booking form | `src/styles/sections.css` |
 
 ## Page Ownership
 
@@ -102,6 +103,12 @@ npm.cmd run check
 npm.cmd run build
 git diff --check
 ```
+
+Current mobile widget note:
+
+- `src/styles/sections.css` hides `.whatsapp-assistant` on mobile when the active page contains `.booking-floating-form`.
+- This prevents the floating WhatsApp button from covering Home booking fields.
+- Keep this scoped to mobile and booking-form pages unless a future layout adds another fixed bottom widget.
 
 For visual QA, inspect at least:
 

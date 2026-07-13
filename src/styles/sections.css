@@ -1644,7 +1644,7 @@
 @media (max-width: 639px) {
   .whatsapp-assistant {
     right: 0.75rem;
-    bottom: calc(4.75rem + env(safe-area-inset-bottom));
+    bottom: calc(1rem + env(safe-area-inset-bottom));
   }
 
   .whatsapp-assistant-panel {
@@ -1763,6 +1763,10 @@
   .whatsapp-assistant-toggle {
     min-height: 2.95rem;
     padding-inline: 0.95rem;
+  }
+
+  main:has(.booking-floating-form) + .whatsapp-assistant:not([data-open="true"]) {
+    display: none;
   }
 
   .site-header__nav {

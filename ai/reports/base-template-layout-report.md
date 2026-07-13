@@ -235,6 +235,7 @@ To update site-wide legal contact details, start with `src/data/site.ts`.
 
 - `src/styles/sections.css`
   - Page section styling, gallery/fleet systems, footer, responsive overrides, keyframes.
+  - Owns the mobile rule that hides the floating WhatsApp widget on pages with `.booking-floating-form` so it does not cover the Home booking fields.
 
 - `src/styles/themes/*`
   - Optional theme overrides for future redesigns.
@@ -260,10 +261,12 @@ Only create a new file when a new reusable concept cannot fit one of the existin
 
 ## Verification
 
-Last known local verification after the structure refactor:
+Last known local verification:
 
 - `npm.cmd run check` passed.
 - `npm.cmd run build` passed.
+- Mobile preview at 375px checked `/`, `/packages/island-tour`, `/packages/activities-packages`, `/packages/pick-up-drop`, `/about`, `/contact`, and `/blog`.
+- Home mobile hides the floating WhatsApp widget while the booking form is present; the other checked pages keep the widget visible.
 - No push or Cloudflare deployment was run.
 
 ## Known Notes
