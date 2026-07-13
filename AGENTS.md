@@ -63,18 +63,33 @@ to connect to a Laravel CMS API in a later phase.
 
 ## File Organization Rules
 
-- Reusable components live in `src/components`.
+- Reusable UI primitives live in `src/components/core`.
+- Site shell components live in `src/components/site`.
+- Domain widgets live in `src/components/features`.
+- Page sections live in `src/components/sections`.
 - Shared data lives in `src/data`.
 - Layouts live in `src/layouts`.
 - Pages live in `src/pages`.
-- Global styling lives in `src/styles/global.css`.
+- `src/styles/global.css` is the style import manifest only.
+- Design tokens live in `src/styles/tokens.css`.
+- Base typography and global prose live in `src/styles/typography.css`.
+- Shared utilities live in `src/styles/utilities.css`.
+- Reusable component styling lives in `src/styles/components.css`.
+- Page section, footer, responsive, and keyframe styling lives in `src/styles/sections.css`.
+- Optional theme overrides live in `src/styles/themes`.
 - Public images live under `public/images`.
+- Prefer path aliases such as `@components/*`, `@data/*`, `@layouts/*`, and `@styles/*` over deep relative imports.
+- Before creating a new source file, check whether the change belongs in an existing data file, section, feature, core component, or style partial.
 
 ## Reporting And Handoff Rules
 
-- Each step must create a report in `ai/reports`.
-- Each step must create or update handoff files in `ai/handoffs`.
-- Reports should list files created, files modified, verification, known issues, and next step.
+- Keep active documentation small and current.
+- The active report is `ai/reports/base-template-layout-report.md`.
+- The active handoff is `ai/handoffs/base-template-layout-handoff.md`.
+- Update those active files for normal changes instead of creating a new report or handoff for every task.
+- Store historical reports and handoffs in `ai/history/project-journey`.
+- Create a separate new report or handoff only when the user explicitly asks for a milestone document, audit, release note, or rollback handoff.
+- Active reports should list files created, files modified, verification, known issues, and next step.
 
 ## Scope Discipline
 
