@@ -45,6 +45,7 @@ src/
 
 - `src/components/site/Navbar.astro`
   - Reads navigation links from `@data/navigation`.
+  - Adds a scroll-aware glass/blur header state so logo and menu remain readable.
 
 - `src/components/site/MobileNav.astro`
   - Reads navigation links and WhatsApp contact data from `@data/navigation` and `@data/site`.
@@ -55,6 +56,7 @@ src/
 - `src/components/site/FloatingWhatsApp.astro`
   - Reads WhatsApp number, message defaults, and promo ticker copy from `@data/site`.
   - Uses `src/components/core/PromoTicker.astro` under the Continue to WhatsApp button.
+  - Owns the global floating action row: WhatsApp assistant plus Back to Top button.
 
 - `src/components/site/ScrollEffects.astro`
   - Adds lightweight IntersectionObserver reveal hooks and count-up behavior for static pages.
@@ -154,10 +156,16 @@ To update contact information, prefer `src/data/site.ts`. Only edit components f
   - `src/data/seo.ts`
   - `src/data/schema.ts`
 - Components:
-  - `src/components/features/blog/BlogCard.astro`
+- `src/components/features/blog/BlogCard.astro`
   - `src/components/features/blog/ArticleGallery.astro`
 
 To add or edit blog articles, update `src/data/blog.ts`. Do not create a new page for each article unless the routing model changes.
+
+Blog index layout note:
+
+- `src/pages/blog.astro` owns the full-width editorial hero, Browse Topics filters, nearby article results, Favorite Reads panel, article pagination, and service-focus soft selling section.
+- `src/styles/components.css` owns the blog hero, blog discovery layout, Favorite Reads panel, service-focus cards, and article pagination surface.
+- `BlogCard.astro` supports `showFavoriteBadge={false}` so the Browse Topics article list can avoid duplicating the Favorite Reads signal.
 
 ### Pick Up And Drop Page
 
@@ -241,7 +249,8 @@ To update site-wide legal contact details, start with `src/data/site.ts`.
 - `src/styles/components.css`
   - Reusable component systems such as cards, swipers, WhatsApp, booking forms, blog UI.
   - Owns Home booking form field-card internal gradient drift and booking form interaction surfaces.
-  - Owns floating WhatsApp toggle sizing, responsive label/icon treatment, pulse, glow, badge, gradient attention motion, panel content styling, and reusable promo ticker styling.
+  - Owns floating WhatsApp toggle sizing, Back to Top button styling, responsive label/icon treatment, pulse, glow, badge, gradient attention motion, panel content styling, and reusable promo ticker styling.
+  - Owns adaptive luxury pagination surfaces for `SwipeControls` and blog pagination.
 
 - `src/styles/sections.css`
   - Page section styling, gallery/fleet systems, footer, responsive overrides, keyframes.
@@ -286,7 +295,11 @@ Last known local verification:
 - Home mobile keeps the floating WhatsApp widget inside the viewport and stacked above the booking form layer for easier tapping; opening the widget blurs the page background to focus the form.
 - Floating WhatsApp mobile panel uses a safer viewport height, a softer luxury glass header, and a reusable running promo below the Continue to WhatsApp button.
 - `PUBLIC_PROMO_TICKER_TEXT` controls the default running promo text through `src/data/site.ts`.
+- Global floating actions now stack WhatsApp above the Back to Top button, keeping both controls available on every `BaseLayout` page without blocking horizontal content.
+- Navbar scroll state adds a blurred luxury header surface so logo and menu remain visible over page content.
 - Scroll animation pass adds reveal hooks, animated stat numbers, package badge/price shimmer, WhatsApp CTA gradient motion, FAQ internal gradient drift/open animation, randomized information-card border light rail, and a stronger Private Concierge promo panel.
+- Pagination polish keeps non-Fleet carousel/blog controls visually aligned with dark and warm section backgrounds while preserving focus-visible accessibility.
+- Blog index now uses a full-width hero treatment, a Browse Topics discovery panel with nearby article results, a Favorite Reads panel, activity/taxy-inspired article pagination, and a service-focus section instead of internal content-structure copy.
 - No push or Cloudflare deployment was run.
 
 ## Known Notes

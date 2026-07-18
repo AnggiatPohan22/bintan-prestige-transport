@@ -17,7 +17,7 @@ const isActive = (href: string) => {
 };
 ---
 
-<header class="site-header">
+<header class="site-header" data-site-header>
   <nav class="site-header__nav editorial-container">
     <a href="/" class="site-header__brand group" aria-label={`${site.shortName} home`}>
       {
@@ -59,3 +59,14 @@ const isActive = (href: string) => {
     </div>
   </nav>
 </header>
+
+<script>
+  const siteHeader = document.querySelector<HTMLElement>("[data-site-header]");
+
+  const updateHeaderSurface = () => {
+    siteHeader?.classList.toggle("is-scrolled", window.scrollY > 18);
+  };
+
+  updateHeaderSurface();
+  window.addEventListener("scroll", updateHeaderSurface, { passive: true });
+</script>

@@ -38,10 +38,12 @@ Older reports and handoffs are preserved under:
 | --- | --- |
 | Site name, phone, WhatsApp, address, env-backed defaults | `src/data/site.ts` |
 | Navbar or footer links | `src/data/navigation.ts` |
+| Navbar scroll blur/glass readability | `src/components/site/Navbar.astro`, `src/styles/utilities.css` |
 | Page title, canonical, sitemap entries | `src/data/seo.ts` |
 | Schema output | `src/data/schema.ts` |
 | Home gallery | `src/data/gallery.ts` |
 | Blog articles | `src/data/blog.ts` |
+| Blog index hero, Browse Topics, Favorite Reads, article pagination, service-focus section | `src/pages/blog.astro`, `src/styles/components.css` |
 | Transfer route cards and detail pages | `src/data/routes.ts`, `src/data/transportRoutes.ts` |
 | Tour/activity cards and detail pages | `src/data/tours.ts` |
 | Fleet selector | `src/data/carTypes.ts` |
@@ -57,7 +59,9 @@ Older reports and handoffs are preserved under:
 | Home booking form field gradient motion | `src/styles/components.css` |
 | Mobile WhatsApp overlap with Home booking form | `src/styles/sections.css` |
 | Floating WhatsApp responsive icon/button polish | `src/components/site/FloatingWhatsApp.astro`, `src/styles/components.css`, `src/styles/sections.css` |
+| Global floating WhatsApp and Back to Top actions | `src/components/site/FloatingWhatsApp.astro`, `src/styles/components.css`, `src/styles/sections.css` |
 | Running text promo / announcement ticker | `.env`, `.env.example`, `src/data/site.ts`, `src/components/core/PromoTicker.astro`, `src/styles/components.css` |
+| Non-Fleet carousel/blog pagination polish | `src/styles/components.css` |
 
 ## Page Ownership
 
@@ -85,6 +89,7 @@ Older reports and handoffs are preserved under:
 - Pages: `src/pages/blog.astro`, `src/pages/blog/[slug].astro`
 - Components: `src/components/features/blog/*`
 - Data: `src/data/blog.ts`, `src/data/seo.ts`, `src/data/schema.ts`
+- Blog index owns the full-width hero, Browse Topics filters with nearby article results, Favorite Reads panel, activity/taxy-inspired pagination, and service-focus soft selling section.
 
 ### Pick Up And Drop
 
@@ -115,6 +120,9 @@ Current mobile widget note:
 - Opening `.whatsapp-assistant` adds a blurred page backdrop so the widget form becomes the focus layer.
 - The mobile panel uses safer viewport sizing, a softer glass header treatment, and a running promo slot below `Continue to WhatsApp`.
 - The default running promo text is controlled by `PUBLIC_PROMO_TICKER_TEXT`, exposed through `site.promoTickerText`, and rendered by `src/components/core/PromoTicker.astro`.
+- `FloatingWhatsApp.astro` also renders the global Back to Top button, so changes to the fixed WhatsApp/back-to-top pair should stay in that component and its CSS.
+- The global floating action pair is stacked vertically, with WhatsApp above Back to Top, to avoid covering content horizontally on mobile.
+- `Navbar.astro` toggles the header scroll state and `src/styles/utilities.css` owns the blurred header surface.
 - Keep this scoped to mobile booking-form layout unless a future design changes the fixed widget position.
 
 Current transfer card note:
@@ -128,6 +136,7 @@ Current animation note:
 - `src/styles/sections.css` owns title reveal, stat glow/count motion, package badge shimmer, WhatsApp CTA gradient motion, randomized info-card border light rail, FAQ internal gradient drift/answer reveal, and Private Concierge promo styling.
 - `src/styles/components.css` owns the Home booking form field-card internal gradient drift.
 - `src/styles/components.css` and `src/styles/sections.css` own the floating WhatsApp responsive tap target, label/icon treatment, glow, pulse, badge, and gradient attention motion.
+- `src/styles/components.css` owns adaptive pagination styling for `SwipeControls` and blog pagination; keep the Home Fleet selector dots (`.fleet-dot-group`, `.fleet-dot-button`) as a separate design unless the user asks to change that section.
 - Keep animation decorative and static-first; do not add animation logic to content/data files unless a section needs a dedicated interaction.
 
 For visual QA, inspect at least:

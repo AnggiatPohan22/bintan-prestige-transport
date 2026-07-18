@@ -1,5 +1,5 @@
 ---
-import { ArrowUpRight, Bot, MessageCircle, Send, Sparkles, X } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Bot, MessageCircle, Send, Sparkles, X } from "lucide-react";
 import { site } from "@data/site";
 import PromoTicker from "@components/core/PromoTicker.astro";
 
@@ -92,18 +92,24 @@ const quickMessages = [
     <PromoTicker className="whatsapp-assistant-promo" />
   </section>
 
-  <button class="whatsapp-assistant-toggle" type="button" data-whatsapp-toggle aria-expanded="false" aria-label="Open WhatsApp chat">
-    <span class="whatsapp-assistant-toggle__pulse" aria-hidden="true"></span>
-    <span class="whatsapp-assistant-toggle__badge" aria-hidden="true"></span>
-    <MessageCircle className="h-4 w-4" aria-hidden="true" />
-    <span class="whatsapp-assistant-toggle__label hidden sm:inline">WhatsApp</span>
-  </button>
+  <div class="whatsapp-assistant-actions" aria-label="Floating quick actions">
+    <button class="whatsapp-assistant-toggle" type="button" data-whatsapp-toggle aria-expanded="false" aria-label="Open WhatsApp chat">
+      <span class="whatsapp-assistant-toggle__pulse" aria-hidden="true"></span>
+      <span class="whatsapp-assistant-toggle__badge" aria-hidden="true"></span>
+      <MessageCircle className="h-4 w-4" aria-hidden="true" />
+      <span class="whatsapp-assistant-toggle__label hidden sm:inline">WhatsApp</span>
+    </button>
+    <button class="scroll-top-toggle" type="button" data-scroll-top aria-label="Back to top">
+      <ArrowUp className="h-4 w-4" aria-hidden="true" />
+    </button>
+  </div>
 </div>
 
 <script>
   const assistant = document.querySelector<HTMLElement>("[data-whatsapp-assistant]");
   const panel = assistant?.querySelector<HTMLElement>("[data-whatsapp-panel]");
   const toggle = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-toggle]");
+  const scrollTopButton = assistant?.querySelector<HTMLButtonElement>("[data-scroll-top]");
   const close = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-close]");
   const textarea = assistant?.querySelector<HTMLTextAreaElement>("[data-whatsapp-message]");
   const link = assistant?.querySelector<HTMLAnchorElement>("[data-whatsapp-link]");
@@ -173,8 +179,22 @@ const quickMessages = [
     }, 240);
   };
 
+  const updateScrollTopButton = () => {
+    if (!scrollTopButton) return;
+
+    scrollTopButton.classList.toggle("is-visible", window.scrollY > 420);
+  };
+
   toggle?.addEventListener("click", () => {
     setPanelOpen(Boolean(panel?.hidden));
+  });
+
+  scrollTopButton?.addEventListener("click", () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({
+      top: 0,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
   });
 
   close?.addEventListener("click", () => {
@@ -207,5 +227,7 @@ const quickMessages = [
   });
 
   updateWhatsAppLink();
+  updateScrollTopButton();
+  window.addEventListener("scroll", updateScrollTopButton, { passive: true });
   window.addEventListener("pagehide", unlockPageScroll);
 </script>

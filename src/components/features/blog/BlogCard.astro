@@ -5,9 +5,10 @@ import type { BlogArticle } from "@data/blog";
 interface Props {
   article: BlogArticle;
   featured?: boolean;
+  showFavoriteBadge?: boolean;
 }
 
-const { article, featured = false } = Astro.props;
+const { article, featured = false, showFavoriteBadge = true } = Astro.props;
 ---
 
 <article
@@ -22,7 +23,7 @@ const { article, featured = false } = Astro.props;
     <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,12,16,0.02),rgba(11,12,16,0.8))]"></div>
     <div class="absolute left-4 top-4 flex flex-wrap gap-2">
       <span class="rounded-full border border-white/14 bg-black/30 px-3 py-1 text-xs font-semibold text-[#f8e7a1] backdrop-blur">{article.category}</span>
-      {article.favorite && <span class="gold-pill rounded-full px-3 py-1 text-xs font-semibold">Favorite</span>}
+      {showFavoriteBadge && article.favorite && <span class="gold-pill rounded-full px-3 py-1 text-xs font-semibold">Favorite</span>}
     </div>
   </a>
 
