@@ -1640,11 +1640,32 @@
   }
 }
 
-/* Mobile hero, floating WhatsApp z-index, dan Home booking dropdown behavior. */
+/* Mobile hero, floating WhatsApp focus layer, dan Home booking dropdown behavior. */
+.whatsapp-assistant {
+  bottom: calc(6.25rem + env(safe-area-inset-bottom));
+  z-index: 120;
+}
+
+.whatsapp-assistant[data-open="true"]::before {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: rgba(4, 8, 7, 0.46);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  content: "";
+}
+
+.whatsapp-assistant-panel,
+.whatsapp-assistant-toggle {
+  z-index: 1;
+}
+
 @media (max-width: 639px) {
   .whatsapp-assistant {
     right: 0.75rem;
-    bottom: calc(1rem + env(safe-area-inset-bottom));
+    bottom: calc(2rem + env(safe-area-inset-bottom));
+    z-index: 160;
   }
 
   .whatsapp-assistant-panel {
@@ -1766,7 +1787,8 @@
   }
 
   main:has(.booking-floating-form) + .whatsapp-assistant:not([data-open="true"]) {
-    display: none;
+    right: 0.75rem;
+    z-index: 160;
   }
 
   .site-header__nav {

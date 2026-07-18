@@ -106,9 +106,15 @@ git diff --check
 
 Current mobile widget note:
 
-- `src/styles/sections.css` hides `.whatsapp-assistant` on mobile when the active page contains `.booking-floating-form`.
-- This prevents the floating WhatsApp button from covering Home booking fields.
-- Keep this scoped to mobile and booking-form pages unless a future layout adds another fixed bottom widget.
+- `src/styles/sections.css` keeps `.whatsapp-assistant` visible on mobile.
+- Home mobile keeps `.whatsapp-assistant` inside the right edge and raises its mobile stacking layer when `.booking-floating-form` is present, so the floating WhatsApp button stays visible and tappable above the booking form.
+- Opening `.whatsapp-assistant` adds a blurred page backdrop so the widget form becomes the focus layer.
+- Keep this scoped to mobile booking-form layout unless a future design changes the fixed widget position.
+
+Current transfer card note:
+
+- `src/data/routes.ts` owns the visible Avanza/Innova, Hiace, and Alphard card copy, capacity badge values, and three price bullets.
+- `RouteList.astro` and `RouteHighlights.astro` parse `Capacity : ...` in `priceFrom` for the card badge.
 
 For visual QA, inspect at least:
 

@@ -235,7 +235,7 @@ To update site-wide legal contact details, start with `src/data/site.ts`.
 
 - `src/styles/sections.css`
   - Page section styling, gallery/fleet systems, footer, responsive overrides, keyframes.
-  - Owns the mobile rule that hides the floating WhatsApp widget on pages with `.booking-floating-form` so it does not cover the Home booking fields.
+  - Owns the floating WhatsApp focus layer, raised bottom position, and mobile stacking rule that keeps the widget visible above `.booking-floating-form` without clipping outside the viewport.
 
 - `src/styles/themes/*`
   - Optional theme overrides for future redesigns.
@@ -257,6 +257,11 @@ When adding or changing content, update the smallest source of truth:
 - Fleet/car selector: `src/data/carTypes.ts`
 - FAQ: `src/data/faqs.ts`
 
+Transfer route card note:
+
+- `src/data/routes.ts` owns the Avanza/Innova, Hiace, and Alphard card capacity badge text and the three visible price bullets for one way, half-day, and full-day options.
+- `RouteList.astro` and `RouteHighlights.astro` support `Capacity : ...` values in `priceFrom` so the former "Start From" badge can display seater capacity.
+
 Only create a new file when a new reusable concept cannot fit one of the existing source files cleanly.
 
 ## Verification
@@ -266,7 +271,7 @@ Last known local verification:
 - `npm.cmd run check` passed.
 - `npm.cmd run build` passed.
 - Mobile preview at 375px checked `/`, `/packages/island-tour`, `/packages/activities-packages`, `/packages/pick-up-drop`, `/about`, `/contact`, and `/blog`.
-- Home mobile hides the floating WhatsApp widget while the booking form is present; the other checked pages keep the widget visible.
+- Home mobile keeps the floating WhatsApp widget inside the viewport and stacked above the booking form layer for easier tapping; opening the widget blurs the page background to focus the form.
 - No push or Cloudflare deployment was run.
 
 ## Known Notes

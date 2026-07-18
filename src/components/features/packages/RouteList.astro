@@ -34,6 +34,15 @@ const getPriceDisplay = (value?: string) => {
     };
   }
 
+  const capacityMatch = value.match(/^Capacity\s*:\s*(.+)$/i);
+
+  if (capacityMatch) {
+    return {
+      label: "Capacity",
+      price: capacityMatch[1],
+    };
+  }
+
   const startFromMatch = value.match(/^Start From\s*:\s*(.+)$/i);
 
   if (startFromMatch) {
