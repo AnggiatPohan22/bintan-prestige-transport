@@ -1,13 +1,13 @@
 export const carTypes = [
   {
-    name: "Luxury Sedan",
-    title: "Luxury Sedan",
-    slug: "luxury-sedan",
+    name: "One Way Transfer",
+    title: "one-way-transfer",
+    slug: "one-way-transfer",
     type: "Luxury private transfer",
     shortDescription:
-      "Quiet, refined private transfer for airport arrivals, dinner rides, and VIP city movement.",
+      "A premium private taxi transfer service for airport, ferry, or hotel pickup and drop-off.",
     description:
-      "Quiet, refined private transfer for airport arrivals, dinner rides, and VIP city movement.",
+      "A premium private taxi transfer service for airport, ferry, or hotel pickup and drop-off.",
     image: "/images/cars/toyota-innova.webp",
     alt: "luxury sedan for private airport transfer",
     capacity: "4 passengers",
