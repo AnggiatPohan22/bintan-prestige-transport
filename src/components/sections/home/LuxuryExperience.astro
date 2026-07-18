@@ -21,8 +21,8 @@ const moodImage = "/images/cars/luxury-mpv.webp";
         </p>
         <div class="mt-6 grid gap-3 sm:grid-cols-3">
           {stats.map((item) => (
-            <div class="rounded-[8px] border border-[#bfa46f]/24 bg-[#071a14]/74 p-3 sm:p-4">
-              <p class="font-[var(--font-editorial-heading)] text-2xl font-medium text-[#f8e7a1] sm:text-3xl">{item.value}</p>
+            <div class="info-light-card luxury-stat-card rounded-[8px] border border-[#bfa46f]/24 bg-[#071a14]/74 p-3 sm:p-4">
+              <p class="luxury-stat-card__value font-[var(--font-editorial-heading)] text-2xl font-medium text-[#f8e7a1] sm:text-3xl" data-count-value={item.value}>{item.value}</p>
               <p class="mt-2 text-xs leading-5 text-[#c7d2c3]/72">{item.label}</p>
             </div>
           ))}

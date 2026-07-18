@@ -39,6 +39,10 @@ export const site = {
     import.meta.env.PUBLIC_WHATSAPP_MESSAGE,
     "Hello, I want to check availability for a premium taxi or island tour service.",
   ),
+  promoTickerText: envValue(
+    import.meta.env.PUBLIC_PROMO_TICKER_TEXT,
+    "Limited private transfer slots available today - chat now for route and vehicle confirmation.",
+  ),
   email: envValue(import.meta.env.PUBLIC_CONTACT_EMAIL, "reservation@bintanprestige.com"),
   phone: envValue(import.meta.env.PUBLIC_CONTACT_PHONE, "+62 823-8635-7012"),
   address: envValue(import.meta.env.PUBLIC_BUSINESS_ADDRESS, "Bintan, Riau Islands, Indonesia"),

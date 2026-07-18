@@ -1,6 +1,7 @@
 ---
 import { ArrowUpRight, Bot, MessageCircle, Send, Sparkles, X } from "lucide-react";
 import { site } from "@data/site";
+import PromoTicker from "@components/core/PromoTicker.astro";
 
 const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
 const quickMessages = [
@@ -87,13 +88,15 @@ const quickMessages = [
       <span>Continue to WhatsApp</span>
       <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
     </a>
+
+    <PromoTicker className="whatsapp-assistant-promo" />
   </section>
 
   <button class="whatsapp-assistant-toggle" type="button" data-whatsapp-toggle aria-expanded="false" aria-label="Open WhatsApp chat">
     <span class="whatsapp-assistant-toggle__pulse" aria-hidden="true"></span>
     <span class="whatsapp-assistant-toggle__badge" aria-hidden="true"></span>
     <MessageCircle className="h-4 w-4" aria-hidden="true" />
-    <span class="hidden sm:inline">WhatsApp</span>
+    <span class="whatsapp-assistant-toggle__label hidden sm:inline">WhatsApp</span>
   </button>
 </div>
 

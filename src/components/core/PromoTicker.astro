@@ -1,0 +1,33 @@
+---
+import { site } from "@data/site";
+
+interface Props {
+  text?: string;
+  label?: string;
+  className?: string;
+}
+
+const {
+  text = site.promoTickerText,
+  label = "Promo",
+  className = "",
+} = Astro.props;
+
+const cleanText = text.trim();
+const tickerItems = [cleanText, cleanText, cleanText].filter(Boolean);
+---
+
+{
+  cleanText && (
+    <div class={`promo-ticker ${className}`} aria-label={`${label}: ${cleanText}`}>
+      <span class="promo-ticker__label">{label}</span>
+      <div class="promo-ticker__viewport" aria-hidden="true">
+        <div class="promo-ticker__track">
+          {tickerItems.map((item) => (
+            <span class="promo-ticker__item">{item}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,86 @@
+<script>
+  const revealSelectors = [
+    ".editorial-kicker",
+    ".editorial-title",
+    ".editorial-lede",
+    ".package-offer-card",
+    ".faq-accordion",
+    ".info-light-card",
+    ".cta-soft-sell",
+  ];
+
+  const countUp = (element: HTMLElement) => {
+    if (element.dataset.counted === "true") return;
+
+    const rawValue = element.dataset.countValue ?? element.textContent?.trim() ?? "";
+    const match = rawValue.match(/^(\d+)(.*)$/);
+    if (!match) return;
+
+    const target = Number(match[1]);
+    const suffix = match[2] ?? "";
+    const duration = 900;
+    const startTime = performance.now();
+
+    element.dataset.counted = "true";
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = `${Math.round(target * eased)}${suffix}`;
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        element.textContent = rawValue;
+      }
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  const hydrateScrollEffects = () => {
+    const revealItems = Array.from(document.querySelectorAll<HTMLElement>(revealSelectors.join(",")));
+    const countItems = Array.from(document.querySelectorAll<HTMLElement>("[data-count-value]"));
+
+    revealItems.forEach((element, index) => {
+      element.dataset.scrollReveal = "true";
+      element.style.setProperty("--reveal-delay", `${Math.min(index % 5, 4) * 70}ms`);
+    });
+
+    if (!("IntersectionObserver" in window)) {
+      revealItems.forEach((element) => {
+        element.dataset.revealed = "true";
+      });
+      countItems.forEach(countUp);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const element = entry.target as HTMLElement;
+          element.dataset.revealed = "true";
+
+          if (element.matches("[data-count-value]")) {
+            countUp(element);
+          }
+
+          element.querySelectorAll<HTMLElement>("[data-count-value]").forEach(countUp);
+          observer.unobserve(element);
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.16 },
+    );
+
+    revealItems.forEach((element) => observer.observe(element));
+    countItems.forEach((element) => observer.observe(element));
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", hydrateScrollEffects, { once: true });
+  } else {
+    hydrateScrollEffects();
+  }
+</script>

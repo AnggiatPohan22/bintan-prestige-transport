@@ -53,7 +53,11 @@ src/
   - Reads navigation links and contact data from `@data/navigation` and `@data/site`.
 
 - `src/components/site/FloatingWhatsApp.astro`
-  - Reads WhatsApp number and message defaults from `@data/site`.
+  - Reads WhatsApp number, message defaults, and promo ticker copy from `@data/site`.
+  - Uses `src/components/core/PromoTicker.astro` under the Continue to WhatsApp button.
+
+- `src/components/site/ScrollEffects.astro`
+  - Adds lightweight IntersectionObserver reveal hooks and count-up behavior for static pages.
 
 ### Core Components
 
@@ -80,6 +84,10 @@ src/
 
 - `src/components/core/WhatsAppCTA.astro`
   - Used by sections and pages that need WhatsApp call-to-action blocks.
+
+- `src/components/core/PromoTicker.astro`
+  - Reusable running text component for soft promo, announcement, or trust copy.
+  - Defaults to `site.promoTickerText`, which is controlled by `PUBLIC_PROMO_TICKER_TEXT`.
 
 ### Home Page
 
@@ -232,10 +240,13 @@ To update site-wide legal contact details, start with `src/data/site.ts`.
 
 - `src/styles/components.css`
   - Reusable component systems such as cards, swipers, WhatsApp, booking forms, blog UI.
+  - Owns Home booking form field-card internal gradient drift and booking form interaction surfaces.
+  - Owns floating WhatsApp toggle sizing, responsive label/icon treatment, pulse, glow, badge, gradient attention motion, panel content styling, and reusable promo ticker styling.
 
 - `src/styles/sections.css`
   - Page section styling, gallery/fleet systems, footer, responsive overrides, keyframes.
   - Owns the floating WhatsApp focus layer, raised bottom position, and mobile stacking rule that keeps the widget visible above `.booking-floating-form` without clipping outside the viewport.
+  - Owns scroll reveal polish, title reveal, badge shimmer, WhatsApp CTA gradient motion, FAQ internal gradient drift/open animation, stat count glow, randomized info-card border light rail, and Private Concierge promo styling.
 
 - `src/styles/themes/*`
   - Optional theme overrides for future redesigns.
@@ -246,6 +257,7 @@ When adding or changing content, update the smallest source of truth:
 
 - Navigation: `src/data/navigation.ts`
 - Site identity, WhatsApp, contact, env-backed values: `src/data/site.ts`
+- WhatsApp panel running promo: `.env`, `.env.example`, `src/data/site.ts`, `src/components/core/PromoTicker.astro`
 - SEO routes and canonical helpers: `src/data/seo.ts`
 - Schema helpers: `src/data/schema.ts`
 - Blog: `src/data/blog.ts`
@@ -272,6 +284,9 @@ Last known local verification:
 - `npm.cmd run build` passed.
 - Mobile preview at 375px checked `/`, `/packages/island-tour`, `/packages/activities-packages`, `/packages/pick-up-drop`, `/about`, `/contact`, and `/blog`.
 - Home mobile keeps the floating WhatsApp widget inside the viewport and stacked above the booking form layer for easier tapping; opening the widget blurs the page background to focus the form.
+- Floating WhatsApp mobile panel uses a safer viewport height, a softer luxury glass header, and a reusable running promo below the Continue to WhatsApp button.
+- `PUBLIC_PROMO_TICKER_TEXT` controls the default running promo text through `src/data/site.ts`.
+- Scroll animation pass adds reveal hooks, animated stat numbers, package badge/price shimmer, WhatsApp CTA gradient motion, FAQ internal gradient drift/open animation, randomized information-card border light rail, and a stronger Private Concierge promo panel.
 - No push or Cloudflare deployment was run.
 
 ## Known Notes

@@ -53,7 +53,11 @@ Older reports and handoffs are preserved under:
 | Design tokens | `src/styles/tokens.css` |
 | Component styling | `src/styles/components.css` |
 | Section and responsive styling | `src/styles/sections.css` |
+| Scroll reveal and decorative motion | `src/components/site/ScrollEffects.astro`, `src/styles/sections.css` |
+| Home booking form field gradient motion | `src/styles/components.css` |
 | Mobile WhatsApp overlap with Home booking form | `src/styles/sections.css` |
+| Floating WhatsApp responsive icon/button polish | `src/components/site/FloatingWhatsApp.astro`, `src/styles/components.css`, `src/styles/sections.css` |
+| Running text promo / announcement ticker | `.env`, `.env.example`, `src/data/site.ts`, `src/components/core/PromoTicker.astro`, `src/styles/components.css` |
 
 ## Page Ownership
 
@@ -109,12 +113,22 @@ Current mobile widget note:
 - `src/styles/sections.css` keeps `.whatsapp-assistant` visible on mobile.
 - Home mobile keeps `.whatsapp-assistant` inside the right edge and raises its mobile stacking layer when `.booking-floating-form` is present, so the floating WhatsApp button stays visible and tappable above the booking form.
 - Opening `.whatsapp-assistant` adds a blurred page backdrop so the widget form becomes the focus layer.
+- The mobile panel uses safer viewport sizing, a softer glass header treatment, and a running promo slot below `Continue to WhatsApp`.
+- The default running promo text is controlled by `PUBLIC_PROMO_TICKER_TEXT`, exposed through `site.promoTickerText`, and rendered by `src/components/core/PromoTicker.astro`.
 - Keep this scoped to mobile booking-form layout unless a future design changes the fixed widget position.
 
 Current transfer card note:
 
 - `src/data/routes.ts` owns the visible Avanza/Innova, Hiace, and Alphard card copy, capacity badge values, and three price bullets.
 - `RouteList.astro` and `RouteHighlights.astro` parse `Capacity : ...` in `priceFrom` for the card badge.
+
+Current animation note:
+
+- `src/components/site/ScrollEffects.astro` adds reveal/count-up hooks with IntersectionObserver.
+- `src/styles/sections.css` owns title reveal, stat glow/count motion, package badge shimmer, WhatsApp CTA gradient motion, randomized info-card border light rail, FAQ internal gradient drift/answer reveal, and Private Concierge promo styling.
+- `src/styles/components.css` owns the Home booking form field-card internal gradient drift.
+- `src/styles/components.css` and `src/styles/sections.css` own the floating WhatsApp responsive tap target, label/icon treatment, glow, pulse, badge, and gradient attention motion.
+- Keep animation decorative and static-first; do not add animation logic to content/data files unless a section needs a dedicated interaction.
 
 For visual QA, inspect at least:
 
