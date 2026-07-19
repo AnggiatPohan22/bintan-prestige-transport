@@ -1,9 +1,54 @@
 ---
-import { ArrowUp, ArrowUpRight, Bot, MessageCircle, Send, Sparkles, X } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Bot, Compass, MessageCircle, Phone, Plus, Send, Sparkles, X } from "lucide-react";
 import { site } from "@data/site";
 import PromoTicker from "@components/core/PromoTicker.astro";
 
 const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
+const phoneHref = `tel:${site.phone.replace(/[^\d+]/g, "")}`;
+const fabActions = [
+  {
+    label: "WA",
+    kind: "whatsapp",
+    Icon: MessageCircle,
+    ariaLabel: "Open WhatsApp concierge",
+  },
+  {
+    label: "Book tour",
+    kind: "link",
+    href: "/packages/activities-packages",
+    Icon: Compass,
+    ariaLabel: "Open activities package page",
+  },
+  {
+    label: "Call direct",
+    kind: "link",
+    href: phoneHref,
+    Icon: Phone,
+    ariaLabel: `Call ${site.shortName}`,
+  },
+];
+const getFabStyle = (index: number, count: number) => {
+  const referenceLayout = [
+    { x: -0.15, y: -5.45 },
+    { x: -3.85, y: -2.8 },
+    { x: -4.72, y: 0.42 },
+  ];
+
+  if (count === referenceLayout.length) {
+    const point = referenceLayout[index];
+    const delay = 40 + index * 46;
+
+    return `--fab-x: ${point.x.toFixed(2)}rem; --fab-y: ${point.y.toFixed(2)}rem; --fab-delay: ${delay}ms;`;
+  }
+
+  const progress = count === 1 ? 0.5 : (index + 1) / (count + 1);
+  const curve = 4;
+  const lift = (count - index - 1) * 2.75 + 5.1;
+  const x = -(0.3 + Math.sin(progress * Math.PI) * curve);
+  const delay = 40 + index * 46;
+
+  return `--fab-x: ${x.toFixed(2)}rem; --fab-y: -${lift.toFixed(2)}rem; --fab-delay: ${delay}ms;`;
+};
 const quickMessages = [
   {
     label: "Check transfer price",
@@ -39,7 +84,7 @@ const quickMessages = [
 ---
 
 <div
-  class="whatsapp-assistant fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] right-4 z-40 sm:bottom-[5.75rem]"
+  class="whatsapp-assistant fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-4 z-40 sm:bottom-[4.75rem] lg:bottom-[4.5rem]"
   data-whatsapp-assistant
   data-whatsapp-number={site.whatsappNumber}
   data-default-message={site.whatsappMessage}
@@ -93,11 +138,36 @@ const quickMessages = [
   </section>
 
   <div class="whatsapp-assistant-actions" aria-label="Floating quick actions">
-    <button class="whatsapp-assistant-toggle" type="button" data-whatsapp-toggle aria-expanded="false" aria-label="Open WhatsApp chat">
+    <div class="whatsapp-assistant-fab-menu" data-fab-menu aria-label="Floating action shortcuts">
+      {fabActions.map((item, index) => {
+        const Icon = item.Icon;
+        const style = getFabStyle(index, fabActions.length);
+
+        return (
+          <div class="whatsapp-assistant-fab-item" style={style}>
+            {item.kind === "whatsapp" ? (
+              <button class="whatsapp-assistant-fab-link" type="button" data-whatsapp-open aria-label={item.ariaLabel}>
+                <span class="whatsapp-assistant-fab-label">{item.label}</span>
+                <span class="whatsapp-assistant-fab-icon" aria-hidden="true">
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </button>
+            ) : (
+              <a class="whatsapp-assistant-fab-link" href={item.href} aria-label={item.ariaLabel}>
+                <span class="whatsapp-assistant-fab-label">{item.label}</span>
+                <span class="whatsapp-assistant-fab-icon" aria-hidden="true">
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </a>
+            )}
+          </div>
+        );
+      })}
+    </div>
+
+    <button class="whatsapp-assistant-toggle" type="button" data-fab-toggle aria-expanded="false" aria-label="Open contact shortcuts">
       <span class="whatsapp-assistant-toggle__pulse" aria-hidden="true"></span>
-      <span class="whatsapp-assistant-toggle__badge" aria-hidden="true"></span>
-      <MessageCircle className="h-4 w-4" aria-hidden="true" />
-      <span class="whatsapp-assistant-toggle__label hidden sm:inline">WhatsApp</span>
+      <Plus className="whatsapp-assistant-toggle__icon h-5 w-5" aria-hidden="true" />
     </button>
     <button class="scroll-top-toggle" type="button" data-scroll-top aria-label="Back to top">
       <ArrowUp className="h-4 w-4" aria-hidden="true" />
@@ -108,7 +178,9 @@ const quickMessages = [
 <script>
   const assistant = document.querySelector<HTMLElement>("[data-whatsapp-assistant]");
   const panel = assistant?.querySelector<HTMLElement>("[data-whatsapp-panel]");
-  const toggle = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-toggle]");
+  const fabMenu = assistant?.querySelector<HTMLElement>("[data-fab-menu]");
+  const toggle = assistant?.querySelector<HTMLButtonElement>("[data-fab-toggle]");
+  const whatsappOpen = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-open]");
   const scrollTopButton = assistant?.querySelector<HTMLButtonElement>("[data-scroll-top]");
   const close = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-close]");
   const textarea = assistant?.querySelector<HTMLTextAreaElement>("[data-whatsapp-message]");
@@ -116,30 +188,42 @@ const quickMessages = [
   const answer = assistant?.querySelector<HTMLElement>("[data-whatsapp-answer]");
   const quickButtons = assistant?.querySelectorAll<HTMLButtonElement>("[data-whatsapp-quick]");
   let panelTransitionTimer: number | undefined;
-  let lockedScrollY = 0;
+  let previousHtmlOverflow = "";
+  let previousBodyOverflow = "";
+  let previousBodyPaddingRight = "";
+  let isFabMenuOpen = false;
+
+  const setFabMenuOpen = (isOpen: boolean) => {
+    if (!assistant || !toggle || !fabMenu) return;
+
+    isFabMenuOpen = isOpen;
+    assistant.dataset.menuOpen = String(isOpen);
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    toggle.setAttribute("aria-label", isOpen ? "Close contact shortcuts" : "Open contact shortcuts");
+  };
 
   const lockPageScroll = () => {
     if (document.documentElement.classList.contains("whatsapp-scroll-locked")) return;
 
-    lockedScrollY = window.scrollY;
+    const scrollbarWidth = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+    previousHtmlOverflow = document.documentElement.style.overflow;
+    previousBodyOverflow = document.body.style.overflow;
+    previousBodyPaddingRight = document.body.style.paddingRight;
     document.documentElement.classList.add("whatsapp-scroll-locked");
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${lockedScrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
   };
 
   const unlockPageScroll = () => {
     if (!document.documentElement.classList.contains("whatsapp-scroll-locked")) return;
 
     document.documentElement.classList.remove("whatsapp-scroll-locked");
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.right = "";
-    document.body.style.width = "";
-    window.scrollTo(0, lockedScrollY);
+    document.documentElement.style.overflow = previousHtmlOverflow;
+    document.body.style.overflow = previousBodyOverflow;
+    document.body.style.paddingRight = previousBodyPaddingRight;
   };
 
   const updateWhatsAppLink = () => {
@@ -154,8 +238,10 @@ const quickMessages = [
     if (!panel || !toggle) return;
 
     window.clearTimeout(panelTransitionTimer);
-    toggle.setAttribute("aria-expanded", String(isOpen));
     assistant?.setAttribute("data-open", String(isOpen));
+    if (isOpen) {
+      setFabMenuOpen(false);
+    }
 
     if (isOpen) {
       lockPageScroll();
@@ -166,7 +252,7 @@ const quickMessages = [
       });
       panelTransitionTimer = window.setTimeout(() => {
         if (window.matchMedia("(min-width: 640px)").matches) {
-          textarea?.focus();
+          textarea?.focus({ preventScroll: true });
         }
       }, 180);
       return;
@@ -186,7 +272,11 @@ const quickMessages = [
   };
 
   toggle?.addEventListener("click", () => {
-    setPanelOpen(Boolean(panel?.hidden));
+    setFabMenuOpen(!isFabMenuOpen);
+  });
+
+  whatsappOpen?.addEventListener("click", () => {
+    setPanelOpen(true);
   });
 
   scrollTopButton?.addEventListener("click", () => {
@@ -216,13 +306,17 @@ const quickMessages = [
         }, 360);
       }
       updateWhatsAppLink();
-      textarea.focus();
+      textarea.focus({ preventScroll: true });
     });
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
-      setPanelOpen(false);
+      if (panel && !panel.hidden) {
+        setPanelOpen(false);
+        return;
+      }
+      setFabMenuOpen(false);
     }
   });
 

@@ -2150,8 +2150,8 @@
 
   .whatsapp-assistant-panel {
     width: min(calc(100vw - 2.5rem), 29rem);
-    max-height: none;
-    overflow-y: visible;
+    max-height: min(31.5rem, calc(100svh - 10.75rem - env(safe-area-inset-bottom)));
+    overflow-y: auto;
     margin-bottom: 0.72rem;
     padding: 0.82rem;
   }
@@ -2253,7 +2253,7 @@
 
   .whatsapp-assistant-panel {
     width: min(calc(100vw - 1rem), 23rem);
-    max-height: min(78svh, calc(100svh - 6rem - env(safe-area-inset-bottom)));
+    max-height: min(68svh, calc(100svh - 12.75rem - env(safe-area-inset-bottom)));
     margin-bottom: 0.72rem;
     padding: 0.72rem;
     border-color: rgba(248, 231, 161, 0.32);
