@@ -373,16 +373,18 @@ Routing:
 
 Section dan sumber:
 
-- Detail hero: `src/components/packages/PackageDetailHero.astro`
-- Breadcrumb: `src/components/common/Breadcrumb.astro`
-- Detail content: `src/components/packages/PackageDetailContent.astro`
-- Booking Information form: `src/components/packages/PackageBookingForm.astro`
-- Form fields: `src/components/packages/PackageBookingFields.astro`
-- CTA: `src/components/common/WhatsAppCTA.astro`
+- Detail hero: `src/components/features/packages/PackageDetailHero.astro`
+- Breadcrumb: `src/components/core/Breadcrumb.astro`
+- Detail content: `src/components/features/packages/PackageDetailContent.astro`
+- Activity gallery: `src/components/features/packages/ActivityPackageGallery.astro`
+- Booking Information form: `src/components/features/booking/PackageBookingForm.astro`
+- Form fields: `src/components/features/booking/PackageBookingFields.astro`
+- CTA: `src/components/core/WhatsAppCTA.astro`
 
 Data:
 
 - Semua detail package Activities: `src/data/tours.ts`
+- Gallery per activity package: field `gallery` di masing-masing object package dalam `src/data/tours.ts`
 - WhatsApp/site config: `src/data/site.ts`
 - SEO URL helper: `src/data/seo.ts`
 - Schema: `src/data/schema.ts`
@@ -390,6 +392,14 @@ Data:
 CSS utama:
 
 - Sama seperti detail transfer: `.package-detail-*`, `.package-booking-*`, `.package-field-*`
+- Activity gallery: `.activity-package-gallery*`
+
+Catatan update gallery:
+
+- Untuk tambah foto activity, upload gambar ke `public/images/gallery` atau subfolder di dalamnya.
+- Update array `gallery` pada object activity yang sesuai di `src/data/tours.ts`.
+- Section gallery akan otomatis muncul di atas itinerary selama `gallery` berisi minimal satu item.
+- Panduan lengkap gambar ada di `ai/guides/manual-image-content-guide.md`.
 
 ### SEO Utility Pages
 

@@ -124,6 +124,61 @@ image: "/images/tours/mangrove-tour.webp",
 alt: "Private mangrove tour in Bintan",
 ```
 
+## Gallery Detail Activity Package
+
+Gallery yang muncul di halaman detail activity package diatur dari:
+
+- Data utama: `src/data/tours.ts`
+- Komponen tampilan: `src/components/features/packages/ActivityPackageGallery.astro`
+- Layout detail package: `src/components/features/packages/PackageDetailContent.astro`
+- Folder gambar yang disarankan: `public/images/gallery` atau subfolder seperti `public/images/gallery/shooting`
+
+Halaman yang memakai data ini:
+
+- `/packages/activities-packages/{slug}`
+- `/packages/island-tour/{slug}` sebagai fallback route lama
+
+Untuk menambah atau mengganti foto gallery pada salah satu activity package, cari object package di `src/data/tours.ts` berdasarkan `slug`, lalu update field `gallery`.
+
+Contoh:
+
+```ts
+{
+  title: "Mangrove Discovery Tour",
+  slug: "mangrove-discovery-tour",
+  image: "/images/tours/mangrove.webp",
+  heroImages: [
+    "/images/tours/mangrove.webp",
+    "/images/gallery/mangrove-2.webp",
+    "/images/gallery/mangrove-5.webp",
+  ],
+  gallery: [
+    {
+      title: "Quiet mangrove route",
+      description: "A calm boat route through Bintan's mangrove forest with local nature scenery.",
+      image: "/images/tours/mangrove.webp",
+      alt: "Mangrove river route in Bintan",
+    },
+    {
+      title: "Nature boat experience",
+      description: "Guests can enjoy a slower soft-adventure activity with guide and wildlife viewing.",
+      image: "/images/gallery/mangrove-2.webp",
+      alt: "Mangrove boat tour scenery in Bintan",
+    },
+  ],
+}
+```
+
+Catatan update:
+
+- `image` di level package adalah thumbnail utama card dan hero fallback.
+- `heroImages` adalah slideshow hero detail.
+- `gallery` adalah section gallery yang muncul di atas itinerary.
+- Setiap item `gallery` wajib punya `title`, `image`, dan `alt`.
+- `description` boleh dikosongkan jika tidak diperlukan.
+- Jika ingin menambah lebih dari 3 foto, cukup tambah object baru di array `gallery`; lightbox sudah bisa pindah foto kanan/kiri tanpa menutup preview.
+- Path gambar di code selalu dimulai dari `/images`, bukan `public/images`.
+
 ## Gambar Gallery
 
 File yang dibuka:
