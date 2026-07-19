@@ -25,17 +25,18 @@ const isActive = (href: string) => {
 };
 ---
 
-<details class="mobile-menu relative z-[90] md:hidden">
+<details class="mobile-menu relative z-[90] md:hidden" data-mobile-menu>
   <summary
     class="mobile-menu-trigger"
     aria-label="Toggle navigation menu"
+    data-mobile-menu-trigger
   >
     <Menu className="mobile-menu-open-icon h-5 w-5" aria-hidden="true" />
     <X className="mobile-menu-close-icon h-5 w-5" aria-hidden="true" />
   </summary>
 
-  <div class="mobile-menu-backdrop md:hidden"></div>
-  <div class="mobile-menu-panel md:hidden">
+  <button class="mobile-menu-backdrop md:hidden" type="button" aria-label="Close navigation menu" data-mobile-menu-backdrop></button>
+  <div class="mobile-menu-panel md:hidden" data-mobile-menu-panel>
     <div class="mobile-menu-panel__glow"></div>
     <div class="mobile-menu-panel__header">
       <p class="mobile-menu-panel__kicker">Bintan Prestige</p>
@@ -75,3 +76,50 @@ const isActive = (href: string) => {
     </div>
   </div>
 </details>
+
+<script>
+  const mobileMenu = document.querySelector<HTMLDetailsElement>("[data-mobile-menu]");
+  const mobileMenuPanel = mobileMenu?.querySelector<HTMLElement>("[data-mobile-menu-panel]");
+  const mobileMenuTrigger = mobileMenu?.querySelector<HTMLElement>("[data-mobile-menu-trigger]");
+  const mobileMenuBackdrop = mobileMenu?.querySelector<HTMLButtonElement>("[data-mobile-menu-backdrop]");
+
+  const setMobileMenuOpen = (isOpen: boolean) => {
+    if (!mobileMenu) return;
+
+    mobileMenu.open = isOpen;
+    document.documentElement.classList.toggle("mobile-menu-is-open", isOpen);
+    document.dispatchEvent(new CustomEvent(isOpen ? "mobile-menu:open" : "mobile-menu:close"));
+  };
+
+  mobileMenu?.addEventListener("toggle", () => {
+    const isOpen = Boolean(mobileMenu.open);
+    document.documentElement.classList.toggle("mobile-menu-is-open", isOpen);
+    document.dispatchEvent(new CustomEvent(isOpen ? "mobile-menu:open" : "mobile-menu:close"));
+  });
+
+  mobileMenuBackdrop?.addEventListener("click", () => {
+    setMobileMenuOpen(false);
+    mobileMenuTrigger?.focus({ preventScroll: true });
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!mobileMenu?.open) return;
+
+    const target = event.target as Node | null;
+    if (!target) return;
+    if (mobileMenuPanel?.contains(target) || mobileMenuTrigger?.contains(target)) return;
+
+    setMobileMenuOpen(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !mobileMenu?.open) return;
+
+    setMobileMenuOpen(false);
+    mobileMenuTrigger?.focus({ preventScroll: true });
+  });
+
+  window.addEventListener("pagehide", () => {
+    document.documentElement.classList.remove("mobile-menu-is-open");
+  });
+</script>

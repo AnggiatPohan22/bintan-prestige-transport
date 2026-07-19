@@ -1,10 +1,11 @@
 ---
-import { Send } from "lucide-react";
+import { CalendarCheck, Send, X } from "lucide-react";
 import PackageBookingFields from "./PackageBookingFields.astro";
 import { site } from "@data/site";
 
 interface DetailItem {
   title: string;
+  slug?: string;
   priceFrom?: string;
   duration?: string;
   whatsappMessage?: string;
@@ -14,14 +15,24 @@ interface Props {
   item: DetailItem;
   typeLabel: string;
   tone?: "default" | "light";
+  collapsedPreview?: boolean;
 }
 
-const { item, typeLabel, tone = "default" } = Astro.props;
+const { item, typeLabel, tone = "default", collapsedPreview = false } = Astro.props;
 const defaultMessage = item.whatsappMessage ?? `Hello, I want to book ${item.title}.`;
 const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`;
+const bookingPanelId = `package-booking-form-${item.slug ?? item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 ---
 
-<section class:list={["package-booking-section editorial-section-dark border-y border-[#bfa46f]/12", tone === "light" && "package-booking-section--light"]}>
+<section
+  class:list={[
+    "package-booking-section editorial-section-dark border-y border-[#bfa46f]/12",
+    tone === "light" && "package-booking-section--light",
+    collapsedPreview && "package-booking-section--collapsible",
+  ]}
+  data-booking-collapsible={collapsedPreview ? "true" : undefined}
+  data-booking-expanded={collapsedPreview ? "false" : undefined}
+>
   <div class="editorial-container grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-start lg:gap-10">
     <div class="package-booking-copy">
       <p class="editorial-kicker">Booking Information</p>
@@ -39,23 +50,56 @@ const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(def
       </div>
     </div>
 
-    <form
-      class="package-booking-form editorial-card p-4 sm:p-6 lg:p-7"
-      action={href}
-      data-package-booking
-      data-whatsapp-number={site.whatsappNumber}
-      data-package-title={item.title}
-      data-package-type={typeLabel}
-      data-package-price={item.priceFrom ?? "To be confirmed"}
-      data-package-duration={item.duration ?? "To be confirmed"}
-    >
-      <PackageBookingFields />
+    <div class="package-booking-form-stack">
+      {collapsedPreview && (
+        <div class="package-booking-reveal" data-booking-reveal-card>
+          <span class="package-booking-reveal__icon"><CalendarCheck className="h-5 w-5" aria-hidden="true" /></span>
+          <div class="package-booking-reveal__copy">
+            <span>Quick booking form</span>
+            <strong>Fill form here to book</strong>
+            <p>Add your date, pickup point, guest count, and notes before the WhatsApp message is prepared.</p>
+          </div>
+          <button
+            class="package-booking-reveal__button editorial-button-primary"
+            type="button"
+            aria-controls={bookingPanelId}
+            aria-expanded="false"
+            data-booking-reveal
+          >
+            <CalendarCheck className="h-4 w-4" aria-hidden="true" />
+            <span>Fill Form here to book</span>
+          </button>
+        </div>
+      )}
 
-      <a class="package-booking-cta editorial-button-primary mt-5 w-full px-4" href={href} target="_blank" rel="noreferrer" data-booking-link>
-        <Send className="h-4 w-4" aria-hidden="true" />
-        <span>Book via WhatsApp</span>
-      </a>
-    </form>
+      <form
+        id={bookingPanelId}
+        class="package-booking-form editorial-card p-4 sm:p-6 lg:p-7"
+        action={href}
+        data-package-booking
+        data-whatsapp-number={site.whatsappNumber}
+        data-package-title={item.title}
+        data-package-type={typeLabel}
+        data-package-price={item.priceFrom ?? "To be confirmed"}
+        data-package-duration={item.duration ?? "To be confirmed"}
+        data-booking-panel={collapsedPreview ? "true" : undefined}
+        hidden={collapsedPreview ? true : undefined}
+      >
+        <PackageBookingFields />
+
+        <a class="package-booking-cta editorial-button-primary mt-5 w-full px-4" href={href} target="_blank" rel="noreferrer" data-booking-link>
+          <Send className="h-4 w-4" aria-hidden="true" />
+          <span>Book via WhatsApp</span>
+        </a>
+
+        {collapsedPreview && (
+          <button class="package-booking-close" type="button" data-booking-close>
+            <X className="h-4 w-4" aria-hidden="true" />
+            <span>Hide booking form</span>
+          </button>
+        )}
+      </form>
+    </div>
   </div>
 </section>
 
@@ -104,5 +148,41 @@ const href = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(def
     form.addEventListener("input", updateLink);
     form.addEventListener("change", updateLink);
     updateLink();
+  });
+
+  document.querySelectorAll<HTMLElement>("[data-booking-collapsible]").forEach((section) => {
+    const reveal = section.querySelector<HTMLButtonElement>("[data-booking-reveal]");
+    const close = section.querySelector<HTMLButtonElement>("[data-booking-close]");
+    const revealCard = section.querySelector<HTMLElement>("[data-booking-reveal-card]");
+    const panel = section.querySelector<HTMLElement>("[data-booking-panel]");
+
+    reveal?.addEventListener("click", () => {
+      if (!panel) return;
+
+      panel.hidden = false;
+      section.dataset.bookingExpanded = "true";
+      reveal.setAttribute("aria-expanded", "true");
+      revealCard?.setAttribute("hidden", "");
+
+      requestAnimationFrame(() => {
+        panel.scrollIntoView({ block: "center", behavior: "smooth" });
+        const firstField = panel.querySelector<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>("input, select, textarea");
+        firstField?.focus({ preventScroll: true });
+      });
+    });
+
+    close?.addEventListener("click", () => {
+      if (!panel) return;
+
+      panel.hidden = true;
+      section.dataset.bookingExpanded = "false";
+      reveal?.setAttribute("aria-expanded", "false");
+      revealCard?.removeAttribute("hidden");
+
+      requestAnimationFrame(() => {
+        revealCard?.scrollIntoView({ block: "center", behavior: "smooth" });
+        reveal?.focus({ preventScroll: true });
+      });
+    });
   });
 </script>

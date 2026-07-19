@@ -271,12 +271,42 @@ const quickMessages = [
     scrollTopButton.classList.toggle("is-visible", window.scrollY > 420);
   };
 
+  const handlePageScroll = () => {
+    updateScrollTopButton();
+    if (isFabMenuOpen) {
+      setFabMenuOpen(false);
+    }
+  };
+
   toggle?.addEventListener("click", () => {
     setFabMenuOpen(!isFabMenuOpen);
   });
 
   whatsappOpen?.addEventListener("click", () => {
     setPanelOpen(true);
+  });
+
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      const target = event.target as Node | null;
+
+      if (isFabMenuOpen && target && !assistant?.contains(target)) {
+        setFabMenuOpen(false);
+      }
+
+      if (!panel || panel.hidden) return;
+
+      if (!target || panel.contains(target)) return;
+
+      setPanelOpen(false);
+    },
+    { capture: true },
+  );
+
+  document.addEventListener("mobile-menu:open", () => {
+    setPanelOpen(false);
+    setFabMenuOpen(false);
   });
 
   scrollTopButton?.addEventListener("click", () => {
@@ -306,7 +336,9 @@ const quickMessages = [
         }, 360);
       }
       updateWhatsAppLink();
-      textarea.focus({ preventScroll: true });
+      if (window.matchMedia("(min-width: 640px)").matches) {
+        textarea.focus({ preventScroll: true });
+      }
     });
   });
 
@@ -322,6 +354,6 @@ const quickMessages = [
 
   updateWhatsAppLink();
   updateScrollTopButton();
-  window.addEventListener("scroll", updateScrollTopButton, { passive: true });
+  window.addEventListener("scroll", handlePageScroll, { passive: true });
   window.addEventListener("pagehide", unlockPageScroll);
 </script>
