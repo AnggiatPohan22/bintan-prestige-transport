@@ -29,6 +29,26 @@ export const tours = [
       "A private activity transfer package for guests who want a safe and exciting target shooting experience at Teluk Bintan Shooting Range, with transport, reservation assistance, and clear package options arranged before arrival.",
     image: "/images/gallery/real-gun-bintan-1.webp",
     heroImages: ["/images/gallery/real-gun-bintan-1.webp", "/images/tours/tanjungpinang.webp", "/images/tours/tanjungpinang2.webp"],
+    gallery: [
+      {
+        title: "Certified shooting range",
+        description: "A visual reference for the supervised target shooting experience in Bintan.",
+        image: "/images/gallery/real-gun-bintan-1.webp",
+        alt: "Certified target shooting range activity in Bintan",
+      },
+      {
+        title: "Private activity transfer",
+        description: "Private pickup and return transfer can be arranged around the selected shooting package.",
+        image: "/images/tours/tanjungpinang.webp",
+        alt: "Private transfer route before a Bintan activity package",
+      },
+      {
+        title: "Flexible route support",
+        description: "The activity can be paired with simple local stops based on timing and pickup area.",
+        image: "/images/tours/tanjungpinang2.webp",
+        alt: "Bintan route scenery for activity transfer planning",
+      },
+    ],
     alt: "Target shooting experience in Bintan",
     priceFrom: "IDR 1,100 K",
     duration: "1-2 hours",

@@ -1,0 +1,182 @@
+---
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+
+interface GalleryItem {
+  title: string;
+  description?: string;
+  image: string;
+  alt: string;
+}
+
+interface Props {
+  items: GalleryItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="activity-package-gallery editorial-section-dark border-t border-[#bfa46f]/12" data-activity-gallery>
+  <div class="editorial-container">
+    <div class="grid gap-5 lg:grid-cols-[0.58fr_1fr] lg:items-end">
+      <div class="max-w-2xl">
+        <p class="editorial-kicker">Activity Gallery</p>
+        <h2 class="editorial-title mt-3 text-[#f8fafc]">See the experience before you book.</h2>
+      </div>
+      <p class="max-w-2xl text-sm leading-7 text-slate-400 lg:justify-self-end">
+        Visual references help guests understand the activity mood, location, and service flow before confirming details through WhatsApp.
+      </p>
+    </div>
+
+    <div class="activity-package-gallery__grid mt-8">
+      {items.map((item, index) => (
+        <button
+          class:list={["activity-package-gallery__item", index === 0 && "activity-package-gallery__item--featured"]}
+          type="button"
+          aria-label={`Open ${item.title} image`}
+          data-activity-gallery-trigger
+          data-gallery-index={index}
+          data-gallery-image={item.image}
+          data-gallery-alt={item.alt}
+          data-gallery-title={item.title}
+          data-gallery-description={item.description ?? ""}
+        >
+          <img src={item.image} alt={item.alt} loading={index === 0 ? "eager" : "lazy"} />
+          <span class="activity-package-gallery__caption">
+            <strong>{item.title}</strong>
+            {item.description && <span>{item.description}</span>}
+          </span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="activity-package-gallery__lightbox" data-activity-gallery-lightbox hidden>
+    <button class="activity-package-gallery__backdrop" type="button" aria-label="Close activity image" data-activity-gallery-close></button>
+    <figure class="activity-package-gallery__dialog" role="dialog" aria-modal="true" aria-label="Activity gallery image preview">
+      <button class="activity-package-gallery__close" type="button" data-activity-gallery-close aria-label="Close activity image">
+        <X className="h-4 w-4" aria-hidden="true" />
+      </button>
+      <button class="activity-package-gallery__nav activity-package-gallery__nav--prev" type="button" data-activity-gallery-prev aria-label="Previous activity image">
+        <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+      </button>
+      <button class="activity-package-gallery__nav activity-package-gallery__nav--next" type="button" data-activity-gallery-next aria-label="Next activity image">
+        <ChevronRight className="h-5 w-5" aria-hidden="true" />
+      </button>
+      <div class="activity-package-gallery__preview-frame" data-activity-gallery-frame>
+        <img src="" alt="" data-activity-gallery-preview />
+      </div>
+      <figcaption>
+        <div>
+          <strong data-activity-gallery-title></strong>
+          <span data-activity-gallery-description></span>
+        </div>
+        <span class="activity-package-gallery__counter" data-activity-gallery-counter></span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  const activityGallery = document.querySelector<HTMLElement>("[data-activity-gallery]");
+  const activityGalleryLightbox = activityGallery?.querySelector<HTMLElement>("[data-activity-gallery-lightbox]");
+  const activityGalleryPreview = activityGallery?.querySelector<HTMLImageElement>("[data-activity-gallery-preview]");
+  const activityGalleryFrame = activityGallery?.querySelector<HTMLElement>("[data-activity-gallery-frame]");
+  const activityGalleryTitle = activityGallery?.querySelector<HTMLElement>("[data-activity-gallery-title]");
+  const activityGalleryDescription = activityGallery?.querySelector<HTMLElement>("[data-activity-gallery-description]");
+  const activityGalleryCounter = activityGallery?.querySelector<HTMLElement>("[data-activity-gallery-counter]");
+  const activityGalleryTriggers = activityGallery?.querySelectorAll<HTMLButtonElement>("[data-activity-gallery-trigger]");
+  const activityGalleryCloseButtons = activityGallery?.querySelectorAll<HTMLButtonElement>("[data-activity-gallery-close]");
+  const activityGalleryPrev = activityGallery?.querySelector<HTMLButtonElement>("[data-activity-gallery-prev]");
+  const activityGalleryNext = activityGallery?.querySelector<HTMLButtonElement>("[data-activity-gallery-next]");
+  const activityGalleryItems = Array.from(activityGalleryTriggers ?? []).map((trigger) => ({
+    image: trigger.dataset.galleryImage ?? "",
+    alt: trigger.dataset.galleryAlt ?? "",
+    title: trigger.dataset.galleryTitle ?? "",
+    description: trigger.dataset.galleryDescription ?? "",
+  }));
+  let lastActivityGalleryTrigger: HTMLButtonElement | null = null;
+  let activeActivityGalleryIndex = 0;
+  let activityGalleryTouchStartX = 0;
+
+  const setActivityGalleryImage = (index: number) => {
+    if (!activityGalleryPreview || !activityGalleryTitle || !activityGalleryDescription || activityGalleryItems.length === 0) return;
+
+    const normalizedIndex = (index + activityGalleryItems.length) % activityGalleryItems.length;
+    const item = activityGalleryItems[normalizedIndex];
+    activeActivityGalleryIndex = normalizedIndex;
+
+    activityGalleryPreview.src = item.image;
+    activityGalleryPreview.alt = item.alt;
+    activityGalleryTitle.textContent = item.title;
+    activityGalleryDescription.textContent = item.description;
+    if (activityGalleryCounter) {
+      activityGalleryCounter.textContent = `${String(normalizedIndex + 1).padStart(2, "0")} / ${String(activityGalleryItems.length).padStart(2, "0")}`;
+    }
+  };
+
+  const moveActivityGallery = (direction: number) => {
+    setActivityGalleryImage(activeActivityGalleryIndex + direction);
+  };
+
+  const closeActivityGallery = () => {
+    if (!activityGalleryLightbox) return;
+
+    activityGalleryLightbox.hidden = true;
+    document.documentElement.classList.remove("activity-gallery-is-open");
+    lastActivityGalleryTrigger?.focus();
+    lastActivityGalleryTrigger = null;
+  };
+
+  activityGalleryTriggers?.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      if (!activityGalleryLightbox) return;
+
+      const triggerIndex = Number(trigger.dataset.galleryIndex ?? 0);
+      setActivityGalleryImage(triggerIndex);
+      lastActivityGalleryTrigger = trigger;
+      activityGalleryLightbox.hidden = false;
+      document.documentElement.classList.add("activity-gallery-is-open");
+      activityGalleryNext?.focus();
+    });
+  });
+
+  activityGalleryCloseButtons?.forEach((button) => {
+    button.addEventListener("click", closeActivityGallery);
+  });
+
+  activityGalleryPrev?.addEventListener("click", () => {
+    moveActivityGallery(-1);
+  });
+
+  activityGalleryNext?.addEventListener("click", () => {
+    moveActivityGallery(1);
+  });
+
+  activityGalleryFrame?.addEventListener("pointerdown", (event) => {
+    activityGalleryTouchStartX = event.clientX;
+  });
+
+  activityGalleryFrame?.addEventListener("pointerup", (event) => {
+    const distance = event.clientX - activityGalleryTouchStartX;
+    if (Math.abs(distance) < 36) return;
+    moveActivityGallery(distance > 0 ? -1 : 1);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!activityGalleryLightbox || activityGalleryLightbox.hidden) return;
+
+    if (event.key === "Escape") {
+      closeActivityGallery();
+      return;
+    }
+
+    if (event.key === "ArrowLeft") {
+      moveActivityGallery(-1);
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
+      moveActivityGallery(1);
+    }
+  });
+</script>

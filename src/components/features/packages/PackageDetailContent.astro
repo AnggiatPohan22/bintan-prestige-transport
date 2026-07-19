@@ -1,8 +1,17 @@
 ---
+import ActivityPackageGallery from "@components/features/packages/ActivityPackageGallery.astro";
 import SwipeControls from "@components/core/SwipeControls.astro";
+
+interface GalleryItem {
+  title: string;
+  description?: string;
+  image: string;
+  alt: string;
+}
 
 interface DetailItem {
   title: string;
+  gallery?: GalleryItem[];
   highlights?: string[];
   itinerary?: string[];
   includes?: string[];
@@ -63,6 +72,8 @@ const isActivitiesTone = tone === "activities";
     </div>
   </div>
 </section>
+
+{isActivitiesTone && item.gallery?.length ? <ActivityPackageGallery items={item.gallery} /> : null}
 
 <section class="editorial-section-dark border-t border-[#bfa46f]/12">
   <div class="editorial-container grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
