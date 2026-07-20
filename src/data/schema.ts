@@ -4,9 +4,55 @@ import { packages } from "./packages";
 import { routes } from "./routes";
 import { site } from "./site";
 import { tours } from "./tours";
+import { transportRoutes } from "./transportRoutes";
 import { absoluteUrl } from "./seo";
 
 const sameAs = site.socialLinks;
+const transferCatalogRoutes = [...routes, ...transportRoutes];
+
+type OfferSchemaInput = {
+  name: string;
+  description?: string;
+  priceFrom?: string;
+  url?: string;
+};
+
+export const parseIdrPrice = (priceFrom?: string) => {
+  const match = priceFrom?.match(/(?:idr|rp)\s*([\d.,]+)\s*(k)?/i);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const baseValue = Number.parseInt(match[1].replace(/[.,]/g, ""), 10);
+
+  if (!Number.isFinite(baseValue)) {
+    return undefined;
+  }
+
+  return String(match[2] ? baseValue * 1000 : baseValue);
+};
+
+export const createOfferSchema = ({ name, description, priceFrom, url }: OfferSchemaInput) => {
+  const price = parseIdrPrice(priceFrom);
+  const offerDescription = [description, !price && priceFrom ? `Quoted as ${priceFrom}.` : ""]
+    .filter(Boolean)
+    .join(" ");
+
+  return {
+    "@type": "Offer",
+    name,
+    description: offerDescription || undefined,
+    url: url ? absoluteUrl(url) : undefined,
+    availability: "https://schema.org/InStock",
+    ...(price
+      ? {
+          priceCurrency: "IDR",
+          price,
+        }
+      : {}),
+  };
+};
 
 export const organizationSchema = {
   "@type": "TravelAgency",
@@ -71,11 +117,14 @@ export const serviceSchemas = [
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Transfer routes",
-      itemListElement: routes.map((route) => ({
-        "@type": "Offer",
+      itemListElement: transferCatalogRoutes.map((route) => ({
+        ...createOfferSchema({
+          name: route.title,
+          description: route.description,
+          priceFrom: route.priceFrom,
+          url: `/packages/pick-up-drop/${route.slug}`,
+        }),
         name: route.title,
-        description: route.description,
-        priceSpecification: route.priceFrom,
       })),
     },
   },
@@ -91,10 +140,13 @@ export const serviceSchemas = [
       "@type": "OfferCatalog",
       name: "Activities packages",
       itemListElement: tours.map((tour) => ({
-        "@type": "Offer",
+        ...createOfferSchema({
+          name: tour.title,
+          description: tour.description,
+          priceFrom: tour.priceFrom,
+          url: `/packages/activities-packages/${tour.slug}`,
+        }),
         name: tour.title,
-        description: tour.description,
-        priceSpecification: tour.priceFrom,
       })),
     },
   },

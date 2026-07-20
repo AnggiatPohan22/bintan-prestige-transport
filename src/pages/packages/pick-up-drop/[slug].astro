@@ -5,7 +5,7 @@ import PackageBookingForm from "@components/features/booking/PackageBookingForm.
 import PackageDetailContent from "@components/features/packages/PackageDetailContent.astro";
 import PackageDetailHero from "@components/features/packages/PackageDetailHero.astro";
 import WhatsAppCTA from "@components/core/WhatsAppCTA.astro";
-import { breadcrumbSchema, organizationSchema, localBusinessSchema } from "@data/schema";
+import { breadcrumbSchema, createOfferSchema, organizationSchema, localBusinessSchema } from "@data/schema";
 import { absoluteUrl } from "@data/seo";
 import { routes } from "@data/routes";
 import { transportRoutes } from "@data/transportRoutes";
@@ -33,11 +33,12 @@ const schema = [
     image: absoluteUrl(route.image),
     url: absoluteUrl(`/packages/pick-up-drop/${route.slug}`),
     provider: { "@id": organizationSchema["@id"] },
-    offers: {
-      "@type": "Offer",
-      priceSpecification: route.priceFrom,
-      availability: "https://schema.org/InStock",
-    },
+    offers: createOfferSchema({
+      name: route.title,
+      description: route.description,
+      priceFrom: route.priceFrom,
+      url: `/packages/pick-up-drop/${route.slug}`,
+    }),
   },
   breadcrumbSchema(breadcrumbs),
 ];

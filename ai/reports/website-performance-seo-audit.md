@@ -264,6 +264,48 @@ Catatan aman:
 - Visual review tetap wajib untuk halaman Home, Activities, Blog, route detail, dan activity gallery karena banyak image binary berubah.
 - Masih ada duplicate image names yang tersisa, tetapi sebagian digunakan oleh konteks berbeda seperti hero responsive, page hero, tours, cars, dan gallery. Sisa dedupe sebaiknya dilakukan di tahap asset registry yang lebih hati-hati, bukan dipaksa dalam C3.
 
+### Step D1 - Sitemap and Structured Data Cleanup
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 8.5/10
+
+Perbaikan yang sudah dilakukan:
+
+- Sitemap tidak lagi memakai `new Date()` saat build untuk semua `lastmod`.
+- Menambahkan `updatedAt` di `src/data/seo.ts` agar `lastmod` lebih stabil dan tidak berubah palsu setiap build.
+- Blog pages memakai `publishedAt` sebagai `updatedAt` awal.
+- Sitemap pick-up/drop sekarang ikut memasukkan halaman dari `transportRoutes`, bukan hanya `routes`.
+- Structured data `Offer` tidak lagi mengirim `priceSpecification` berupa string bebas seperti `IDR 350K/pax`, `By routes`, atau `Capacity : 7 Seater`.
+- Menambahkan helper `parseIdrPrice` dan `createOfferSchema` supaya harga yang bisa diparse dikirim sebagai `priceCurrency: "IDR"` dan `price` numeric.
+- Harga yang sifatnya by request/capacity tidak dipaksa menjadi numeric price, sehingga schema lebih aman untuk crawler.
+
+File yang berubah:
+
+- `src/data/seo.ts`
+- `src/pages/sitemap.xml.ts`
+- `src/data/schema.ts`
+- `src/pages/packages/activities-packages/[slug].astro`
+- `src/pages/packages/island-tour/[slug].astro`
+- `src/pages/packages/pick-up-drop/[slug].astro`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run build`: pass, 44 pages built.
+- `npm.cmd run audit:dist`: pass, semua budget tetap pass.
+- `dist/sitemap.xml`: 28 URL, termasuk `bintan-highlights`, `east-bintan-tour`, dan `tanjung-pinang-city-tour`.
+- `dist/sitemap.xml`: `lastmod` memakai tanggal stabil dari data, bukan timestamp build.
+- `rg -n 'priceSpecification' dist src`: no match, output HTML dan source tidak lagi memakai `priceSpecification` string bebas.
+
+Catatan aman:
+
+- Tidak ada perubahan visual atau UX.
+- Risiko rendah-menengah karena perubahan menyentuh JSON-LD dan sitemap, bukan layout.
+- Legacy `/packages/island-tour/[slug]` tetap dipertahankan sesuai existing route, tetapi offer schema-nya ikut dirapikan.
+
 ## Executive Summary
 
 Website sudah punya fondasi yang cukup baik untuk static hosting: Astro build sukses, halaman sudah memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap dan robots tersedia, dan JavaScript/CSS bukan bottleneck utama.
@@ -558,7 +600,9 @@ Bintan Prestige Transport | Private Taxi, Transfers & Bintan Tours
 
 Prioritas: Medium
 
-Temuan:
+Status progress: improved in Step D1, waiting user review.
+
+Temuan sebelum Step D1:
 
 - `dist/sitemap.xml` berisi 25 URL.
 - `src/pages/sitemap.xml.ts` memakai `new Date().toISOString()` untuk semua `lastmod`.
@@ -570,10 +614,10 @@ Dampak:
 
 Rekomendasi:
 
-- Gunakan `updatedAt` dari data content jika tersedia.
-- Untuk blog, gunakan tanggal artikel atau tanggal revisi.
-- Untuk halaman statis, gunakan tanggal terakhir update yang manual di data SEO.
-- Jika belum punya data update yang valid, lebih baik omit `lastmod` daripada selalu memakai tanggal build.
+- Done in Step D1: gunakan `updatedAt` dari data content.
+- Done in Step D1: blog memakai `publishedAt` sebagai tanggal awal.
+- Done in Step D1: halaman statis dan package memakai tanggal update manual dari data SEO.
+- Done in Step D1: sitemap sekarang memasukkan `transportRoutes` sehingga total URL sitemap naik menjadi 28.
 
 ### 5. Legacy Activity Routes
 
@@ -600,13 +644,15 @@ Rekomendasi:
 
 Prioritas: Medium
 
+Status progress: improved in Step D1, waiting user review.
+
 Temuan positif:
 
 - Project sudah punya schema terpusat di `src/data/schema.ts`.
 - Ada Organization, LocalBusiness, WebSite, SiteNavigationElement, Service, FAQ, Breadcrumb, BlogPosting, dan TouristTrip.
 - Detail package memakai schema offer.
 
-Temuan yang perlu dirapikan:
+Temuan sebelum Step D1:
 
 - Beberapa `priceSpecification` masih berupa string seperti `IDR 350K` atau `By request`.
 - Untuk Google structured data, harga lebih baik memakai `Offer` dengan `priceCurrency` dan angka numeric jika valid.
@@ -614,7 +660,11 @@ Temuan yang perlu dirapikan:
 
 Rekomendasi:
 
-- Untuk harga pasti:
+- Done in Step D1: harga pasti diparse menjadi `priceCurrency: "IDR"` dan `price` numeric.
+- Done in Step D1: harga fleksibel/by request/capacity tidak dipaksa menjadi numeric price.
+- Done in Step D1: helper schema offer dipusatkan di `src/data/schema.ts`.
+
+Contoh output untuk harga pasti:
 
 ```json
 {
@@ -625,12 +675,11 @@ Rekomendasi:
 }
 ```
 
-- Untuk harga by request:
+- Contoh output untuk harga by request/fleksibel:
 
 ```json
 {
   "@type": "Offer",
-  "priceCurrency": "IDR",
   "availability": "https://schema.org/InStock"
 }
 ```
@@ -779,8 +828,8 @@ Current position:
 1. Optimasi `scripts/generate-hero-responsive.mjs` agar output responsive hero lebih kecil.
 2. Tambahkan `width`, `height`, dan `decoding="async"` pada image yang belum stabil.
 3. Ubah route legacy `/packages/island-tour` menjadi redirect jika sudah tidak dipakai sebagai URL utama.
-4. Rapikan structured data harga agar lebih machine-readable.
-5. Tambahkan `og:site_name` dan `og:locale`.
+4. Done in Step D1: rapikan structured data harga agar lebih machine-readable.
+5. Done in Step A: tambahkan `og:site_name` dan `og:locale`.
 
 ### P2 - Improvement Lanjutan
 
