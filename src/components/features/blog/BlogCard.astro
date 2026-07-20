@@ -19,7 +19,15 @@ const { article, featured = false, showFavoriteBadge = true } = Astro.props;
   data-blog-tags={article.tags.join("|")}
 >
   <a class={`blog-card__media relative block overflow-hidden bg-[#071a14] ${featured ? "min-h-72 lg:min-h-full" : ""}`} href={`/blog/${article.slug}`} aria-label={`Read ${article.title}`}>
-    <img class="blog-card__image absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.035]" src={article.heroImage} alt={article.heroAlt} loading={featured ? "eager" : "lazy"} />
+    <img
+      class="blog-card__image absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.035]"
+      src={article.heroImage}
+      alt={article.heroAlt}
+      width={featured ? "1200" : "1600"}
+      height={featured ? "900" : "1000"}
+      loading={featured ? "eager" : "lazy"}
+      decoding="async"
+    />
     <div class="blog-card__shade absolute inset-0"></div>
     <div class="blog-card__badges absolute left-4 top-4 flex flex-wrap gap-2">
       <span class="blog-card__badge rounded-full border border-white/14 bg-black/30 px-3 py-1 text-xs font-semibold text-[#f8e7a1] backdrop-blur">{article.category}</span>

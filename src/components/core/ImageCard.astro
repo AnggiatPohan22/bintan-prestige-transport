@@ -15,7 +15,10 @@ const { title, description, image, alt } = Astro.props;
       class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.02]"
       src={image}
       alt={alt}
+      width="1200"
+      height="900"
       loading="lazy"
+      decoding="async"
     />
     <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(11,12,16,0.16),rgba(6,78,59,0.34))]" aria-hidden="true"></div>
   </div>

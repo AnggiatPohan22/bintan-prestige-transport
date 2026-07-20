@@ -40,7 +40,14 @@ const { items } = Astro.props;
           data-gallery-title={item.title}
           data-gallery-description={item.description ?? ""}
         >
-          <img src={item.image} alt={item.alt} loading={index === 0 ? "eager" : "lazy"} />
+          <img
+            src={item.image}
+            alt={item.alt}
+            width="1200"
+            height="900"
+            loading={index === 0 ? "eager" : "lazy"}
+            decoding="async"
+          />
           <span class="activity-package-gallery__caption">
             <strong>{item.title}</strong>
             {item.description && <span>{item.description}</span>}
@@ -63,7 +70,7 @@ const { items } = Astro.props;
         <ChevronRight className="h-5 w-5" aria-hidden="true" />
       </button>
       <div class="activity-package-gallery__preview-frame" data-activity-gallery-frame>
-        <img src="" alt="" data-activity-gallery-preview />
+        <img src="" alt="" width="1600" height="1200" decoding="async" data-activity-gallery-preview />
       </div>
       <figcaption>
         <div>

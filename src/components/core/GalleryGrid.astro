@@ -28,7 +28,7 @@ const { items } = Astro.props;
         data-gallery-title={item.title}
         data-gallery-description={item.description ?? ""}
       >
-        <img src={item.image} alt={item.alt} loading="lazy" />
+        <img src={item.image} alt={item.alt} width="1200" height="900" loading="lazy" decoding="async" />
         <span class="client-gallery-caption">
           <span>{item.title}</span>
           {item.description && <small>{item.description}</small>}
@@ -43,7 +43,7 @@ const { items } = Astro.props;
   <figure class="client-gallery-dialog" role="dialog" aria-modal="true" aria-label="Gallery image preview">
     <button class="client-gallery-close" type="button" aria-label="Close gallery image" data-gallery-close>Close</button>
     <div class="client-gallery-dialog-frame">
-      <img src="" alt="" data-gallery-preview />
+      <img src="" alt="" width="1600" height="1200" decoding="async" data-gallery-preview />
     </div>
     <figcaption>
       <strong data-gallery-preview-title></strong>

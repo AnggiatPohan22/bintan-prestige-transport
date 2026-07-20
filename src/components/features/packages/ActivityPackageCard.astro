@@ -26,7 +26,10 @@ const { tour } = Astro.props;
       class="package-offer-card__image"
       src={tour.image}
       alt={tour.alt}
+      width="1200"
+      height="1200"
       loading="lazy"
+      decoding="async"
     />
     <div class="package-offer-card__shade" aria-hidden="true"></div>
     <div class="package-offer-card__badges">

@@ -14,7 +14,16 @@ const fleetJson = JSON.stringify(carTypes);
       <div class="absolute inset-x-8 bottom-8 h-px bg-gradient-to-r from-transparent via-[#f8e7a1]/45 to-transparent"></div>
       <div class="relative z-[1] flex min-h-full items-center justify-center p-4 sm:p-6 lg:p-7">
         <figure class="fleet-car-frame w-full">
-          <img alt={initialCar.alt} class="fleet-car-image h-full w-full" src={initialCar.image} data-fleet-image />
+          <img
+            alt={initialCar.alt}
+            class="fleet-car-image h-full w-full"
+            src={initialCar.image}
+            width="1600"
+            height="900"
+            loading="lazy"
+            decoding="async"
+            data-fleet-image
+          />
           <figcaption class="sr-only" data-fleet-caption>{initialCar.name}</figcaption>
         </figure>
       </div>

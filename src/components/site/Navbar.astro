@@ -22,7 +22,15 @@ const isActive = (href: string) => {
     <a href="/" class="site-header__brand group" aria-label={`${site.shortName} home`}>
       {
         site.logoImage ? (
-          <img class="site-header__logo" src={site.logoImage} alt={`${site.shortName} logo`} />
+          <img
+            class="site-header__logo"
+            src={site.logoImage}
+            alt={`${site.shortName} logo`}
+            width="900"
+            height="471"
+            decoding="async"
+            fetchpriority="high"
+          />
         ) : (
           <span class="site-header__wordmark">
             <span>{site.shortName}</span>

@@ -72,7 +72,10 @@ const getPriceDisplay = (value?: string) => {
                 class="package-offer-card__image"
                 src={item.image}
                 alt={item.alt ?? item.title}
+                width="1600"
+                height="900"
                 loading="lazy"
+                decoding="async"
               />
               <div class="package-offer-card__shade" aria-hidden="true"></div>
               <div class="package-offer-card__badges">

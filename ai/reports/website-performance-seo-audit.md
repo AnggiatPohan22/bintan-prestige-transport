@@ -349,6 +349,62 @@ Catatan aman:
 - Risiko rendah-menengah karena halaman legacy dihapus dari static build dan sekarang bergantung pada `_redirects` saat hosting di Cloudflare Pages.
 - Pada local static file output, URL legacy tidak lagi tersedia sebagai HTML, tetapi di hosting production akan diarahkan oleh `_redirects`.
 
+### Step E1 - Image Layout Stability Attributes
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 8/10
+
+Perbaikan yang sudah dilakukan:
+
+- Menambahkan `width`, `height`, dan `decoding="async"` pada image manual di komponen reusable.
+- Header logo diberi dimensi dan `fetchpriority="high"` agar brand image punya ukuran stabil saat first paint.
+- Footer logo diberi dimensi dan lazy async decode.
+- Hero slideshow image diberi dimensi 16:9 sebagai fallback aspect ratio.
+- Blog card, article gallery, package card, activity gallery, transfer fleet, route list, service card, route highlight, image card, dan client gallery diberi dimensi sesuai rasio frame masing-masing.
+- Lightbox preview image diberi dimensi fallback agar frame preview lebih stabil ketika source diganti lewat JavaScript.
+
+File yang berubah:
+
+- `src/components/site/Navbar.astro`
+- `src/components/site/Footer.astro`
+- `src/components/core/GalleryGrid.astro`
+- `src/components/core/HeroBackdrop.astro`
+- `src/components/core/ImageCard.astro`
+- `src/components/features/blog/BlogCard.astro`
+- `src/components/features/blog/ArticleGallery.astro`
+- `src/components/sections/home/PremiumCarSelector.astro`
+- `src/components/sections/home/ServiceCards.astro`
+- `src/components/sections/home/RouteHighlights.astro`
+- `src/components/features/packages/ActivityPackageCard.astro`
+- `src/components/features/packages/ActivityPackageGallery.astro`
+- `src/components/sections/packages/TransferFleet.astro`
+- `src/components/features/packages/PackageCard.astro`
+- `src/components/features/packages/RouteList.astro`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run build`: pass, 33 pages built.
+- `npm.cmd run audit:dist`: pass, semua budget tetap pass.
+- HTML scanner: 33 HTML files checked, `img missing attrs: 0` untuk `width`, `height`, dan `decoding`.
+- Manual check tetap disarankan: cek header logo, footer logo, home cards, blog card swipe, activity gallery, route card, dan lightbox agar tidak ada crop visual yang terasa berubah.
+
+Hasil ukuran setelah E1:
+
+- Total `dist`: 22.41 MB dari budget 25 MB.
+- Largest image: 491.0 KB dari budget 500 KB.
+- JS gzip total: 61.9 KB dari budget 80 KB.
+- CSS gzip total: 30.8 KB dari budget 50 KB.
+
+Catatan aman:
+
+- Tidak ada perubahan CSS, data, URL, atau behavior JavaScript.
+- Risiko utama hanya visual crop/perceived ratio jika browser memakai rasio atribut sebelum CSS aktif.
+- Karena image berada dalam parent yang sudah punya `aspect-ratio` dan `object-fit: cover`, perubahan ini seharusnya menjaga layout tanpa menggeser desain.
+
 ## Executive Summary
 
 Website sudah punya fondasi yang cukup baik untuk static hosting: Astro build sukses, halaman sudah memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap dan robots tersedia, dan JavaScript/CSS bukan bottleneck utama.

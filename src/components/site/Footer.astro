@@ -22,7 +22,15 @@ const policyLinks = [
   <div class="site-footer__glow" aria-hidden="true"></div>
   <div class="site-footer__inner editorial-container">
     <div class="site-footer__brand">
-      <img class="site-footer__logo" src={footerLogo} alt={`${site.shortName} logo`} loading="lazy" />
+      <img
+        class="site-footer__logo"
+        src={footerLogo}
+        alt={`${site.shortName} logo`}
+        width="900"
+        height="471"
+        loading="lazy"
+        decoding="async"
+      />
       <p class="site-footer__copy">{site.defaultDescription}</p>
       <div class="site-footer__cta-row">
         <a class="site-footer__primary" href={whatsappHref} target="_blank" rel="noreferrer">Chat on WhatsApp</a>

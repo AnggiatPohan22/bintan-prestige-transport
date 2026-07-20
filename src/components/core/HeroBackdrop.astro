@@ -32,6 +32,8 @@ const getImageSrc = (image: string | HeroImageAsset) => (typeof image === "strin
                   class="hero-slide__image"
                   src={image}
                   alt=""
+                  width="1760"
+                  height="990"
                   loading={index === 0 ? "eager" : "lazy"}
                   decoding="async"
                   fetchpriority={index === 0 ? "high" : "auto"}
@@ -45,6 +47,8 @@ const getImageSrc = (image: string | HeroImageAsset) => (typeof image === "strin
                     class="hero-slide__image"
                     src={getImageSrc(image)}
                     alt=""
+                    width="1760"
+                    height="990"
                     loading={index === 0 ? "eager" : "lazy"}
                     decoding="async"
                     fetchpriority={index === 0 ? "high" : "auto"}
