@@ -77,6 +77,8 @@ const { items } = Astro.props;
 </section>
 
 <script>
+  import { pageScrollLock } from "../../../scripts/pageScrollLock";
+
   const activityGallery = document.querySelector<HTMLElement>("[data-activity-gallery]");
   const activityGalleryLightbox = activityGallery?.querySelector<HTMLElement>("[data-activity-gallery-lightbox]");
   const activityGalleryPreview = activityGallery?.querySelector<HTMLImageElement>("[data-activity-gallery-preview]");
@@ -123,6 +125,7 @@ const { items } = Astro.props;
 
     activityGalleryLightbox.hidden = true;
     document.documentElement.classList.remove("activity-gallery-is-open");
+    pageScrollLock.unlock("activity-gallery");
     lastActivityGalleryTrigger?.focus();
     lastActivityGalleryTrigger = null;
   };
@@ -136,6 +139,7 @@ const { items } = Astro.props;
       lastActivityGalleryTrigger = trigger;
       activityGalleryLightbox.hidden = false;
       document.documentElement.classList.add("activity-gallery-is-open");
+      pageScrollLock.lock("activity-gallery");
       activityGalleryNext?.focus();
     });
   });
@@ -178,5 +182,9 @@ const { items } = Astro.props;
     if (event.key === "ArrowRight") {
       moveActivityGallery(1);
     }
+  });
+
+  window.addEventListener("pagehide", () => {
+    pageScrollLock.unlock("activity-gallery");
   });
 </script>

@@ -53,6 +53,8 @@ const { items } = Astro.props;
 </div>
 
 <script>
+  import { pageScrollLock } from "../../scripts/pageScrollLock";
+
   const galleryLightbox = document.querySelector<HTMLElement>("[data-gallery-lightbox]");
   const galleryPreview = galleryLightbox?.querySelector<HTMLImageElement>("[data-gallery-preview]");
   const galleryTitle = galleryLightbox?.querySelector<HTMLElement>("[data-gallery-preview-title]");
@@ -133,6 +135,7 @@ const { items } = Astro.props;
 
     galleryLightbox.hidden = true;
     document.documentElement.classList.remove("gallery-is-open");
+    pageScrollLock.unlock("client-gallery");
     lastGalleryTrigger?.focus();
     lastGalleryTrigger = null;
   };
@@ -153,6 +156,7 @@ const { items } = Astro.props;
       lastGalleryTrigger = photo;
       galleryLightbox.hidden = false;
       document.documentElement.classList.add("gallery-is-open");
+      pageScrollLock.lock("client-gallery");
       galleryCloseButtons[0]?.focus();
     });
   });
@@ -242,4 +246,8 @@ const { items } = Astro.props;
     window.addEventListener("load", scheduleGalleryVisualState);
     updateGalleryVisualState();
   }
+
+  window.addEventListener("pagehide", () => {
+    pageScrollLock.unlock("client-gallery");
+  });
 </script>

@@ -78,6 +78,8 @@ const isActive = (href: string) => {
 </details>
 
 <script>
+  import { pageScrollLock } from "../../scripts/pageScrollLock";
+
   const mobileMenu = document.querySelector<HTMLDetailsElement>("[data-mobile-menu]");
   const mobileMenuPanel = mobileMenu?.querySelector<HTMLElement>("[data-mobile-menu-panel]");
   const mobileMenuTrigger = mobileMenu?.querySelector<HTMLElement>("[data-mobile-menu-trigger]");
@@ -88,12 +90,22 @@ const isActive = (href: string) => {
 
     mobileMenu.open = isOpen;
     document.documentElement.classList.toggle("mobile-menu-is-open", isOpen);
+    if (isOpen) {
+      pageScrollLock.lock("mobile-menu");
+    } else {
+      pageScrollLock.unlock("mobile-menu");
+    }
     document.dispatchEvent(new CustomEvent(isOpen ? "mobile-menu:open" : "mobile-menu:close"));
   };
 
   mobileMenu?.addEventListener("toggle", () => {
     const isOpen = Boolean(mobileMenu.open);
     document.documentElement.classList.toggle("mobile-menu-is-open", isOpen);
+    if (isOpen) {
+      pageScrollLock.lock("mobile-menu");
+    } else {
+      pageScrollLock.unlock("mobile-menu");
+    }
     document.dispatchEvent(new CustomEvent(isOpen ? "mobile-menu:open" : "mobile-menu:close"));
   });
 
@@ -121,5 +133,6 @@ const isActive = (href: string) => {
 
   window.addEventListener("pagehide", () => {
     document.documentElement.classList.remove("mobile-menu-is-open");
+    pageScrollLock.unlock("mobile-menu");
   });
 </script>
