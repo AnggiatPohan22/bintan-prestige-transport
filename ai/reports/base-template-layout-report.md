@@ -304,6 +304,7 @@ Last known local verification:
 - No push or Cloudflare deployment was run.
 - Asset registry pass centralizes page hero images and activity package card/detail/gallery images in `src/data/assets.ts`; maintenance notes are updated in `ai/guides/manual-image-content-guide.md` and `ai/guides/mapping-file-project-travel-agent.md`.
 - Responsive hero image pass adds full-cover mobile/tablet/desktop variants, a reusable `npm.cmd run images:hero` generator, and `<picture>` support in `HeroBackdrop.astro` so hero sections can serve sharper device-specific images while staying lightweight.
+- Floating WhatsApp now uses an explicit full-screen blur backdrop on all breakpoints, and mobile navigation reuses the promo ticker below the WhatsApp CTA.
 
 ## Known Notes
 

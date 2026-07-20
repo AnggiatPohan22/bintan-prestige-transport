@@ -89,6 +89,7 @@ const quickMessages = [
   data-whatsapp-number={site.whatsappNumber}
   data-default-message={site.whatsappMessage}
 >
+  <button class="whatsapp-assistant-backdrop" type="button" data-whatsapp-backdrop hidden aria-label="Close WhatsApp chat"></button>
   <section class="whatsapp-assistant-panel" data-whatsapp-panel hidden aria-label="WhatsApp concierge chat">
     <div class="whatsapp-assistant-panel__glow" aria-hidden="true"></div>
     <div class="whatsapp-assistant-panel__header">
@@ -179,6 +180,7 @@ const quickMessages = [
   import { pageScrollLock } from "../../scripts/pageScrollLock";
 
   const assistant = document.querySelector<HTMLElement>("[data-whatsapp-assistant]");
+  const backdrop = assistant?.querySelector<HTMLButtonElement>("[data-whatsapp-backdrop]");
   const panel = assistant?.querySelector<HTMLElement>("[data-whatsapp-panel]");
   const fabMenu = assistant?.querySelector<HTMLElement>("[data-fab-menu]");
   const toggle = assistant?.querySelector<HTMLButtonElement>("[data-fab-toggle]");
@@ -223,7 +225,7 @@ const quickMessages = [
   };
 
   const setPanelOpen = (isOpen: boolean) => {
-    if (!panel || !toggle) return;
+    if (!panel || !toggle || !backdrop) return;
 
     window.clearTimeout(panelTransitionTimer);
     assistant?.setAttribute("data-open", String(isOpen));
@@ -233,9 +235,11 @@ const quickMessages = [
 
     if (isOpen) {
       lockPageScroll();
+      backdrop.hidden = false;
       panel.hidden = false;
       updateWhatsAppLink();
       window.requestAnimationFrame(() => {
+        backdrop.dataset.state = "open";
         panel.dataset.state = "open";
       });
       panelTransitionTimer = window.setTimeout(() => {
@@ -246,9 +250,11 @@ const quickMessages = [
       return;
     }
 
+    backdrop.dataset.state = "closed";
     panel.dataset.state = "closed";
     unlockPageScroll();
     panelTransitionTimer = window.setTimeout(() => {
+      backdrop.hidden = true;
       panel.hidden = true;
     }, 240);
   };
@@ -272,6 +278,10 @@ const quickMessages = [
 
   whatsappOpen?.addEventListener("click", () => {
     setPanelOpen(true);
+  });
+
+  backdrop?.addEventListener("click", () => {
+    setPanelOpen(false);
   });
 
   document.addEventListener(
@@ -344,6 +354,10 @@ const quickMessages = [
   updateScrollTopButton();
   window.addEventListener("scroll", handlePageScroll, { passive: true });
   window.addEventListener("pagehide", () => {
+    assistant?.setAttribute("data-open", "false");
+    if (backdrop) {
+      backdrop.hidden = true;
+    }
     pageScrollLock.unlock("whatsapp-panel");
     pageScrollLock.unlock("whatsapp-fab");
   });

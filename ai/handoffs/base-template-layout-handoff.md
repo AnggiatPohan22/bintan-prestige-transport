@@ -63,6 +63,7 @@ Older reports and handoffs are preserved under:
 | Floating WhatsApp responsive icon/button polish | `src/components/site/FloatingWhatsApp.astro`, `src/styles/components.css`, `src/styles/sections.css` |
 | Global floating WhatsApp and Back to Top actions | `src/components/site/FloatingWhatsApp.astro`, `src/styles/components.css`, `src/styles/sections.css` |
 | Running text promo / announcement ticker | `.env`, `.env.example`, `src/data/site.ts`, `src/components/core/PromoTicker.astro`, `src/styles/components.css` |
+| Mobile menu promo ticker | `src/components/site/MobileNav.astro`, `src/styles/sections.css`, `src/components/core/PromoTicker.astro` |
 | Non-Fleet carousel/blog pagination polish | `src/styles/components.css` |
 
 ## Page Ownership
@@ -123,7 +124,9 @@ Current mobile widget note:
 - `src/styles/sections.css` keeps `.whatsapp-assistant` visible on mobile.
 - Home mobile keeps `.whatsapp-assistant` inside the right edge and raises its mobile stacking layer when `.booking-floating-form` is present, so the floating WhatsApp button stays visible and tappable above the booking form.
 - Opening `.whatsapp-assistant` adds a blurred page backdrop so the widget form becomes the focus layer.
+- The WhatsApp backdrop is an explicit full-screen button, matching the mobile menu blur behavior and allowing outside-click close on every breakpoint.
 - The mobile panel uses safer viewport sizing, a softer glass header treatment, and a running promo slot below `Continue to WhatsApp`.
+- `MobileNav.astro` reuses `PromoTicker.astro` below the WhatsApp CTA so menu and chat share the same promo copy.
 - The default running promo text is controlled by `PUBLIC_PROMO_TICKER_TEXT`, exposed through `site.promoTickerText`, and rendered by `src/components/core/PromoTicker.astro`.
 - `FloatingWhatsApp.astro` also renders the global Back to Top button, so changes to the fixed WhatsApp/back-to-top pair should stay in that component and its CSS.
 - The global floating action pair is stacked vertically, with WhatsApp above Back to Top, to avoid covering content horizontally on mobile.

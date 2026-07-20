@@ -2292,6 +2292,28 @@
   scrollbar-gutter: stable;
 }
 
+.whatsapp-assistant-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  border: 0;
+  background: rgba(2, 6, 5, 0.72);
+  cursor: pointer;
+  opacity: 0;
+  padding: 0;
+  pointer-events: none;
+  transition:
+    opacity 220ms ease,
+    backdrop-filter 220ms ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.whatsapp-assistant-backdrop[data-state="open"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .whatsapp-assistant-panel::-webkit-scrollbar {
   width: 0.35rem;
 }
