@@ -6,6 +6,8 @@ Branch saat audit: `develop`
 
 Scope audit: build output, asset size, image delivery, client bundle, metadata SEO, schema, sitemap, robots, dan kesiapan hosting static.
 
+Status dokumen terakhir: updated through Step H1 on 2026-07-21.
+
 ## Optimization Progress
 
 ### Step A - SEO Foundation P0
@@ -505,13 +507,43 @@ Catatan aman:
 - Perubahan ini menambah satu section visual di package detail, jadi perlu review tampilan.
 - Maintenance link berikutnya dilakukan dari data package masing-masing melalui property `relatedLinks`.
 
+### Step H1 - Report Consistency And Launch Readiness Checklist
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-21
+
+Rating aman: 9/10
+
+Perbaikan yang sudah dilakukan:
+
+- Merapikan ringkasan audit agar tidak lagi memakai baseline lama sebagai kondisi final.
+- Memperbarui `Current position` berdasarkan verifikasi terbaru setelah Step G1.
+- Memperbarui `Priority Action Plan` supaya item yang sudah selesai tidak lagi terlihat seperti pekerjaan aktif.
+- Menambahkan launch readiness checklist untuk pengecekan manual di Cloudflare dan live domain.
+- Memperbarui final verdict agar sesuai dengan kondisi project setelah Step A sampai Step G1.
+
+File yang berubah:
+
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- Document-only update, tidak perlu build ulang untuk perubahan source.
+- Angka terbaru mengacu pada verifikasi Step G1: `npm run build` PASS, `npm run audit:dist` PASS, total `dist` 22.45 MB.
+
+Catatan aman:
+
+- Tidak ada perubahan UI, route, data content, script build, atau hosting config.
+- Checklist manual tetap perlu dilakukan setelah deployment karena header, redirect domain, dan environment variable final hanya bisa dipastikan di hosting/live domain.
+
 ## Executive Summary
 
-Website sudah punya fondasi yang cukup baik untuk static hosting: Astro build sukses, halaman sudah memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap dan robots tersedia, dan JavaScript/CSS bukan bottleneck utama.
+Website sekarang sudah berada di kondisi jauh lebih siap untuk static hosting: Astro build sukses, halaman memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap/robots tersedia, structured data harga sudah lebih machine-readable, dan JavaScript/CSS masih dalam budget aman.
 
-Masalah terbesar saat ini adalah bobot asset gambar. Output `dist` sekitar 40.54 MB, dan 36.39 MB berasal dari file `.webp`. Beberapa gambar utama masih 700 KB sampai 970 KB, dan logo PNG putih mencapai sekitar 1.1 MB. Karena folder `public/images` ikut tersalin apa adanya ke `dist`, duplikasi gambar antar folder juga ikut menaikkan ukuran deploy.
+Masalah terbesar dari audit awal adalah bobot asset gambar dan output static yang terlalu besar. Setelah Step C1 sampai C3, total `dist` turun dari 40.55 MB menjadi sekitar 22.45 MB dan largest image sudah masuk budget 500 KB. Masih ada duplicate image names yang tersisa, tetapi sekarang bukan blocker launch karena budget utama sudah PASS dan semua HTML image references valid.
 
-Untuk SEO, struktur dasarnya sudah benar, tetapi ada beberapa hal yang perlu dirapikan sebelum dianggap production-grade: fallback domain canonical berbeda antara `astro.config.mjs` dan `src/data/site.ts`, homepage meta description masih memakai wording "frontend foundation", sitemap memakai `lastmod` tanggal build untuk semua URL, dan schema harga masih perlu dibuat lebih machine-readable.
+Untuk SEO, temuan P0 seperti canonical fallback mismatch, homepage meta copy development, sitemap `lastmod` build-time, duplicate legacy route, dan schema offer string bebas sudah diperbaiki. Sisa pekerjaan sebelum launch lebih banyak berupa verifikasi manual environment production, domain canonical, Cloudflare redirect/cache/security headers, dan polishing lanjutan seperti asset registry final atau React/Motion audit.
 
 ## Audit Commands
 
@@ -1043,10 +1075,12 @@ Target sebelum production:
 
 Current position:
 
-- Total `dist`: 23.09 MB setelah Step C3.
-- Images: 19.98 MB WebP plus 294.4 KB PNG setelah Step C3.
-- JS gzip: sekitar 60 KB, masih aman.
-- CSS gzip: sekitar 30 KB, masih aman.
+- Total `dist`: 22.45 MB setelah Step G1 verification.
+- Images: 19.98 MB WebP plus 294.4 KB PNG.
+- Largest image: 491.0 KB, masih dalam budget 500 KB.
+- JS gzip: 61.9 KB, masih aman dari budget 80 KB.
+- CSS gzip: 31.0 KB, masih aman dari budget 50 KB.
+- Missing image references: 0.
 
 ## Priority Action Plan
 
@@ -1055,23 +1089,27 @@ Current position:
 1. Done in Step A: samakan canonical production domain di `astro.config.mjs`, `src/data/site.ts`, dan `.env.example`. Cloudflare env `PUBLIC_SITE_URL` tetap perlu dicek saat deployment.
 2. Done in Step A: ganti homepage meta description agar tidak memakai wording "frontend foundation".
 3. Done through Step C1, C2, and C3: compress logo PNG besar, responsive hero images, dan source/original WebP besar.
-4. Partially done in Step C3: kurangi duplikasi root gallery/legacy hero di `public/images`. Sisa dedupe perlu asset registry/refactor path yang lebih hati-hati.
+4. Improved in Step G1: tambah `_headers` untuk cache static asset dan security header dasar.
+5. Manual before launch: pastikan Cloudflare env `PUBLIC_SITE_URL`, canonical domain redirect, HTTPS redirect, dan production contact/WA env sudah final.
 
 ### P1 - Sangat Disarankan
 
-1. Optimasi `scripts/generate-hero-responsive.mjs` agar output responsive hero lebih kecil.
-2. Tambahkan `width`, `height`, dan `decoding="async"` pada image yang belum stabil.
+1. Done in Step C2: optimasi `scripts/generate-hero-responsive.mjs` agar output responsive hero lebih kecil.
+2. Done in Step E1: tambahkan `width`, `height`, dan `decoding="async"` pada image yang belum stabil.
 3. Done in Step D2: ubah route legacy `/packages/island-tour` menjadi redirect jika sudah tidak dipakai sebagai URL utama.
 4. Done in Step D1: rapikan structured data harga agar lebih machine-readable.
 5. Done in Step A: tambahkan `og:site_name` dan `og:locale`.
+6. Optional before launch: tambah `twitter:site` jika akun resmi sudah tersedia.
+7. Optional before launch: cek default OG image di social preview tool setelah domain live.
 
 ### P2 - Improvement Lanjutan
 
 1. Audit apakah React/Motion masih diperlukan untuk animation island.
 2. Pindahkan icon static ke pendekatan yang lebih ringan jika bundle mulai membesar.
-3. Buat asset registry khusus, misalnya `src/data/assets.ts`, untuk gambar, logo, icon, dan OG image.
+3. Continue asset registry work di `src/data/assets.ts` untuk gambar, logo, icon, hero, gallery, tours, dan OG image.
 4. Done in Step B: buat script audit size supaya setiap build bisa cek image besar dan total deploy size.
 5. Done in Step F1 and F2: tambahkan internal linking strategy dari blog ke package/service dan dari package detail ke related blog/package/contact.
+6. Partially done in Step C3: kurangi duplikasi root gallery/legacy hero di `public/images`. Sisa dedupe hanya dilakukan kalau registry sudah jelas dan visual mapping aman.
 
 ## Suggested Maintenance Files
 
@@ -1098,32 +1136,48 @@ Fungsi masing-masing:
 - `scripts/generate-hero-responsive.mjs`: generator hero responsive.
 - `scripts/audit-dist-size.mjs`: quality gate ukuran build.
 
-## Verification Checklist For Next Optimization
+## Launch Readiness Checklist
 
-Setelah perubahan optimasi dilakukan, jalankan:
+Sebelum production deploy atau setelah build final, jalankan lokal:
 
 ```bash
 npm.cmd run build
+npm.cmd run audit:dist
 ```
 
-Lalu cek:
+Lalu cek hasil lokal:
 
 - Build tetap sukses.
-- Total `dist` turun mendekati 20 sampai 25 MB.
+- Total `dist` tetap di bawah 25 MB.
 - Tidak ada gambar utama di atas 500 KB.
 - Canonical dan sitemap memakai domain final yang sama.
 - Homepage meta description sudah production-ready.
 - Semua halaman utama tidak horizontal overflow di mobile.
 - Floating WhatsApp, menu mobile, gallery, dan booking form tetap berjalan.
+- `dist/_headers` memuat security header dan cache rule.
+- `dist/_redirects` memuat redirect legacy `/packages/island-tour`.
+
+Cek manual di Cloudflare setelah deploy:
+
+- `PUBLIC_SITE_URL` memakai domain production final.
+- Brand/contact/WhatsApp environment variable memakai nilai production.
+- Domain non-canonical redirect ke canonical domain.
+- HTTP redirect ke HTTPS aktif.
+- Response `/_astro/*` memiliki `Cache-Control: public, max-age=31536000, immutable`.
+- Response `/images/*` memiliki cache media sesuai `_headers`.
+- Halaman HTML tidak tersimpan terlalu lama sehingga update konten tetap cepat terlihat.
+- `sitemap.xml` dan `robots.txt` memakai domain canonical final.
+- Preview/staging domain tidak terindex jika tidak ingin muncul di Google.
+- 404 page tampil dengan layout site dan tidak menjadi halaman indexable penting.
 
 ## Final Verdict
 
-Website sudah punya struktur static dan SEO foundation yang baik, tetapi belum optimal untuk production hosting karena asset gambar masih terlalu berat dan ada ketidakkonsistenan domain canonical fallback.
+Website sudah punya struktur static, performance budget, dan SEO foundation yang cukup siap untuk production launch. Temuan besar dari audit awal sudah selesai: canonical fallback sudah konsisten, meta production copy sudah rapi, image budget sudah PASS, sitemap/structured data sudah lebih stabil, legacy duplicate route sudah diarahkan, internal linking sudah diperkuat, dan Cloudflare `_headers` sudah disiapkan.
 
-Urutan terbaik berikutnya adalah:
+Sisa pekerjaan yang belum sepenuhnya selesai:
 
-1. Fix domain canonical dan homepage meta.
-2. Compress dan deduplicate image assets.
-3. Rapikan structured data dan sitemap lastmod.
-4. Tambahkan asset registry agar maintenance gambar/logo/icon lebih mudah.
-5. Baru setelah itu lakukan polishing performance kecil seperti React/Motion audit dan preload strategy.
+1. Verifikasi manual environment variable dan redirect di Cloudflare production.
+2. Finalisasi asset registry jika ingin maintenance gambar/logo/icon lebih terpusat.
+3. Audit React/Motion jika ingin bundle lebih ringan lagi, meskipun JS gzip saat ini masih aman.
+4. Pertimbangkan CSP dan HSTS setelah domain/subdomain production benar-benar final.
+5. Tambahkan `twitter:site` atau FAQ artikel penting jika aset/akun resmi sudah tersedia.
