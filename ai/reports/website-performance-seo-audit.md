@@ -980,6 +980,8 @@ Rekomendasi:
 
 Prioritas: High
 
+Status progress: improved in Step G1, waiting user review.
+
 Pastikan hosting mengaktifkan:
 
 - Brotli atau gzip untuk HTML, CSS, dan JS.
@@ -994,7 +996,36 @@ Jika memakai Cloudflare Pages:
 
 - Set `PUBLIC_SITE_URL` ke domain production final.
 - Set environment variable brand/contact/WA dengan nilai production.
-- Tambahkan `_headers` dan `_redirects` jika perlu kontrol caching dan canonical redirect.
+- Done in Step G1: `public/_headers` mengatur security headers, immutable cache untuk `/_astro/*`, cache gambar/video, dan cache pendek untuk `robots.txt`, `sitemap.xml`, serta `site.webmanifest`.
+- Done in Step D2: `public/_redirects` menjaga redirect permanen route legacy `/packages/island-tour`.
+- HTML cache dibiarkan mengikuti default Cloudflare Pages agar update konten cepat terlihat dan tidak membuat duplikasi `Cache-Control` dari wildcard `_headers`.
+- Belum ditambahkan: CSP dan HSTS. CSP perlu audit inline script/style lebih dulu; HSTS perlu keputusan production domain dan subdomain final.
+
+### Step G1 - Cloudflare Headers And Cache Rules
+
+Status: Done, waiting user review.
+
+Rating aman: 8.5/10.
+
+Perubahan:
+
+- Mempertahankan security headers global: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, dan `Permissions-Policy`.
+- Mempertahankan immutable cache untuk hashed Astro build assets di `/_astro/*`.
+- Menambahkan `stale-while-revalidate` untuk `/images/*` dan `/videos/*` agar asset media bisa tetap cepat sambil refresh di background.
+- Menambahkan cache rule untuk `/site.webmanifest`.
+- Menambahkan `must-revalidate` untuk `sitemap.xml` dan `robots.txt` agar crawler tetap mendapat update dalam window cache pendek.
+
+Catatan aman:
+
+- Tidak menambahkan `Cache-Control` pada wildcard `/*` supaya tidak ikut tergabung dengan rule cache asset yang lebih spesifik.
+- Tidak menambahkan CSP pada tahap ini karena site masih memakai beberapa inline interaction script yang perlu audit terpisah.
+- Tidak menambahkan HSTS pada tahap ini karena keputusan tersebut sebaiknya dilakukan setelah domain production, HTTPS, dan semua subdomain sudah final.
+
+Verifikasi:
+
+- `npm run build`: PASS, 33 static pages built.
+- `npm run audit:dist`: PASS, total `dist` 22.45 MB, largest image 491.0 KB, JS gzip 61.9 KB, CSS gzip 31.0 KB, missing image references 0.
+- `dist/_headers`: PASS, rule dari `public/_headers` tersalin ke output build.
 
 ## Recommended Asset Budgets
 
