@@ -176,6 +176,8 @@ const quickMessages = [
 </div>
 
 <script>
+  import { pageScrollLock } from "../../scripts/pageScrollLock";
+
   const assistant = document.querySelector<HTMLElement>("[data-whatsapp-assistant]");
   const panel = assistant?.querySelector<HTMLElement>("[data-whatsapp-panel]");
   const fabMenu = assistant?.querySelector<HTMLElement>("[data-fab-menu]");
@@ -188,9 +190,6 @@ const quickMessages = [
   const answer = assistant?.querySelector<HTMLElement>("[data-whatsapp-answer]");
   const quickButtons = assistant?.querySelectorAll<HTMLButtonElement>("[data-whatsapp-quick]");
   let panelTransitionTimer: number | undefined;
-  let previousHtmlOverflow = "";
-  let previousBodyOverflow = "";
-  let previousBodyPaddingRight = "";
   let isFabMenuOpen = false;
 
   const setFabMenuOpen = (isOpen: boolean) => {
@@ -200,30 +199,19 @@ const quickMessages = [
     assistant.dataset.menuOpen = String(isOpen);
     toggle.setAttribute("aria-expanded", String(isOpen));
     toggle.setAttribute("aria-label", isOpen ? "Close contact shortcuts" : "Open contact shortcuts");
-  };
-
-  const lockPageScroll = () => {
-    if (document.documentElement.classList.contains("whatsapp-scroll-locked")) return;
-
-    const scrollbarWidth = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
-    previousHtmlOverflow = document.documentElement.style.overflow;
-    previousBodyOverflow = document.body.style.overflow;
-    previousBodyPaddingRight = document.body.style.paddingRight;
-    document.documentElement.classList.add("whatsapp-scroll-locked");
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-    if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    if (isOpen) {
+      pageScrollLock.lock("whatsapp-fab");
+    } else {
+      pageScrollLock.unlock("whatsapp-fab");
     }
   };
 
-  const unlockPageScroll = () => {
-    if (!document.documentElement.classList.contains("whatsapp-scroll-locked")) return;
+  const lockPageScroll = () => {
+    pageScrollLock.lock("whatsapp-panel");
+  };
 
-    document.documentElement.classList.remove("whatsapp-scroll-locked");
-    document.documentElement.style.overflow = previousHtmlOverflow;
-    document.body.style.overflow = previousBodyOverflow;
-    document.body.style.paddingRight = previousBodyPaddingRight;
+  const unlockPageScroll = () => {
+    pageScrollLock.unlock("whatsapp-panel");
   };
 
   const updateWhatsAppLink = () => {
@@ -355,5 +343,8 @@ const quickMessages = [
   updateWhatsAppLink();
   updateScrollTopButton();
   window.addEventListener("scroll", handlePageScroll, { passive: true });
-  window.addEventListener("pagehide", unlockPageScroll);
+  window.addEventListener("pagehide", () => {
+    pageScrollLock.unlock("whatsapp-panel");
+    pageScrollLock.unlock("whatsapp-fab");
+  });
 </script>

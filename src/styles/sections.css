@@ -1388,23 +1388,33 @@
 .mobile-menu-link.is-active {
   border-color: rgba(214, 180, 106, 0.58);
   background:
-    linear-gradient(135deg, rgba(248, 231, 161, 0.11), rgba(6, 78, 59, 0.22)),
+    linear-gradient(135deg, rgba(248, 231, 161, 0.08), rgba(6, 78, 59, 0.18)),
     rgba(17, 24, 39, 0.7);
-  background-size: 220% 220%;
   color: #f8e7a1 !important;
-  animation: mobileMenuActiveGradient 5.6s ease-in-out infinite;
 }
 
 .mobile-menu-link.is-active::before {
   position: absolute;
-  inset: 0;
+  inset: 0 auto 0 0;
   z-index: -1;
-  background:
-    linear-gradient(115deg, transparent 0%, rgba(248, 231, 161, 0.16) 28%, rgba(6, 78, 59, 0.18) 54%, transparent 78%);
+  width: 200%;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 78, 59, 0.16) 0%,
+    rgba(248, 231, 161, 0.14) 12.5%,
+    rgba(17, 24, 39, 0.04) 25%,
+    rgba(6, 78, 59, 0.2) 37.5%,
+    rgba(6, 78, 59, 0.16) 50%,
+    rgba(248, 231, 161, 0.14) 62.5%,
+    rgba(17, 24, 39, 0.04) 75%,
+    rgba(6, 78, 59, 0.2) 87.5%,
+    rgba(6, 78, 59, 0.16) 100%
+  );
   content: "";
-  opacity: 0.9;
-  transform: translateX(-58%);
-  animation: mobileMenuActiveSweep 3.8s ease-in-out infinite;
+  opacity: 0.82;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  animation: mobileMenuActiveGradient 9.5s linear infinite;
 }
 
 .mobile-menu-link__index {
@@ -1522,25 +1532,8 @@
 }
 
 @keyframes mobileMenuActiveGradient {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes mobileMenuActiveSweep {
-  0%,
-  42% {
-    transform: translateX(-72%);
-  }
-
-  74%,
-  100% {
-    transform: translateX(72%);
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 

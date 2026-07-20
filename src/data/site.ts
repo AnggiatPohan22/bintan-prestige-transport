@@ -22,7 +22,7 @@ export const site = {
   name: envValue(import.meta.env.PUBLIC_SITE_NAME, "Bintan Prestige Transport"),
   shortName: envValue(import.meta.env.PUBLIC_SITE_SHORT_NAME, "Bintan Prestige"),
   tagline: envValue(import.meta.env.PUBLIC_SITE_TAGLINE, "Private taxi, transfers, and curated Bintan activities"),
-  url: normalizeSiteUrl(envValue(import.meta.env.PUBLIC_SITE_URL, "https://bintanprestige.com")),
+  url: normalizeSiteUrl(envValue(import.meta.env.PUBLIC_SITE_URL, "https://bintanprestigetransport.com")),
   defaultTitle: envValue(
     import.meta.env.PUBLIC_SITE_DEFAULT_TITLE,
     "Bintan Prestige Transport | Private Taxi, Transfers & Activities",
@@ -34,7 +34,7 @@ export const site = {
     ),
   logoImage: envValue(import.meta.env.PUBLIC_LOGO_IMAGE, "/images/brand/bintan-prestige-gold-logo.png"),
   defaultOgImage: envValue(import.meta.env.PUBLIC_DEFAULT_OG_IMAGE, "/images/brand/bintan-prestige-gold-logo.png"),
-  whatsappNumber: envValue(import.meta.env.PUBLIC_WHATSAPP_NUMBER, "6282386357012"),
+  whatsappNumber: envValue(import.meta.env.PUBLIC_WHATSAPP_NUMBER, "6285381389242"),
   whatsappMessage: envValue(
     import.meta.env.PUBLIC_WHATSAPP_MESSAGE,
     "Hello, I want to check availability for a premium taxi or island tour service.",
@@ -44,7 +44,7 @@ export const site = {
     "Limited private transfer slots available today - chat now for route and vehicle confirmation.",
   ),
   email: envValue(import.meta.env.PUBLIC_CONTACT_EMAIL, "reservation@bintanprestige.com"),
-  phone: envValue(import.meta.env.PUBLIC_CONTACT_PHONE, "+62 823-8635-7012"),
+  phone: envValue(import.meta.env.PUBLIC_CONTACT_PHONE, "+62 853-8138-9242"),
   address: envValue(import.meta.env.PUBLIC_BUSINESS_ADDRESS, "Bintan, Riau Islands, Indonesia"),
   addressLocality: envValue(import.meta.env.PUBLIC_ADDRESS_LOCALITY, "Bintan"),
   addressRegion: envValue(import.meta.env.PUBLIC_ADDRESS_REGION, "Riau Islands"),
