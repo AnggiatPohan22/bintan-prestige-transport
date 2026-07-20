@@ -1,3 +1,5 @@
+import { tourImage } from "./assets";
+
 export const transportRoutes = [
   {
     title: "Bintan Highlights",
@@ -6,8 +8,8 @@ export const transportRoutes = [
     duration: "Flexible day route",
     capacity: "1-4 guests",
     category: "tour-transfer",
-    image: "/images/tours/blue-lake-2.webp",
-    heroImages: ["/images/tours/tresure-bay.webp", "/images/tours/blue-lake-2.webp", "/images/tours/sand-dunes.webp"],
+    image: tourImage("blue-lake-2.webp"),
+    heroImages: [tourImage("tresure-bay.webp"), tourImage("blue-lake-2.webp"), tourImage("sand-dunes.webp")],
     alt: "Private Bintan highlights tour with driver",
     badge: "Highlight route",
     mood: "Signature Bintan highlights with private car timing",
@@ -76,8 +78,8 @@ export const transportRoutes = [
     duration: "Flexible day route",
     capacity: "1-4 guests",
     category: "tour-transfer",
-    image: "/images/tours/trikora-beach-bintan.webp",
-    heroImages: ["/images/tours/trikora-beach.webp", "/images/tours/santa-maria-cave.webp", "/images/tours/trikora-beach-bintan.webp"],
+    image: tourImage("trikora-beach-bintan.webp"),
+    heroImages: [tourImage("trikora-beach.webp"), tourImage("santa-maria-cave.webp"), tourImage("trikora-beach-bintan.webp")],
     alt: "Private East Bintan tour car",
     badge: "Coastal route",
     mood: "Scenic east-coast route with private driver support",
@@ -146,8 +148,8 @@ export const transportRoutes = [
     duration: "Flexible city route",
     capacity: "1-4 guests",
     category: "tour-transfer",
-    image: "/images/tours/gedung-gongong.webp",
-    heroImages: ["/images/tours/penyengat-island.webp", "/images/tours/akau-potong-lembu-2.webp", "/images/tours/gedung-gongong-3.webp"],
+    image: tourImage("gedung-gongong.webp"),
+    heroImages: [tourImage("penyengat-island.webp"), tourImage("akau-potong-lembu-2.webp"), tourImage("gedung-gongong-3.webp")],
     alt: "Private Tanjung Pinang city tour car",
     badge: "City route",
     mood: "Culture, local food, and city highlights in one private route",

@@ -537,13 +537,55 @@ Catatan aman:
 - Tidak ada perubahan UI, route, data content, script build, atau hosting config.
 - Checklist manual tetap perlu dilakukan setelah deployment karena header, redirect domain, dan environment variable final hanya bisa dipastikan di hosting/live domain.
 
+### Step I1 - Asset Registry Expansion
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-21
+
+Rating aman: 8.5/10
+
+Perbaikan yang sudah dilakukan:
+
+- Menambahkan helper image registry di `src/data/assets.ts` untuk `cars`, `tours`, root gallery, dan package gallery.
+- Mengganti path gambar hardcoded di data package, transfer route, blog, car type, gallery, site fallback, dan beberapa komponen CTA menjadi helper dari `assets.ts`.
+- Menjaga output URL gambar tetap sama, sehingga perubahan ini bersifat maintenance/refactor dan tidak mengganti asset visual.
+- Setelah refactor, pencarian `/images/` pada `src/data`, `src/components`, dan `src/pages` hanya tersisa di `src/data/assets.ts`.
+
+File yang berubah:
+
+- `src/data/assets.ts`
+- `src/data/blog.ts`
+- `src/data/carTypes.ts`
+- `src/data/gallery.ts`
+- `src/data/packages.ts`
+- `src/data/routes.ts`
+- `src/data/site.ts`
+- `src/data/transportRoutes.ts`
+- `src/components/core/WhatsAppCTA.astro`
+- `src/components/sections/home/LuxuryExperience.astro`
+- `src/components/site/Footer.astro`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run build`: PASS, 33 static pages built.
+- `npm.cmd run audit:dist`: PASS, total `dist` 22.45 MB, largest image 491.0 KB, JS gzip 61.9 KB, CSS gzip 31.0 KB, missing image references 0.
+- Source path scan: PASS, `/images/` references in `src/data`, `src/components`, and `src/pages` now only live in `src/data/assets.ts`.
+
+Catatan aman:
+
+- Tidak ada file gambar yang dihapus atau diubah.
+- Tidak ada perubahan route, schema, CSS, atau UI interaction.
+- Risiko utama adalah typo path helper, sehingga wajib diverifikasi lewat build dan image reference checker.
+
 ## Executive Summary
 
-Website sekarang sudah berada di kondisi jauh lebih siap untuk static hosting: Astro build sukses, halaman memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap/robots tersedia, structured data harga sudah lebih machine-readable, dan JavaScript/CSS masih dalam budget aman.
+Website sekarang sudah berada di kondisi jauh lebih siap untuk static hosting: Astro build sukses, halaman memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap/robots tersedia, structured data harga sudah lebih machine-readable, asset path utama sudah dipusatkan di registry, dan JavaScript/CSS masih dalam budget aman.
 
 Masalah terbesar dari audit awal adalah bobot asset gambar dan output static yang terlalu besar. Setelah Step C1 sampai C3, total `dist` turun dari 40.55 MB menjadi sekitar 22.45 MB dan largest image sudah masuk budget 500 KB. Masih ada duplicate image names yang tersisa, tetapi sekarang bukan blocker launch karena budget utama sudah PASS dan semua HTML image references valid.
 
-Untuk SEO, temuan P0 seperti canonical fallback mismatch, homepage meta copy development, sitemap `lastmod` build-time, duplicate legacy route, dan schema offer string bebas sudah diperbaiki. Sisa pekerjaan sebelum launch lebih banyak berupa verifikasi manual environment production, domain canonical, Cloudflare redirect/cache/security headers, dan polishing lanjutan seperti asset registry final atau React/Motion audit.
+Untuk SEO, temuan P0 seperti canonical fallback mismatch, homepage meta copy development, sitemap `lastmod` build-time, duplicate legacy route, dan schema offer string bebas sudah diperbaiki. Sisa pekerjaan sebelum launch lebih banyak berupa verifikasi manual environment production, domain canonical, Cloudflare redirect/cache/security headers, dan polishing lanjutan seperti React/Motion audit.
 
 ## Audit Commands
 
@@ -1106,7 +1148,7 @@ Current position:
 
 1. Audit apakah React/Motion masih diperlukan untuk animation island.
 2. Pindahkan icon static ke pendekatan yang lebih ringan jika bundle mulai membesar.
-3. Continue asset registry work di `src/data/assets.ts` untuk gambar, logo, icon, hero, gallery, tours, dan OG image.
+3. Done in Step I1: pusatkan path gambar utama di `src/data/assets.ts` untuk brand, hero, cars, tours, gallery, activity package assets, dan OG fallback.
 4. Done in Step B: buat script audit size supaya setiap build bisa cek image besar dan total deploy size.
 5. Done in Step F1 and F2: tambahkan internal linking strategy dari blog ke package/service dan dari package detail ke related blog/package/contact.
 6. Partially done in Step C3: kurangi duplikasi root gallery/legacy hero di `public/images`. Sisa dedupe hanya dilakukan kalau registry sudah jelas dan visual mapping aman.

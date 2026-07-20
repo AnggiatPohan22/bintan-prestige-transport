@@ -1,8 +1,9 @@
 ---
+import { brandAssets } from "@data/assets";
 import { navigation } from "@data/navigation";
 import { site } from "@data/site";
 
-const footerLogo = site.logoImage || "/images/brand/bintan-prestige-white-logo.png";
+const footerLogo = site.logoImage || brandAssets.logoWhite;
 const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
 const trustItems = [
   "Private driver coordination",

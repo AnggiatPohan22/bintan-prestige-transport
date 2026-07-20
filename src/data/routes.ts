@@ -1,3 +1,5 @@
+import { carImage } from "./assets";
+
 export const routes = [
   {
     title: "Package Transfer with Avanza & Innova",
@@ -5,8 +7,8 @@ export const routes = [
     description: "Avanza or Innova 7 seater private transfer with one way, half-day, and full-day package options.",
     overview:
       "A premium private taxi transfer service for airport, ferry, or hotel pickup and drop-off. Guests can also choose half-day or full-day island tour packages to explore the island's attractions with a private driver.",
-    image: "/images/cars/toyota-innova-2.webp",
-    heroImages: ["/images/cars/toyota-avanza.webp", "/images/cars/toyota-innova-2.webp", "/images/cars/toyota-innova.webp"],
+    image: carImage("toyota-innova-2.webp"),
+    heroImages: [carImage("toyota-avanza.webp"), carImage("toyota-innova-2.webp"), carImage("toyota-innova.webp")],
     alt: "package transfer with avanza and innova for private taxi service",
     priceFrom: "Capacity : 7 Seater",
     duration: "Depending on route",
@@ -85,8 +87,8 @@ export const routes = [
     description: "Hiace 14 seater private transfer for larger groups with one way, half-day, and full-day package options.",
     overview:
       "A premium private taxi transfer service using Hiace for larger groups or families. Guests can enjoy a comfortable ride from the airport, ferry, or hotel to their destination with a private driver.",
-    image: "/images/cars/toyota-hiace-3.webp",
-    heroImages: ["/images/cars/toyota-hiace-3.webp", "/images/cars/toyota-hiace.webp", "/images/cars/executive-van.webp"],
+    image: carImage("toyota-hiace-3.webp"),
+    heroImages: [carImage("toyota-hiace-3.webp"), carImage("toyota-hiace.webp"), carImage("executive-van.webp")],
     alt: "Private car drop to ferry terminal",
     priceFrom: "Capacity : 14 Seater",
     duration: "Depending on route",
@@ -164,8 +166,8 @@ export const routes = [
     description: "Alphard 4 seater premium private transfer with one way, half-day, and full-day arrangements by request.",
     overview:
       "A private luxury transfer service using Alphard for VIP guests. Enjoy a premium taxi experience with a private driver from the airport, ferry, or hotel to your destination.",
-    image: "/images/cars/toyota-alphard-2.webp",
-    heroImages: ["/images/cars/toyota-alphard-2.webp", "/images/cars/alphard-car.webp", "/images/cars/luxury-mpv.webp"],
+    image: carImage("toyota-alphard-2.webp"),
+    heroImages: [carImage("toyota-alphard-2.webp"), carImage("alphard-car.webp"), carImage("luxury-mpv.webp")],
     alt: "Luxury private taxi transfer with Alphard",
     priceFrom: "Capacity : 4 Seater",
     duration: "Flexible evening or day timing",

@@ -1,3 +1,5 @@
+import { carImage } from "./assets";
+
 export const carTypes = [
   {
     name: "One Way Transfer",
@@ -8,7 +10,7 @@ export const carTypes = [
       "A premium private taxi transfer service for airport, ferry, or hotel pickup and drop-off.",
     description:
       "A premium private taxi transfer service for airport, ferry, or hotel pickup and drop-off.",
-    image: "/images/cars/toyota-innova.webp",
+    image: carImage("toyota-innova.webp"),
     alt: "luxury sedan for private airport transfer",
     capacity: "4 passengers",
     luggage: "2 suitcases",
@@ -25,7 +27,7 @@ export const carTypes = [
       "Spacious premium cabin for resort transfers, flexible island routes, and private families.",
     description:
       "Spacious premium cabin for resort transfers, flexible island routes, and private families.",
-    image: "/images/cars/toyota-alparhd.webp",
+    image: carImage("toyota-alparhd.webp"),
     alt: "Luxury MPV for private island transfer",
     capacity: "6 passengers",
     luggage: "4 suitcases",
@@ -42,7 +44,7 @@ export const carTypes = [
       "A calm and capable option for tour groups, luggage-heavy arrivals, and longer itineraries.",
     description:
       "A calm and capable option for tour groups, luggage-heavy arrivals, and longer itineraries.",
-    image: "/images/cars/toyota-hiace.webp",
+    image: carImage("toyota-hiace.webp"),
     alt: "Executive van for VIP tour group",
     capacity: "8 passengers",
     luggage: "6 suitcases",

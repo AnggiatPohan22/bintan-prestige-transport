@@ -1,3 +1,5 @@
+import { carImage, galleryImage, rootGalleryImage, tourImage } from "./assets";
+
 export type BlogCategory = "Taxi Guide" | "Travel Guide" | "Destination";
 
 export interface BlogGalleryImage {
@@ -50,14 +52,14 @@ export const blogArticles: BlogArticle[] = [
     tags: ["Airport pickup", "Private taxi", "Arrival transfer", "Bintan hotel"],
     publishedAt: "2026-07-05",
     readTime: "4 min read",
-    heroImage: "/images/cars/toyota-avanza.webp",
+    heroImage: carImage("toyota-avanza.webp"),
     heroAlt: "Private car prepared for Bintan airport pickup",
     favorite: true,
     popularRank: 1,
     gallery: [
-      { src: "/images/cars/toyota-avanza.webp", alt: "Private transfer car for Bintan airport arrival" },
-      { src: "/images/cars/luxury-mpv.webp", alt: "Luxury MPV option for airport transfer in Bintan" },
-      { src: "/images/cars/toyota-innova.webp", alt: "Premium sedan option for private airport pickup" },
+      { src: carImage("toyota-avanza.webp"), alt: "Private transfer car for Bintan airport arrival" },
+      { src: carImage("luxury-mpv.webp"), alt: "Luxury MPV option for airport transfer in Bintan" },
+      { src: carImage("toyota-innova.webp"), alt: "Premium sedan option for private airport pickup" },
     ],
     intro:
       "Airport pickup is usually the first moment that shapes a guest's Bintan trip. A private transfer keeps the arrival calm because pickup timing, luggage space, hotel area, and contact details can be confirmed before landing.",
@@ -118,14 +120,14 @@ export const blogArticles: BlogArticle[] = [
     tags: ["Harbour pickup", "Ferry transfer", "Private driver", "Resort transfer"],
     publishedAt: "2026-07-05",
     readTime: "4 min read",
-    heroImage: "/images/cars/luxury-mpv.webp",
+    heroImage: carImage("luxury-mpv.webp"),
     heroAlt: "Luxury MPV prepared for ferry harbour pickup in Bintan",
     favorite: true,
     popularRank: 2,
     gallery: [
-      { src: "/images/cars/luxury-mpv.webp", alt: "Private MPV for harbour pickup" },
-      { src: "/images/cars/executive-van.webp", alt: "Executive van option for group ferry transfer" },
-      { src: "/images/cars/toyota-innova-2.webp", alt: "Comfort vehicle for Bintan ferry transfer" },
+      { src: carImage("luxury-mpv.webp"), alt: "Private MPV for harbour pickup" },
+      { src: carImage("executive-van.webp"), alt: "Executive van option for group ferry transfer" },
+      { src: carImage("toyota-innova-2.webp"), alt: "Comfort vehicle for Bintan ferry transfer" },
     ],
     intro:
       "Many Bintan visitors arrive by ferry, then continue to resorts, villas, golf areas, restaurants, or island tour starting points. A private harbour pickup helps the trip feel organized from the moment guests exit the terminal.",
@@ -185,13 +187,13 @@ export const blogArticles: BlogArticle[] = [
     tags: ["Hotel transfer", "Private taxi", "Dinner ride", "Point to point"],
     publishedAt: "2026-07-05",
     readTime: "3 min read",
-    heroImage: "/images/cars/toyota-innova-2.webp",
+    heroImage: carImage("toyota-innova-2.webp"),
     heroAlt: "Comfort private car for hotel to hotel transfer in Bintan",
     popularRank: 4,
     gallery: [
-      { src: "/images/cars/toyota-innova-2.webp", alt: "Comfort vehicle for hotel transfer" },
-      { src: "/images/cars/Toyota-Innova_7.webp", alt: "Private MPV option for Bintan hotel ride" },
-      { src: "/images/cars/executive-van.webp", alt: "Executive van for group hotel transfer" },
+      { src: carImage("toyota-innova-2.webp"), alt: "Comfort vehicle for hotel transfer" },
+      { src: carImage("Toyota-Innova_7.webp"), alt: "Private MPV option for Bintan hotel ride" },
+      { src: carImage("executive-van.webp"), alt: "Executive van for group hotel transfer" },
     ],
     intro:
       "Hotel to hotel transfers are useful when guests move from one resort area to another, visit a dinner venue, connect to a ferry terminal, or plan a relaxed day outside the property.",
@@ -250,14 +252,14 @@ export const blogArticles: BlogArticle[] = [
     tags: ["Mangrove tour", "Nature trip", "Private tour", "Eco travel"],
     publishedAt: "2026-07-05",
     readTime: "5 min read",
-    heroImage: "/images/tours/mangrove.webp",
+    heroImage: tourImage("mangrove.webp"),
     heroAlt: "Mangrove scenery for a Bintan private nature tour",
     favorite: true,
     popularRank: 3,
     gallery: [
-      { src: "/images/gallery/mangrove-1.webp", alt: "Mangrove river route in Bintan" },
-      { src: "/images/gallery/mangrove-discory-tour/mangrove-2.webp", alt: "Mangrove exploration scenery" },
-      { src: "/images/gallery/mangrove-discory-tour/mangrove-5.webp", alt: "Mangrove kayaking and nature atmosphere" },
+      { src: rootGalleryImage("mangrove-1.webp"), alt: "Mangrove river route in Bintan" },
+      { src: galleryImage("mangrove-discory-tour", "mangrove-2.webp"), alt: "Mangrove exploration scenery" },
+      { src: galleryImage("mangrove-discory-tour", "mangrove-5.webp"), alt: "Mangrove kayaking and nature atmosphere" },
     ],
     intro:
       "A mangrove tour is a good choice for guests who want nature, slower pacing, and a quieter itinerary between beach days. It works well as a half-day plan or as one stop inside a private island route.",
@@ -317,14 +319,14 @@ export const blogArticles: BlogArticle[] = [
     tags: ["Snorkeling", "Island tour", "Beach day", "Private transfer"],
     publishedAt: "2026-07-05",
     readTime: "5 min read",
-    heroImage: "/images/tours/snorkeling.webp",
+    heroImage: tourImage("snorkeling.webp"),
     heroAlt: "Snorkeling trip atmosphere in Bintan Island",
     favorite: true,
     popularRank: 5,
     gallery: [
-      { src: "/images/gallery/snorkeling-adventure/snorkeling-1.webp", alt: "Snorkeling activity in Bintan" },
-      { src: "/images/gallery/snorkeling-adventure/snorkeling-2.webp", alt: "Clear water snorkeling tour moment" },
-      { src: "/images/gallery/snorkeling-adventure/snorkeling-3.webp", alt: "Private snorkeling island experience" },
+      { src: galleryImage("snorkeling-adventure", "snorkeling-1.webp"), alt: "Snorkeling activity in Bintan" },
+      { src: galleryImage("snorkeling-adventure", "snorkeling-2.webp"), alt: "Clear water snorkeling tour moment" },
+      { src: galleryImage("snorkeling-adventure", "snorkeling-3.webp"), alt: "Private snorkeling island experience" },
     ],
     intro:
       "Snorkeling adds a memorable ocean moment to a Bintan itinerary. The best experience is planned with realistic timing, weather flexibility, and transport that does not leave guests waiting after the activity.",
@@ -384,13 +386,13 @@ export const blogArticles: BlogArticle[] = [
     tags: ["Blue Lake", "Photo stop", "Island tour", "Private route"],
     publishedAt: "2026-07-05",
     readTime: "4 min read",
-    heroImage: "/images/tours/blue-lake-2.webp",
+    heroImage: tourImage("blue-lake-2.webp"),
     heroAlt: "Blue Lake Bintan scenic destination",
     popularRank: 6,
     gallery: [
-      { src: "/images/gallery/blue-lake/blue-lake.webp", alt: "Blue Lake Bintan destination view" },
-      { src: "/images/gallery/blue-lake/blue-lake-2.webp", alt: "Blue Lake and desert-style scenery" },
-      { src: "/images/gallery/blue-lake/blue-lake-3.webp", alt: "Private photo stop at Blue Lake Bintan" },
+      { src: galleryImage("blue-lake", "blue-lake.webp"), alt: "Blue Lake Bintan destination view" },
+      { src: galleryImage("blue-lake", "blue-lake-2.webp"), alt: "Blue Lake and desert-style scenery" },
+      { src: galleryImage("blue-lake", "blue-lake-3.webp"), alt: "Private photo stop at Blue Lake Bintan" },
     ],
     intro:
       "Blue Lake and the desert-style landscape are popular because they are visually striking and easy to understand as a photo stop. The visit works best when folded into a private route instead of treated as a rushed standalone stop.",

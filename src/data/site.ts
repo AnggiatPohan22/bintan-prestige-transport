@@ -1,3 +1,5 @@
+import { brandAssets } from "./assets";
+
 const envValue = (value: string | undefined, fallback: string) => {
   const trimmed = value?.trim();
 
@@ -32,8 +34,8 @@ export const site = {
       import.meta.env.PUBLIC_SITE_DESCRIPTION,
       "Bintan Prestige provides private taxi, airport and ferry transfers, custom tours, and curated Bintan activities with WhatsApp-first reservations.",
     ),
-  logoImage: envValue(import.meta.env.PUBLIC_LOGO_IMAGE, "/images/brand/bintan-prestige-gold-logo.png"),
-  defaultOgImage: envValue(import.meta.env.PUBLIC_DEFAULT_OG_IMAGE, "/images/brand/bintan-prestige-gold-logo.png"),
+  logoImage: envValue(import.meta.env.PUBLIC_LOGO_IMAGE, brandAssets.logoGold),
+  defaultOgImage: envValue(import.meta.env.PUBLIC_DEFAULT_OG_IMAGE, brandAssets.logoGold),
   whatsappNumber: envValue(import.meta.env.PUBLIC_WHATSAPP_NUMBER, "6285381389242"),
   whatsappMessage: envValue(
     import.meta.env.PUBLIC_WHATSAPP_MESSAGE,

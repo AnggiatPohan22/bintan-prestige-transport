@@ -17,13 +17,16 @@ const responsiveHeroImage = (page: string, file: string): HeroImageAsset => {
   };
 };
 
+export const carImage = (file: string) => `/images/cars/${file}`;
+export const tourImage = (file: string) => `/images/tours/${file}`;
+export const galleryImage = (folder: string, file: string) => `/images/gallery/${folder}/${file}`;
+export const rootGalleryImage = (file: string) => `/images/gallery/${file}`;
+
 export const responsiveHeroSource = (src: string): HeroImageAsset | string => {
   const match = src.match(/^\/images\/hero\/([^/]+)\/([^/]+)$/);
 
   return match ? responsiveHeroImage(match[1], match[2]) : src;
 };
-
-const galleryImage = (folder: string, file: string) => `/images/gallery/${folder}/${file}`;
 
 type GalleryAsset = {
   title: string;
