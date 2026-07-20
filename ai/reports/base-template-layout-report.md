@@ -271,7 +271,8 @@ When adding or changing content, update the smallest source of truth:
 - Schema helpers: `src/data/schema.ts`
 - Blog: `src/data/blog.ts`
 - Gallery: `src/data/gallery.ts`
-- Images and hero media mapping: `src/data/media.ts`
+- Images, logo, icon, page hero, and activity package asset mapping: `src/data/assets.ts`
+- Hero media adapter: `src/data/media.ts`
 - Transfer routes: `src/data/routes.ts` and `src/data/transportRoutes.ts`
 - Tours and activities: `src/data/tours.ts`
 - Package categories: `src/data/packages.ts`
@@ -301,6 +302,8 @@ Last known local verification:
 - Pagination polish keeps non-Fleet carousel/blog controls visually aligned with dark and warm section backgrounds while preserving focus-visible accessibility.
 - Blog index now uses a full-width hero treatment, a Browse Topics discovery panel with nearby article results, a Favorite Reads panel, activity/taxy-inspired article pagination, and a service-focus section instead of internal content-structure copy.
 - No push or Cloudflare deployment was run.
+- Asset registry pass centralizes page hero images and activity package card/detail/gallery images in `src/data/assets.ts`; maintenance notes are updated in `ai/guides/manual-image-content-guide.md` and `ai/guides/mapping-file-project-travel-agent.md`.
+- Responsive hero image pass adds full-cover mobile/tablet/desktop variants, a reusable `npm.cmd run images:hero` generator, and `<picture>` support in `HeroBackdrop.astro` so hero sections can serve sharper device-specific images while staying lightweight.
 
 ## Known Notes
 

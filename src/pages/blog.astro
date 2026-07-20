@@ -2,10 +2,12 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogCard from "@components/features/blog/BlogCard.astro";
 import Breadcrumb from "@components/core/Breadcrumb.astro";
+import HeroBackdrop from "@components/core/HeroBackdrop.astro";
 import WhatsAppCTA from "@components/core/WhatsAppCTA.astro";
 import { MessageCircle } from "lucide-react";
 import { absoluteUrl } from "@data/seo";
 import { blogArticles, blogCategories, blogLocations, blogTags, favoriteBlogArticles } from "@data/blog";
+import { heroSlides } from "@data/media";
 import { breadcrumbSchema, localBusinessSchema, organizationSchema } from "@data/schema";
 import { site } from "@data/site";
 
@@ -65,12 +67,7 @@ const schema = [
   schema={schema}
 >
   <section class="blog-hero site-hero-section relative isolate flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-[#0b0c10] text-white">
-    <div
-      class="blog-hero__image absolute inset-0 -z-20 bg-cover bg-center"
-      role="img"
-      aria-label="Bintan travel blog editorial hero"
-      style={`background-image: url('${featuredArticle.heroImage}');`}
-    ></div>
+    <HeroBackdrop images={heroSlides.blog} className="-z-20" />
     <div class="blog-hero__shade absolute inset-0 -z-10"></div>
     <div class="site-hero-inner blog-hero__inner container-page relative flex min-h-[100svh] w-full flex-col justify-end py-12 lg:py-16">
       <div class="hero-copy max-w-4xl">

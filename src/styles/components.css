@@ -309,16 +309,16 @@
 }
 
 .package-offer-card__category {
-  max-width: min(5.5rem, 35%);
+  max-width: min(9rem, 58%);
   border: 1px solid rgba(248, 250, 252, 0.16);
   background:
     linear-gradient(135deg, rgba(226, 232, 240, 0.16), rgba(7, 26, 20, 0.54)),
     rgba(11, 12, 16, 0.5);
   color: rgba(248, 250, 252, 0.9);
   font-weight: 750;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   overflow: hidden;
-  padding-inline: 0.9rem;
+  padding-inline: 0.82rem;
   text-overflow: ellipsis;
   text-transform: uppercase;
   backdrop-filter: blur(14px);
@@ -533,9 +533,10 @@
   }
 
   .package-offer-card__category {
-    padding-inline: 0.72rem;
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
+    max-width: min(8.2rem, 62%);
+    padding-inline: 0.78rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
   }
 
   .package-offer-card__price {
@@ -1894,7 +1895,21 @@
 .hero-slide {
   opacity: 0;
   transform: scale(1.02);
+  transform-origin: center;
+  will-change: opacity, transform;
   animation: heroCrossfade 18s ease-in-out infinite;
+}
+
+.hero-slide picture,
+.hero-slide__image {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.hero-slide__image {
+  object-fit: cover;
+  object-position: center;
 }
 
 .hero-slide:first-child {
