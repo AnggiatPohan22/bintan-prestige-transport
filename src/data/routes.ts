@@ -60,6 +60,23 @@ export const routes = [
       "Multi-stop routes should be confirmed before booking.",
       "Vehicle availability may depend on date and group size.",
     ],
+    relatedLinks: [
+      {
+        label: "Airport pickup guide",
+        href: "/blog/bintan-airport-pickup-private-transfer-guide",
+        description: "Read arrival timing and luggage planning tips before booking.",
+      },
+      {
+        label: "Hotel transfer guide",
+        href: "/blog/hotel-to-hotel-private-taxi-bintan",
+        description: "Useful for resort, dinner, and point-to-point movement.",
+      },
+      {
+        label: "Hiace group transfer",
+        href: "/packages/pick-up-drop/package-transfer-hiace",
+        description: "Compare this option if your group needs more seats.",
+      },
+    ],
     whatsappMessage: "Hello, I want to book a package transfer with Avanza or Innova.",
   },
   {
@@ -122,6 +139,23 @@ export const routes = [
       "Multi-stop routes should be confirmed before booking.",
       "Hiace availability may depend on date and group size.",
     ],
+    relatedLinks: [
+      {
+        label: "Harbour pickup guide",
+        href: "/blog/bintan-harbour-pickup-ferry-transfer-guide",
+        description: "Plan ferry arrival, terminal pickup, and resort transfer details.",
+      },
+      {
+        label: "Avanza or Innova transfer",
+        href: "/packages/pick-up-drop/package-transfer-avanza-innova",
+        description: "Compare a smaller vehicle option for lighter groups.",
+      },
+      {
+        label: "Alphard premium transfer",
+        href: "/packages/pick-up-drop/package-transfer-alphard",
+        description: "Review premium cabin support for VIP movement.",
+      },
+    ],
     whatsappMessage: "Hello, I want to book a package transfer with Hiace.",
   },
   {
@@ -177,6 +211,23 @@ export const routes = [
       "Share full pickup and drop-off locations for accurate quote.",
       "Multi-stop routes should be confirmed before booking.",
       "Alphard availability may depend on date and group size.",
+    ],
+    relatedLinks: [
+      {
+        label: "Hotel transfer guide",
+        href: "/blog/hotel-to-hotel-private-taxi-bintan",
+        description: "Read when to book ahead for resort and dinner transfers.",
+      },
+      {
+        label: "Avanza or Innova transfer",
+        href: "/packages/pick-up-drop/package-transfer-avanza-innova",
+        description: "Compare a practical transfer option for simple movement.",
+      },
+      {
+        label: "Contact concierge",
+        href: "/contact",
+        description: "Confirm premium availability and timing before booking.",
+      },
     ],
     whatsappMessage: "Hello, I want to book a luxury transfer with Alphard.",
   },

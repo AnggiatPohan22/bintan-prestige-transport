@@ -455,6 +455,56 @@ Catatan aman:
 - Tidak ada route baru, dependency baru, atau perubahan struktur halaman besar.
 - Risiko utama adalah visual spacing pada sidebar blog detail karena ada satu kartu baru.
 
+### Step F2 - Package Detail Related Planning Links
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-21
+
+Rating aman: 8/10
+
+Perbaikan yang sudah dilakukan:
+
+- Menambahkan section `Related planning` reusable di `PackageDetailContent.astro`.
+- Menambahkan `relatedLinks` pada semua package detail utama:
+  - 3 taxi transfer packages di `src/data/routes.ts`.
+  - 3 tour-transfer routes di `src/data/transportRoutes.ts`.
+  - 10 activity packages di `src/data/tours.ts`.
+- Link diarahkan ke artikel blog relevan, package terkait, service overview, atau contact page.
+- Tujuan SEO: package detail tidak menjadi dead-end dan punya internal path ke guide/service yang relevan.
+
+File yang berubah:
+
+- `src/components/features/packages/PackageDetailContent.astro`
+- `src/data/routes.ts`
+- `src/data/transportRoutes.ts`
+- `src/data/tours.ts`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run build`: pass, 33 pages built.
+- `npm.cmd run audit:dist`: pass, semua budget tetap pass.
+- Package detail transfer sample `package-transfer-avanza-innova`: section `Related planning` ditemukan.
+- Package detail transfer sample: link ke airport pickup guide, hotel transfer guide, dan Hiace package ditemukan.
+- Package detail activity sample `snorkeling-adventure`: section `Related planning` ditemukan.
+- Package detail activity sample: link ke snorkeling guide, Beach Hopping Tour, dan Bintan Highlights ditemukan.
+- Internal link checker: 18 unique related hrefs, 0 missing built page targets.
+- Manual check tetap disarankan: cek package detail transfer dan activity di mobile/tablet/desktop agar section baru tidak terasa terlalu panjang.
+
+Hasil ukuran setelah F2:
+
+- Total `dist`: 22.45 MB dari budget 25 MB.
+- Largest image: 491.0 KB dari budget 500 KB.
+- JS gzip total: 61.9 KB dari budget 80 KB.
+- CSS gzip total: 31.0 KB dari budget 50 KB.
+
+Catatan aman:
+
+- Tidak ada route baru, dependency baru, atau perubahan behavior form/WhatsApp.
+- Perubahan ini menambah satu section visual di package detail, jadi perlu review tampilan.
+- Maintenance link berikutnya dilakukan dari data package masing-masing melalui property `relatedLinks`.
+
 ## Executive Summary
 
 Website sudah punya fondasi yang cukup baik untuk static hosting: Astro build sukses, halaman sudah memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap dan robots tersedia, dan JavaScript/CSS bukan bottleneck utama.
@@ -921,7 +971,7 @@ Rekomendasi:
   - activities packages
   - contact/WhatsApp
 - Done in Step F1: dari blog index dan blog detail, link ke package/service yang relevan.
-- Dari package detail, link ke related activity atau related transfer package.
+- Done in Step F2: dari package detail, link ke related blog, activity, transfer package, atau contact page.
 - Gunakan anchor text natural, bukan hanya "Read more".
 
 ## Hosting Readiness
@@ -990,7 +1040,7 @@ Current position:
 2. Pindahkan icon static ke pendekatan yang lebih ringan jika bundle mulai membesar.
 3. Buat asset registry khusus, misalnya `src/data/assets.ts`, untuk gambar, logo, icon, dan OG image.
 4. Done in Step B: buat script audit size supaya setiap build bisa cek image besar dan total deploy size.
-5. Partially done in Step F1: tambahkan internal linking strategy dari blog ke package dan service. Sisa improvement: package detail ke related blog atau related package.
+5. Done in Step F1 and F2: tambahkan internal linking strategy dari blog ke package/service dan dari package detail ke related blog/package/contact.
 
 ## Suggested Maintenance Files
 

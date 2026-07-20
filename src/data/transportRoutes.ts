@@ -50,6 +50,23 @@ export const transportRoutes = [
       "Entry tickets, meals, and paid activities should be confirmed separately.",
       "Share your preferred pickup and return point before booking.",
     ],
+    relatedLinks: [
+      {
+        label: "Blue Lake photo guide",
+        href: "/blog/blue-lake-desert-bintan-photo-stop-guide",
+        description: "Read how to plan Blue Lake and desert-style photo stops.",
+      },
+      {
+        label: "Customized Tour",
+        href: "/packages/activities-packages/customized-tour",
+        description: "Use a custom package when the route needs more flexibility.",
+      },
+      {
+        label: "Private transfer options",
+        href: "/packages/pick-up-drop",
+        description: "Compare vehicle support before confirming the route.",
+      },
+    ],
     whatsappMessage: "Hello, I want to book the Bintan Highlights tour package.",
   },
   {
@@ -103,6 +120,23 @@ export const transportRoutes = [
       "Route timing may vary by pickup area and weather conditions.",
       "Share any lunch timing preference before the driver schedule is confirmed.",
     ],
+    relatedLinks: [
+      {
+        label: "Beach Hopping Tour",
+        href: "/packages/activities-packages/beach-hopping-tour",
+        description: "Compare a beach-focused day route before deciding.",
+      },
+      {
+        label: "Customized Tour",
+        href: "/packages/activities-packages/customized-tour",
+        description: "Build a custom private route if you want extra stops.",
+      },
+      {
+        label: "Private transfer options",
+        href: "/packages/pick-up-drop",
+        description: "Review vehicle choices for route comfort and guest count.",
+      },
+    ],
     whatsappMessage: "Hello, I want to book the East Bintan Tour package.",
   },
   {
@@ -155,6 +189,23 @@ export const transportRoutes = [
       "Boat, entry, meal, or activity costs should be confirmed separately.",
       "City route timing may vary by pickup area and ferry or boat conditions.",
       "Share your preferred return point before booking.",
+    ],
+    relatedLinks: [
+      {
+        label: "Shopping Tour",
+        href: "/packages/activities-packages/shopping-tour",
+        description: "Pair city movement with local shopping and snack stops.",
+      },
+      {
+        label: "Customized Tour",
+        href: "/packages/activities-packages/customized-tour",
+        description: "Shape the city route around culture, local food, and timing.",
+      },
+      {
+        label: "Contact concierge",
+        href: "/contact",
+        description: "Confirm pickup area and city timing before booking.",
+      },
     ],
     whatsappMessage: "Hello, I want to book the Tanjung Pinang City Tour package.",
   },

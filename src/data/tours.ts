@@ -90,6 +90,23 @@ export const tours = [
       "Prices for the shooting experience are provided by the activity operator and may change without prior notice.",
       "Transportation charges are provided by Bintan Prestige Transport.",
     ],
+    relatedLinks: [
+      {
+        label: "Customized Tour",
+        href: "/packages/activities-packages/customized-tour",
+        description: "Build a custom activity day around shooting, food, or photo stops.",
+      },
+      {
+        label: "Avanza or Innova transfer",
+        href: "/packages/pick-up-drop/package-transfer-avanza-innova",
+        description: "Compare private transport support for compact groups.",
+      },
+      {
+        label: "Contact concierge",
+        href: "/contact",
+        description: "Confirm range availability, pickup point, and package choice.",
+      },
+    ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
     whatsappMessage: "Hello, I want to ask about the Shooting Experience Package.",
@@ -145,6 +162,23 @@ export const tours = [
       "Morning and afternoon timings are recommended for comfortable weather and better nature viewing.",
       "Boat operation may depend on local weather and operator conditions.",
       "Guest count and pickup area should be confirmed before final quotation.",
+    ],
+    relatedLinks: [
+      {
+        label: "Mangrove tour guide",
+        href: "/blog/bintan-mangrove-tour-private-trip-guide",
+        description: "Read nature timing, weather notes, and route planning tips.",
+      },
+      {
+        label: "Fireflies Night Tour",
+        href: "/packages/activities-packages/fireflies-night-tour",
+        description: "Compare the evening mangrove experience before choosing.",
+      },
+      {
+        label: "Bintan Highlights",
+        href: "/packages/pick-up-drop/bintan-highlights",
+        description: "Pair mangrove with a private highlights route.",
+      },
     ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
@@ -202,6 +236,23 @@ export const tours = [
       "Advance booking is recommended for evening boat availability.",
       "Bring comfortable clothing and follow local boat operator safety guidance.",
     ],
+    relatedLinks: [
+      {
+        label: "Mangrove tour guide",
+        href: "/blog/bintan-mangrove-tour-private-trip-guide",
+        description: "Understand mangrove timing and weather before booking.",
+      },
+      {
+        label: "Mangrove Discovery Tour",
+        href: "/packages/activities-packages/mangrove-discovery-tour",
+        description: "Compare the daytime nature route with the night experience.",
+      },
+      {
+        label: "Contact concierge",
+        href: "/contact",
+        description: "Confirm evening boat availability and hotel return timing.",
+      },
+    ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
     whatsappMessage: "Hello, I want to ask about the Fireflies Night Tour.",
@@ -252,6 +303,23 @@ export const tours = [
       "Snorkeling depends on weather and sea conditions.",
       "Guests should confirm swim comfort and equipment needs before booking.",
       "Optional boat, guide, and equipment fees should be confirmed separately.",
+    ],
+    relatedLinks: [
+      {
+        label: "Snorkeling trip guide",
+        href: "/blog/bintan-snorkeling-trip-guide-private-tour",
+        description: "Read preparation and weather-flexible planning notes.",
+      },
+      {
+        label: "Beach Hopping Tour",
+        href: "/packages/activities-packages/beach-hopping-tour",
+        description: "Pair snorkeling with a relaxed beach day route.",
+      },
+      {
+        label: "Bintan Highlights",
+        href: "/packages/pick-up-drop/bintan-highlights",
+        description: "Compare a land route if weather changes the water plan.",
+      },
     ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
@@ -310,6 +378,23 @@ export const tours = [
       "Morning is generally preferred for comfort and activity conditions.",
       "Custom timing can be requested before confirmation.",
     ],
+    relatedLinks: [
+      {
+        label: "Customized Tour",
+        href: "/packages/activities-packages/customized-tour",
+        description: "Shape a custom route around fishing, lunch, or return timing.",
+      },
+      {
+        label: "Beach Hopping Tour",
+        href: "/packages/activities-packages/beach-hopping-tour",
+        description: "Compare a softer coastal plan for mixed groups.",
+      },
+      {
+        label: "Contact concierge",
+        href: "/contact",
+        description: "Confirm tide, boat timing, and pickup location.",
+      },
+    ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
     whatsappMessage: "Hello, I want to ask about the Fishing Trip.",
@@ -365,6 +450,23 @@ export const tours = [
       "Confirm tee time before booking transfer.",
       "Golf fees, cart, caddie, and equipment are not included unless requested.",
       "Return transfer or waiting arrangement should be confirmed in advance.",
+    ],
+    relatedLinks: [
+      {
+        label: "Hotel transfer guide",
+        href: "/blog/hotel-to-hotel-private-taxi-bintan",
+        description: "Read timing notes for hotel, resort, and appointment transfers.",
+      },
+      {
+        label: "Alphard premium transfer",
+        href: "/packages/pick-up-drop/package-transfer-alphard",
+        description: "Compare a premium cabin option for golf day movement.",
+      },
+      {
+        label: "Hiace group transfer",
+        href: "/packages/pick-up-drop/package-transfer-hiace",
+        description: "Useful for golf groups carrying more equipment.",
+      },
     ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
@@ -422,6 +524,23 @@ export const tours = [
       "Store opening hours may vary.",
       "Share specific shopping requests before booking.",
     ],
+    relatedLinks: [
+      {
+        label: "Hotel transfer guide",
+        href: "/blog/hotel-to-hotel-private-taxi-bintan",
+        description: "Plan resort pickup, dinner, and return timing around shopping.",
+      },
+      {
+        label: "Tanjung Pinang City Tour",
+        href: "/packages/pick-up-drop/tanjung-pinang-city-tour",
+        description: "Pair shopping with city culture and local food stops.",
+      },
+      {
+        label: "Customized Tour",
+        href: "/packages/activities-packages/customized-tour",
+        description: "Shape shopping stops into a custom private route.",
+      },
+    ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
     whatsappMessage: "Hello, I want to ask about the Shopping Tour.",
@@ -477,6 +596,23 @@ export const tours = [
       "Spa treatment availability and package menu should be confirmed before booking.",
       "Treatment duration may vary by selected package.",
       "Transportation charges are confirmed based on pickup area and route.",
+    ],
+    relatedLinks: [
+      {
+        label: "Hotel transfer guide",
+        href: "/blog/hotel-to-hotel-private-taxi-bintan",
+        description: "Read when to book private pickup for appointment-based movement.",
+      },
+      {
+        label: "Alphard premium transfer",
+        href: "/packages/pick-up-drop/package-transfer-alphard",
+        description: "Compare premium transport support for wellness plans.",
+      },
+      {
+        label: "Contact concierge",
+        href: "/contact",
+        description: "Confirm spa timing, treatment choice, and route support.",
+      },
     ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
@@ -534,6 +670,23 @@ export const tours = [
       "Optional island stop availability should be confirmed before booking.",
       "Bring swimwear, sun protection, and spare clothes if planning to swim.",
     ],
+    relatedLinks: [
+      {
+        label: "Snorkeling trip guide",
+        href: "/blog/bintan-snorkeling-trip-guide-private-tour",
+        description: "Read water activity preparation and weather notes.",
+      },
+      {
+        label: "Blue Lake photo guide",
+        href: "/blog/blue-lake-desert-bintan-photo-stop-guide",
+        description: "Pair beach time with a private photo-stop route.",
+      },
+      {
+        label: "Bintan Highlights",
+        href: "/packages/pick-up-drop/bintan-highlights",
+        description: "Compare a broader route with beach and resort-area stops.",
+      },
+    ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
     whatsappMessage: "Hello, I want to ask about the Beach Hopping Tour.",
@@ -589,6 +742,23 @@ export const tours = [
       "Customized packages are available upon request.",
       "Advance booking helps create a smoother route plan.",
       "Share must-visit places and timing limits before confirmation.",
+    ],
+    relatedLinks: [
+      {
+        label: "Blue Lake photo guide",
+        href: "/blog/blue-lake-desert-bintan-photo-stop-guide",
+        description: "Use this guide to plan photo stops inside a private route.",
+      },
+      {
+        label: "Bintan Highlights",
+        href: "/packages/pick-up-drop/bintan-highlights",
+        description: "Start from a proven highlights route before customizing.",
+      },
+      {
+        label: "Contact concierge",
+        href: "/contact",
+        description: "Send your must-visit places and timing limits.",
+      },
     ],
     whyChoose: whyChooseBintanPrestige,
     terms: activityTerms,
