@@ -42,6 +42,8 @@ Older reports and handoffs are preserved under:
 | Page title, canonical, sitemap entries | `src/data/seo.ts` |
 | Schema output | `src/data/schema.ts` |
 | Home gallery | `src/data/gallery.ts` |
+| Logo, icon, page hero, and activity package image registry | `src/data/assets.ts` |
+| Responsive hero image regeneration | `scripts/generate-hero-responsive.mjs`, `npm.cmd run images:hero` |
 | Blog articles | `src/data/blog.ts` |
 | Blog index hero, Browse Topics, Favorite Reads, article pagination, service-focus section | `src/pages/blog.astro`, `src/styles/components.css` |
 | Transfer route cards and detail pages | `src/data/routes.ts`, `src/data/transportRoutes.ts` |
@@ -70,25 +72,27 @@ Older reports and handoffs are preserved under:
 - Page: `src/pages/index.astro`
 - Sections: `src/components/sections/home/*`
 - Data: `src/data/gallery.ts`, `src/data/routes.ts`, `src/data/tours.ts`, `src/data/packages.ts`, `src/data/carTypes.ts`, `src/data/faqs.ts`
+- Hero assets: `src/data/assets.ts` via `src/data/media.ts`
+- After replacing hero originals under `public/images/hero/{page}`, run `npm.cmd run images:hero` to refresh mobile/tablet/desktop variants.
 
 ### About
 
 - Page: `src/pages/about.astro`
 - Sections: `src/components/sections/about/*`
-- Data: `src/data/media.ts`, `src/data/schema.ts`
+- Data: `src/data/assets.ts`, `src/data/media.ts`, `src/data/schema.ts`
 
 ### Contact
 
 - Page: `src/pages/contact.astro`
 - Sections: `src/components/sections/contact/*`
 - WhatsApp planner: `src/components/features/whatsapp/WhatsAppPlanner.astro`
-- Data: `src/data/site.ts`, `src/data/media.ts`, `src/data/schema.ts`
+- Data: `src/data/site.ts`, `src/data/assets.ts`, `src/data/media.ts`, `src/data/schema.ts`
 
 ### Blog
 
 - Pages: `src/pages/blog.astro`, `src/pages/blog/[slug].astro`
 - Components: `src/components/features/blog/*`
-- Data: `src/data/blog.ts`, `src/data/seo.ts`, `src/data/schema.ts`
+- Data: `src/data/blog.ts`, `src/data/assets.ts`, `src/data/seo.ts`, `src/data/schema.ts`
 - Blog index owns the full-width hero, Browse Topics filters with nearby article results, Favorite Reads panel, activity/taxy-inspired pagination, and service-focus soft selling section.
 
 ### Pick Up And Drop
@@ -103,7 +107,8 @@ Older reports and handoffs are preserved under:
 - Pages: `src/pages/packages/activities-packages*.astro`, `src/pages/packages/island-tour*.astro`
 - Sections: `src/components/sections/packages/Tour*.astro`
 - Features: `src/components/features/packages/Tour*.astro`, package detail components
-- Data: `src/data/tours.ts`
+- Data: `src/data/tours.ts`, `src/data/assets.ts`
+- Activity package card images, detail hero images, and gallery images are centralized in `activityPackageAssets`.
 
 ## Verification To Run After Changes
 

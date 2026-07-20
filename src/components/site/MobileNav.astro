@@ -47,15 +47,12 @@ const isActive = (href: string) => {
     </div>
 
     <div class="mobile-menu-panel__links">
-      {navigation.map((item, index) => (
+      {navigation.map((item) => (
         <a
           class:list={["mobile-menu-link group", isActive(item.href) && "is-active"]}
           href={item.href}
           aria-current={isActive(item.href) ? "page" : undefined}
         >
-          <span class="mobile-menu-link__index">
-            {String(index + 1).padStart(2, "0")}
-          </span>
           <span class="mobile-menu-link__body">
             <span>{item.label}</span>
             <small>{menuDescriptions[item.href] ?? "Explore"}</small>

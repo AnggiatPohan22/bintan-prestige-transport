@@ -12,6 +12,33 @@ Simpan gambar di dalam folder `public/images`.
 
 Gunakan format `.webp` jika bisa. Nama file sebaiknya huruf kecil, tanpa spasi.
 
+## File Pusat Asset
+
+File utama untuk mapping gambar, logo, dan icon:
+
+- `src/data/assets.ts`
+
+Gunakan file ini sebagai pintu utama untuk:
+
+- Logo dan brand image: `brandAssets`
+- Hero per halaman: `pageHeroAssets`
+- Icon custom: `iconAssets`
+- Card, hero detail, dan gallery activity package: `activityPackageAssets`
+
+Jika file gambar sudah di-upload ke `public/images`, path di code selalu dimulai dari `/images`, bukan `public/images`.
+
+Untuk hero image, upload gambar original ke folder halaman seperti `public/images/hero/home`, lalu jalankan:
+
+```powershell
+npm.cmd run images:hero
+```
+
+Command ini membuat versi responsive di `public/images/hero/{halaman}/responsive`:
+
+- `*-mobile.webp`: 1080 x 1920 untuk smartphone.
+- `*-tablet.webp`: 1440 x 1080 untuk tablet.
+- `*-desktop.webp`: 1920 x 1080 untuk desktop.
+
 Contoh:
 
 ```txt
@@ -50,27 +77,40 @@ Jika `PUBLIC_LOGO_IMAGE` kosong, navbar akan kembali menampilkan teks `Travel Ag
 
 File utama:
 
+- `src/data/assets.ts`
 - `src/data/media.ts`
 
-Bagian yang bisa diedit:
+Edit list gambar di `pageHeroAssets` dalam `src/data/assets.ts`.
 
 ```ts
-export const heroSlides = {
-  home: ["/images/hero/home-1.webp", "/images/hero/home-2.webp"],
-  transfer: ["/images/hero/transfer-1.webp", "/images/hero/transfer-2.webp"],
-  islandTour: ["/images/hero/tour-1.webp", "/images/hero/tour-2.webp"],
-  about: ["/images/hero/about-1.webp", "/images/hero/about-2.webp"],
-  contact: ["/images/hero/contact-1.webp", "/images/hero/contact-2.webp"],
+export const pageHeroAssets = {
+  home: [responsiveHeroImage("home", "home-1.webp")],
+  taxy: [responsiveHeroImage("taxy", "toyota-innova.webp")],
+  activity: [responsiveHeroImage("activity", "mangrove.webp")],
+  blog: [responsiveHeroImage("blog", "mangrove-2.webp")],
+  about: [responsiveHeroImage("about", "destinasi-tanjungpinang-1.webp")],
+  contact: [responsiveHeroImage("contact", "blue-lake.webp")],
 };
 ```
 
-Hero akan otomatis crossfade halus antar gambar. Jika hanya satu gambar, animasi dimatikan otomatis.
+Hero akan otomatis crossfade halus antar gambar dan memakai `<picture>` responsive source. Jika hanya satu gambar, animasi dimatikan otomatis.
+
+Mapping halaman:
+
+- Home: `pageHeroAssets.home`
+- Taxy / Pick Up Drop: `pageHeroAssets.taxy`
+- Activities Packages / Island Tour: `pageHeroAssets.activity`
+- Blog: `pageHeroAssets.blog`
+- About: `pageHeroAssets.about`
+- Contact: `pageHeroAssets.contact`
 
 Alternatif khusus homepage:
 
 ```env
-PUBLIC_HERO_IMAGES=/images/hero/home-1.webp,/images/hero/home-2.webp,/images/hero/home-3.webp
+PUBLIC_HERO_IMAGES=/images/hero/home/home-1.webp,/images/hero/home/home-2.webp,/images/hero/home/home-3.webp
 ```
+
+Jika `PUBLIC_HERO_IMAGES` memakai path di dalam `/images/hero/{halaman}/...`, sistem akan otomatis mencari versi responsive-nya.
 
 ## Gambar Card Paket Home
 
@@ -115,69 +155,99 @@ alt: "Airport transfer private car",
 
 File yang dibuka:
 
+- `src/data/assets.ts`
 - `src/data/tours.ts`
 
-Field yang diganti:
+Untuk activity package, gambar card, hero detail, dan gallery diambil dari `activityPackageAssets`.
 
 ```ts
-image: "/images/tours/mangrove-tour.webp",
-alt: "Private mangrove tour in Bintan",
+export const activityPackageAssets = {
+  "mangrove-discovery-tour": {
+    folder: "mangrove-discory-tour",
+    card: "/images/gallery/mangrove-discory-tour/mangrove-2.webp",
+    hero: [
+      "/images/gallery/mangrove-discory-tour/mangrove-2.webp",
+      "/images/gallery/mangrove-discory-tour/mangrove-4.webp",
+    ],
+    gallery: [
+      {
+        title: "Quiet mangrove route",
+        description: "A calm boat route through Bintan's mangrove forest.",
+        image: "/images/gallery/mangrove-discory-tour/mangrove-2.webp",
+        alt: "Mangrove river route in Bintan",
+      },
+    ],
+  },
+};
 ```
 
 ## Gallery Detail Activity Package
 
 Gallery yang muncul di halaman detail activity package diatur dari:
 
-- Data utama: `src/data/tours.ts`
+- Mapping gambar: `src/data/assets.ts`
+- Data package: `src/data/tours.ts`
 - Komponen tampilan: `src/components/features/packages/ActivityPackageGallery.astro`
 - Layout detail package: `src/components/features/packages/PackageDetailContent.astro`
-- Folder gambar yang disarankan: `public/images/gallery` atau subfolder seperti `public/images/gallery/shooting`
+- Folder gambar: `public/images/gallery/{nama-folder-package}`
 
 Halaman yang memakai data ini:
 
 - `/packages/activities-packages/{slug}`
 - `/packages/island-tour/{slug}` sebagai fallback route lama
 
-Untuk menambah atau mengganti foto gallery pada salah satu activity package, cari object package di `src/data/tours.ts` berdasarkan `slug`, lalu update field `gallery`.
+Untuk menambah atau mengganti foto gallery pada salah satu activity package, upload gambar ke folder package di `public/images/gallery`, lalu update object sesuai slug di `activityPackageAssets`.
 
 Contoh:
 
 ```ts
-{
-  title: "Mangrove Discovery Tour",
-  slug: "mangrove-discovery-tour",
-  image: "/images/tours/mangrove.webp",
-  heroImages: [
-    "/images/tours/mangrove.webp",
-    "/images/gallery/mangrove-2.webp",
-    "/images/gallery/mangrove-5.webp",
+"mangrove-discovery-tour": {
+  folder: "mangrove-discory-tour",
+  card: "/images/gallery/mangrove-discory-tour/mangrove-2.webp",
+  hero: [
+    "/images/gallery/mangrove-discory-tour/mangrove-2.webp",
+    "/images/gallery/mangrove-discory-tour/mangrove-4.webp",
+    "/images/gallery/mangrove-discory-tour/mangrove-5.webp",
   ],
   gallery: [
     {
       title: "Quiet mangrove route",
       description: "A calm boat route through Bintan's mangrove forest with local nature scenery.",
-      image: "/images/tours/mangrove.webp",
+      image: "/images/gallery/mangrove-discory-tour/mangrove-2.webp",
       alt: "Mangrove river route in Bintan",
     },
     {
       title: "Nature boat experience",
       description: "Guests can enjoy a slower soft-adventure activity with guide and wildlife viewing.",
-      image: "/images/gallery/mangrove-2.webp",
+      image: "/images/gallery/mangrove-discory-tour/mangrove-4.webp",
       alt: "Mangrove boat tour scenery in Bintan",
     },
   ],
-}
+},
 ```
 
 Catatan update:
 
-- `image` di level package adalah thumbnail utama card dan hero fallback.
-- `heroImages` adalah slideshow hero detail.
+- `card` adalah thumbnail utama card activity.
+- `hero` adalah slideshow hero detail package.
 - `gallery` adalah section gallery yang muncul di atas itinerary.
 - Setiap item `gallery` wajib punya `title`, `image`, dan `alt`.
 - `description` boleh dikosongkan jika tidak diperlukan.
 - Jika ingin menambah lebih dari 3 foto, cukup tambah object baru di array `gallery`; lightbox sudah bisa pindah foto kanan/kiri tanpa menutup preview.
 - Path gambar di code selalu dimulai dari `/images`, bukan `public/images`.
+
+Folder activity package yang aktif saat ini:
+
+- `public/images/gallery/Shooting-Experience-Package` -> `shooting-experience-package`
+- `public/images/gallery/mangrove-discory-tour` -> `mangrove-discovery-tour`
+- `public/images/gallery/fireflies-night-tour` -> `fireflies-night-tour`
+- `public/images/gallery/snorkeling-adventure` -> `snorkeling-adventure`
+- `public/images/gallery/fishing-trip` -> `fishing-trip`
+- `public/images/gallery/golf-transfer` -> `golf-transfer`
+- `public/images/gallery/shopping-tour` -> `shopping-tour`
+- `public/images/gallery/spa` -> `spa-wellness-experience`
+- `public/images/gallery/beach-hopping-tour` -> `beach-hopping-tour`
+- `public/images/gallery/custome` -> `customized-tour`
 
 ## Gambar Gallery
 

@@ -77,7 +77,7 @@ Section dan sumber komponennya:
 
 1. Hero
    - Komponen: `src/components/home/Hero.astro`
-   - Background media: `src/data/media.ts` lewat `heroSlides.home`
+   - Background media: `src/data/assets.ts` lewat `pageHeroAssets.home`, lalu dipakai `src/data/media.ts` sebagai `heroSlides.home`
    - Booking mini form: `src/components/home/MinimalBookingForm.astro`
    - Site/WhatsApp config: `src/data/site.ts`
 
@@ -384,7 +384,8 @@ Section dan sumber:
 Data:
 
 - Semua detail package Activities: `src/data/tours.ts`
-- Gallery per activity package: field `gallery` di masing-masing object package dalam `src/data/tours.ts`
+- Asset card, hero detail, dan gallery per activity package: `src/data/assets.ts` lewat `activityPackageAssets`
+- `src/data/tours.ts` hanya menyambungkan package ke asset dengan `image`, `heroImages`, dan `gallery`
 - WhatsApp/site config: `src/data/site.ts`
 - SEO URL helper: `src/data/seo.ts`
 - Schema: `src/data/schema.ts`
@@ -397,7 +398,7 @@ CSS utama:
 Catatan update gallery:
 
 - Untuk tambah foto activity, upload gambar ke `public/images/gallery` atau subfolder di dalamnya.
-- Update array `gallery` pada object activity yang sesuai di `src/data/tours.ts`.
+- Update object package yang sesuai di `src/data/assets.ts` pada `activityPackageAssets`.
 - Section gallery akan otomatis muncul di atas itinerary selama `gallery` berisi minimal satu item.
 - Panduan lengkap gambar ada di `ai/guides/manual-image-content-guide.md`.
 
@@ -449,20 +450,36 @@ Jika ingin mengubah:
 - Tujuan link: edit `href`.
 - Urutan menu: pindahkan posisi object di array.
 
+### `src/data/assets.ts`
+
+Fungsi:
+
+- Pusat mapping asset gambar, logo, dan icon.
+- `brandAssets`: logo dan brand image.
+- `pageHeroAssets`: hero image per halaman, termasuk `home`, `taxy`, `activity`, `blog`, `about`, dan `contact`.
+- `responsiveHeroImage(page, file)`: membuat mapping original, mobile, tablet, dan desktop untuk hero.
+- Hero responsive memakai full image cover untuk mobile, tablet, dan desktop.
+- `activityPackageAssets`: card image, hero detail image, dan gallery detail untuk activity package.
+
+Jika ingin mengubah:
+
+- Gambar hero halaman: edit `pageHeroAssets`.
+- Setelah mengganti file hero original, jalankan `npm.cmd run images:hero` agar versi mobile/tablet/desktop dibuat ulang.
+- Gambar card activity package: edit `activityPackageAssets[slug].card`.
+- Gambar hero detail activity package: edit `activityPackageAssets[slug].hero`.
+- Gallery detail activity package: edit `activityPackageAssets[slug].gallery`.
+
 ### `src/data/media.ts`
 
 Fungsi:
 
-- Kumpulan gambar hero per halaman.
-- `heroSlides.home`, `heroSlides.transfer`, `heroSlides.islandTour`, `heroSlides.about`, `heroSlides.contact`.
+- Adapter hero per halaman dari `src/data/assets.ts`.
+- `heroSlides.home`, `heroSlides.transfer`, `heroSlides.islandTour`, `heroSlides.blog`, `heroSlides.about`, `heroSlides.contact`.
 
 Jika ingin mengubah:
 
-- Gambar hero Home: edit `heroSlides.home`, atau set `PUBLIC_HERO_IMAGES`.
-- Gambar hero Pick Up & Drop: edit `heroSlides.transfer`.
-- Gambar hero Activities Packages: edit `heroSlides.islandTour`.
-- Gambar hero About: edit `heroSlides.about`.
-- Gambar hero Contact: edit `heroSlides.contact`.
+- Default gambar hero: edit `pageHeroAssets` di `src/data/assets.ts`.
+- Override khusus Home: set `PUBLIC_HERO_IMAGES`.
 
 Catatan gambar:
 
@@ -1094,10 +1111,11 @@ Gunakan breakpoint ini sebelum menambah breakpoint baru agar pattern CSS tetap k
 
 ### Ganti gambar hero Home
 
-1. Buka `src/data/media.ts`.
-2. Edit `heroSlides.home`.
+1. Buka `src/data/assets.ts`.
+2. Edit `pageHeroAssets.home`.
 3. Pastikan file gambar berada di `public/images/...`.
-4. Tulis path seperti `/images/hero/nama-file.jpg`.
+4. Tulis path seperti `/images/hero/home/nama-file.webp`.
+5. Jalankan `npm.cmd run images:hero` untuk membuat versi responsive.
 
 ### Ganti gambar Signature Services Home
 
@@ -1108,8 +1126,8 @@ Gunakan breakpoint ini sebelum menambah breakpoint baru agar pattern CSS tetap k
 ### Ganti gambar Featured Routes Home
 
 1. Untuk taxi route: buka `src/data/routes.ts`.
-2. Untuk activities route: buka `src/data/tours.ts`.
-3. Edit `image`.
+2. Untuk activities route: buka `src/data/assets.ts`.
+3. Edit `activityPackageAssets[slug].card`.
 4. Jika crop perlu disesuaikan, cek CSS `.package-offer-card--home-route`.
 
 ### Ganti gambar Fleet Home
@@ -1121,15 +1139,17 @@ Gunakan breakpoint ini sebelum menambah breakpoint baru agar pattern CSS tetap k
 ### Ganti gambar detail package
 
 1. Untuk taxi transfer: buka `src/data/routes.ts`.
-2. Untuk Activities Packages: buka `src/data/tours.ts`.
-3. Edit `heroImages` untuk hero detail.
-4. Edit `image` untuk card utama.
+2. Untuk Activities Packages: buka `src/data/assets.ts`.
+3. Edit `activityPackageAssets[slug].hero` untuk hero detail.
+4. Edit `activityPackageAssets[slug].card` untuk card utama.
+5. Edit `activityPackageAssets[slug].gallery` untuk gallery detail.
 
 ### Ganti gambar blog
 
-1. Buka `src/data/blog.ts`.
-2. Edit `heroImage` untuk hero.
-3. Edit `gallery` untuk gallery artikel.
+1. Untuk hero halaman Blog: buka `src/data/assets.ts`.
+2. Edit `pageHeroAssets.blog`.
+3. Untuk gambar artikel: buka `src/data/blog.ts`.
+4. Edit `heroImage` atau `gallery` artikel.
 
 ## Panduan Cepat Mengubah Text dan CTA
 

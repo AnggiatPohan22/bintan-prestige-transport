@@ -1,6 +1,8 @@
 ---
+import type { HeroImageAsset } from "@data/assets";
+
 interface Props {
-  images?: string[];
+  images?: Array<string | HeroImageAsset>;
   video?: string;
   className?: string;
 }
@@ -8,6 +10,7 @@ interface Props {
 const { images = [], video = "", className = "-z-20" } = Astro.props;
 const activeImages = images.filter(Boolean);
 const duration = Math.max(activeImages.length * 6, 12);
+const getImageSrc = (image: string | HeroImageAsset) => (typeof image === "string" ? image : image.src);
 ---
 
 <div class={`absolute inset-0 ${className}`} aria-hidden="true">
@@ -18,11 +21,38 @@ const duration = Math.max(activeImages.length * 6, 12);
         {activeImages.map((image, index) => (
           <div
             class:list={[
-              "hero-slide absolute inset-0 bg-cover bg-center bg-no-repeat",
+              "hero-slide absolute inset-0",
               activeImages.length === 1 && "hero-slide-static",
             ]}
-            style={`background-image: url('${image}'); animation-delay: ${index * 6}s; animation-duration: ${duration}s;`}
-          />
+            style={`animation-delay: ${index * 6}s; animation-duration: ${duration}s;`}
+          >
+            {
+              typeof image === "string" ? (
+                <img
+                  class="hero-slide__image"
+                  src={image}
+                  alt=""
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchpriority={index === 0 ? "high" : "auto"}
+                />
+              ) : (
+                <picture>
+                  <source media="(max-width: 640px)" srcset={image.mobile} />
+                  <source media="(max-width: 1024px)" srcset={image.tablet} />
+                  <source media="(min-width: 1025px)" srcset={image.desktop} />
+                  <img
+                    class="hero-slide__image"
+                    src={getImageSrc(image)}
+                    alt=""
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchpriority={index === 0 ? "high" : "auto"}
+                  />
+                </picture>
+              )
+            }
+          </div>
         ))}
       </div>
     )
