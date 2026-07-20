@@ -306,6 +306,49 @@ Catatan aman:
 - Risiko rendah-menengah karena perubahan menyentuh JSON-LD dan sitemap, bukan layout.
 - Legacy `/packages/island-tour/[slug]` tetap dipertahankan sesuai existing route, tetapi offer schema-nya ikut dirapikan.
 
+### Step D2 - Legacy Activity Route Redirect Cleanup
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 8/10
+
+Perbaikan yang sudah dilakukan:
+
+- Menghapus route generator legacy `/packages/island-tour`.
+- Menghapus route generator legacy `/packages/island-tour/[slug]`.
+- Mempertahankan `public/_redirects` yang sudah tersedia:
+  - `/packages/island-tour /packages/activities-packages 301`
+  - `/packages/island-tour/:slug /packages/activities-packages/:slug 301`
+- Dengan ini, Cloudflare Pages tetap bisa mengarahkan URL lama ke URL canonical baru, tetapi Astro tidak lagi membangun duplicate static HTML untuk route legacy.
+
+File yang berubah:
+
+- `src/pages/packages/island-tour.astro`
+- `src/pages/packages/island-tour/[slug].astro`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run build`: pass, 33 pages built.
+- `npm.cmd run audit:dist`: pass, semua budget tetap pass.
+- `dist/packages/island-tour`: tidak lagi dibuat.
+- `dist/_redirects`: tetap memuat redirect 301 legacy.
+- `dist/sitemap.xml`: tetap 28 URL dan tidak memasukkan route legacy.
+
+Hasil ukuran setelah D2:
+
+- Total `dist`: turun dari 23.11 MB menjadi 22.40 MB.
+- HTML output: turun dari 44 file menjadi 33 file.
+- Total HTML gzip estimate: turun dari 473.4 KB menjadi 341.6 KB.
+
+Catatan aman:
+
+- Tidak ada perubahan visual pada route canonical `/packages/activities-packages`.
+- Risiko rendah-menengah karena halaman legacy dihapus dari static build dan sekarang bergantung pada `_redirects` saat hosting di Cloudflare Pages.
+- Pada local static file output, URL legacy tidak lagi tersedia sebagai HTML, tetapi di hosting production akan diarahkan oleh `_redirects`.
+
 ## Executive Summary
 
 Website sudah punya fondasi yang cukup baik untuk static hosting: Astro build sukses, halaman sudah memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap dan robots tersedia, dan JavaScript/CSS bukan bottleneck utama.
@@ -623,7 +666,9 @@ Rekomendasi:
 
 Prioritas: Medium
 
-Temuan:
+Status progress: improved in Step D2, waiting user review.
+
+Temuan sebelum Step D2:
 
 - Route `/packages/island-tour` dan `/packages/island-tour/[slug]` masih digenerate.
 - Canonical diarahkan ke `/packages/activities-packages` dan `/packages/activities-packages/[slug]`.
@@ -636,9 +681,9 @@ Risiko:
 
 Rekomendasi:
 
-- Jika `island-tour` hanya legacy route, ubah menjadi redirect permanen ke route canonical.
-- Jika Cloudflare Pages mendukung redirect file, gunakan `_redirects`.
-- Ini akan mengurangi duplicate content dan memperjelas canonical authority.
+- Done in Step D2: route legacy dihapus dari static build.
+- Done in Step D2: `public/_redirects` dipertahankan untuk redirect permanen 301 di Cloudflare Pages.
+- Ini mengurangi duplicate content dan memperjelas canonical authority.
 
 ### 6. Structured Data
 
@@ -827,7 +872,7 @@ Current position:
 
 1. Optimasi `scripts/generate-hero-responsive.mjs` agar output responsive hero lebih kecil.
 2. Tambahkan `width`, `height`, dan `decoding="async"` pada image yang belum stabil.
-3. Ubah route legacy `/packages/island-tour` menjadi redirect jika sudah tidak dipakai sebagai URL utama.
+3. Done in Step D2: ubah route legacy `/packages/island-tour` menjadi redirect jika sudah tidak dipakai sebagai URL utama.
 4. Done in Step D1: rapikan structured data harga agar lebih machine-readable.
 5. Done in Step A: tambahkan `og:site_name` dan `og:locale`.
 
