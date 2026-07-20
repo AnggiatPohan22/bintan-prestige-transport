@@ -22,16 +22,19 @@ const serviceHighlights = [
     label: "Private transfer",
     title: "Airport, ferry, resort, and dinner routes",
     description: "Premium point-to-point transport with pickup timing, luggage needs, and vehicle fit confirmed before the trip.",
+    href: "/packages/pick-up-drop",
   },
   {
     label: "Island experience",
     title: "Activities and private tour planning",
     description: "Bintan highlights, mangrove, fireflies, snorkeling, beach stops, spa, shopping, golf, and custom routes shaped around guest pace.",
+    href: "/packages/activities-packages",
   },
   {
     label: "WhatsApp concierge",
     title: "Human-first booking support",
     description: "Guests can ask questions, compare routes, request availability, and confirm the right service from one clear WhatsApp thread.",
+    href: "/contact",
   },
 ];
 const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(
@@ -172,11 +175,11 @@ const schema = [
       </div>
       <div class="blog-service-grid mt-8">
         {serviceHighlights.map((item) => (
-          <article class="blog-service-card">
+          <a class="blog-service-card" href={item.href} aria-label={`Open ${item.title}`}>
             <span>{item.label}</span>
             <h3>{item.title}</h3>
             <p>{item.description}</p>
-          </article>
+          </a>
         ))}
       </div>
     </div>

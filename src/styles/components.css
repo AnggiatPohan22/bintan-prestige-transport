@@ -4116,6 +4116,21 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.76),
     0 20px 48px rgba(111, 84, 41, 0.08);
+  text-decoration: none;
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.blog-service-card:hover,
+.blog-service-card:focus-visible {
+  border-color: rgba(6, 78, 59, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 24px 58px rgba(111, 84, 41, 0.12);
+  outline: 0;
+  transform: translateY(-0.12rem);
 }
 
 .blog-service-card::before {

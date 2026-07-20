@@ -405,6 +405,56 @@ Catatan aman:
 - Risiko utama hanya visual crop/perceived ratio jika browser memakai rasio atribut sebelum CSS aktif.
 - Karena image berada dalam parent yang sudah punya `aspect-ratio` dan `object-fit: cover`, perubahan ini seharusnya menjaga layout tanpa menggeser desain.
 
+### Step F1 - Blog Internal Linking SEO
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 8.5/10
+
+Perbaikan yang sudah dilakukan:
+
+- Menambahkan `relatedServices` pada data setiap artikel blog di `src/data/blog.ts`.
+- Detail artikel sekarang menampilkan kartu `Related services` yang mengarah ke package/service relevan.
+- Blog index section `Service focus` sekarang menjadi internal links ke:
+  - `/packages/pick-up-drop`
+  - `/packages/activities-packages`
+  - `/contact`
+- Sidebar `Plan this route` di artikel blog memakai `site.whatsappNumber`, bukan nomor hardcoded.
+- Menambahkan hover/focus state untuk `blog-service-card` agar link tetap terlihat polished dan accessible.
+
+File yang berubah:
+
+- `src/data/blog.ts`
+- `src/pages/blog.astro`
+- `src/pages/blog/[slug].astro`
+- `src/styles/components.css`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run build`: pass, 33 pages built.
+- `npm.cmd run audit:dist`: pass, semua budget tetap pass.
+- Blog index output: link ke `/packages/pick-up-drop`, `/packages/activities-packages`, dan `/contact` ditemukan.
+- Blog detail output sample `bintan-airport-pickup-private-transfer-guide`: section `Related services` ditemukan.
+- Blog detail output sample: link ke `/packages/pick-up-drop/package-transfer-avanza-innova`, `/packages/pick-up-drop/package-transfer-hiace`, dan `/contact` ditemukan.
+- Blog detail output sample: WhatsApp link memakai `wa.me/6285381389242`.
+- Manual check tetap disarankan: cek tampilan Blog index `Service focus` dan Blog detail `Related services` di mobile/tablet/desktop.
+
+Hasil ukuran setelah F1:
+
+- Total `dist`: 22.42 MB dari budget 25 MB.
+- Largest image: 491.0 KB dari budget 500 KB.
+- JS gzip total: 61.9 KB dari budget 80 KB.
+- CSS gzip total: 30.9 KB dari budget 50 KB.
+
+Catatan aman:
+
+- Perubahan bersifat internal linking dan satu koreksi nomor WhatsApp hardcoded.
+- Tidak ada route baru, dependency baru, atau perubahan struktur halaman besar.
+- Risiko utama adalah visual spacing pada sidebar blog detail karena ada satu kartu baru.
+
 ## Executive Summary
 
 Website sudah punya fondasi yang cukup baik untuk static hosting: Astro build sukses, halaman sudah memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap dan robots tersedia, dan JavaScript/CSS bukan bottleneck utama.
@@ -861,6 +911,8 @@ Rekomendasi:
 
 Prioritas: Medium
 
+Status progress: improved in Step F1, waiting user review.
+
 Rekomendasi:
 
 - Dari homepage, link langsung ke:
@@ -868,7 +920,7 @@ Rekomendasi:
   - ferry transfer
   - activities packages
   - contact/WhatsApp
-- Dari blog, link ke package/service yang relevan.
+- Done in Step F1: dari blog index dan blog detail, link ke package/service yang relevan.
 - Dari package detail, link ke related activity atau related transfer package.
 - Gunakan anchor text natural, bukan hanya "Read more".
 
@@ -938,7 +990,7 @@ Current position:
 2. Pindahkan icon static ke pendekatan yang lebih ringan jika bundle mulai membesar.
 3. Buat asset registry khusus, misalnya `src/data/assets.ts`, untuk gambar, logo, icon, dan OG image.
 4. Done in Step B: buat script audit size supaya setiap build bisa cek image besar dan total deploy size.
-5. Tambahkan internal linking strategy dari blog ke package dan sebaliknya.
+5. Partially done in Step F1: tambahkan internal linking strategy dari blog ke package dan service. Sisa improvement: package detail ke related blog atau related package.
 
 ## Suggested Maintenance Files
 

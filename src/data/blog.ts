@@ -10,6 +10,12 @@ export interface BlogSection {
   body: string[];
 }
 
+export interface BlogInternalLink {
+  label: string;
+  href: string;
+  description: string;
+}
+
 export interface BlogArticle {
   slug: string;
   title: string;
@@ -28,6 +34,7 @@ export interface BlogArticle {
   intro: string;
   sections: BlogSection[];
   takeaway: string[];
+  relatedServices: BlogInternalLink[];
 }
 
 export const blogArticles: BlogArticle[] = [
@@ -81,6 +88,23 @@ export const blogArticles: BlogArticle[] = [
       "Confirm the vehicle size before arrival.",
       "Use WhatsApp for timing changes and route notes.",
     ],
+    relatedServices: [
+      {
+        label: "Avanza or Innova airport transfer",
+        href: "/packages/pick-up-drop/package-transfer-avanza-innova",
+        description: "Best starting point for private airport pickup and direct hotel transfer.",
+      },
+      {
+        label: "Hiace group transfer",
+        href: "/packages/pick-up-drop/package-transfer-hiace",
+        description: "Useful when airport arrival includes family groups, luggage, or larger parties.",
+      },
+      {
+        label: "Contact the concierge",
+        href: "/contact",
+        description: "Share flight timing and hotel details before confirming pickup availability.",
+      },
+    ],
   },
   {
     slug: "bintan-harbour-pickup-ferry-transfer-guide",
@@ -131,6 +155,23 @@ export const blogArticles: BlogArticle[] = [
       "Mention luggage, golf bags, or child seats early.",
       "Use a private MPV or van for groups and resort transfers.",
     ],
+    relatedServices: [
+      {
+        label: "Hiace ferry transfer",
+        href: "/packages/pick-up-drop/package-transfer-hiace",
+        description: "A practical option for harbour arrivals with groups or luggage-heavy movement.",
+      },
+      {
+        label: "Bintan Highlights route",
+        href: "/packages/pick-up-drop/bintan-highlights",
+        description: "Pair ferry pickup with photo stops and resort-area highlights in one private route.",
+      },
+      {
+        label: "Contact before arrival",
+        href: "/contact",
+        description: "Confirm ferry terminal, arrival timing, and resort drop-off before landing.",
+      },
+    ],
   },
   {
     slug: "hotel-to-hotel-private-taxi-bintan",
@@ -178,6 +219,23 @@ export const blogArticles: BlogArticle[] = [
       "Confirm exact lobby or villa pickup point.",
       "Book ahead for ferry, dinner, and tour timing.",
       "Share multi-stop plans before the ride starts.",
+    ],
+    relatedServices: [
+      {
+        label: "Private transfer packages",
+        href: "/packages/pick-up-drop",
+        description: "Compare point-to-point transfer options before confirming the right vehicle.",
+      },
+      {
+        label: "Avanza or Innova transfer",
+        href: "/packages/pick-up-drop/package-transfer-avanza-innova",
+        description: "A flexible option for hotel, dinner, ferry, and simple daily movement.",
+      },
+      {
+        label: "Alphard premium transfer",
+        href: "/packages/pick-up-drop/package-transfer-alphard",
+        description: "For guests who want a more premium cabin for hotel-to-hotel movement.",
+      },
     ],
   },
   {
@@ -229,6 +287,23 @@ export const blogArticles: BlogArticle[] = [
       "Confirm timing around weather and daylight.",
       "Combine the route with lunch, beach, or hotel transfer.",
     ],
+    relatedServices: [
+      {
+        label: "Mangrove Discovery Tour",
+        href: "/packages/activities-packages/mangrove-discovery-tour",
+        description: "Open the package page for gallery, itinerary, support notes, and booking flow.",
+      },
+      {
+        label: "Bintan Highlights route",
+        href: "/packages/pick-up-drop/bintan-highlights",
+        description: "Combine mangrove planning with flexible private-car route support.",
+      },
+      {
+        label: "Activities packages",
+        href: "/packages/activities-packages",
+        description: "Browse other private activity options that can pair with nature routes.",
+      },
+    ],
   },
   {
     slug: "bintan-snorkeling-trip-guide-private-tour",
@@ -279,6 +354,23 @@ export const blogArticles: BlogArticle[] = [
       "Keep timing flexible for weather and sea conditions.",
       "Arrange return transfer before starting the activity.",
     ],
+    relatedServices: [
+      {
+        label: "Snorkeling Adventure",
+        href: "/packages/activities-packages/snorkeling-adventure",
+        description: "Review the snorkeling package, gallery, itinerary, and booking support.",
+      },
+      {
+        label: "Beach Hopping Tour",
+        href: "/packages/activities-packages/beach-hopping-tour",
+        description: "Pair water activity planning with a relaxed beach route.",
+      },
+      {
+        label: "Activities packages",
+        href: "/packages/activities-packages",
+        description: "Compare Bintan activity options before choosing the right day plan.",
+      },
+    ],
   },
   {
     slug: "blue-lake-desert-bintan-photo-stop-guide",
@@ -326,6 +418,23 @@ export const blogArticles: BlogArticle[] = [
       "Use Blue Lake as a photo stop inside a private route.",
       "Bring sun protection and keep timing comfortable.",
       "Confirm pickup, waiting time, and next destination early.",
+    ],
+    relatedServices: [
+      {
+        label: "Bintan Highlights route",
+        href: "/packages/pick-up-drop/bintan-highlights",
+        description: "The most direct package path for Blue Lake, Sand Dunes, and resort-area stops.",
+      },
+      {
+        label: "Customized Tour",
+        href: "/packages/activities-packages/customized-tour",
+        description: "Use this when the photo route needs custom stops and flexible timing.",
+      },
+      {
+        label: "Private transfer packages",
+        href: "/packages/pick-up-drop",
+        description: "Choose transport support if Blue Lake is part of a wider island route.",
+      },
     ],
   },
 ];
