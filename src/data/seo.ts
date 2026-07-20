@@ -8,7 +8,7 @@ const staticSeoPages = [
     path: "/",
     title: "Premium Private Taxi & Island Tour Experience",
     description:
-      "Premium private taxi, airport transfer, VIP driver, and island tour experience with WhatsApp-first reservations.",
+      "Bintan Prestige Transport provides private taxi, airport and ferry transfers, island tours, and curated Bintan activities with WhatsApp-first booking.",
     priority: 1,
   },
   {
@@ -36,7 +36,7 @@ const staticSeoPages = [
     path: "/about",
     title: "About Us",
     description:
-      "About the premium private taxi, transfer, and island tour concierge service foundation.",
+      "Learn about Bintan Prestige Transport, a private taxi, transfer, and island tour concierge service for comfortable travel in Bintan.",
     priority: 0.7,
   },
   {

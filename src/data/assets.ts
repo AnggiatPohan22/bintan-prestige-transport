@@ -42,6 +42,10 @@ type ActivityPackageAsset = {
 export const brandAssets = {
   logoGold: "/images/brand/bintan-prestige-gold-logo.png",
   logoWhite: "/images/brand/bintan-prestige-white-logo.png",
+  favicon: "/images/brand/icons/bintan-prestige-icon-32.png",
+  appleTouchIcon: "/images/brand/icons/bintan-prestige-icon-180.png",
+  manifestIcon192: "/images/brand/icons/bintan-prestige-icon-192.png",
+  manifestIcon512: "/images/brand/icons/bintan-prestige-icon-512.png",
 } as const;
 
 export const pageHeroAssets = {

@@ -2,7 +2,7 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 
-const fallbackSiteUrl = "https://bintanprestige.com";
+const fallbackSiteUrl = "https://bintanprestigetransport.com";
 
 const normalizeSiteUrl = (value) => {
   try {

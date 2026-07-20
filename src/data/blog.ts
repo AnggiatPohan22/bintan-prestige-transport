@@ -198,8 +198,8 @@ export const blogArticles: BlogArticle[] = [
     popularRank: 3,
     gallery: [
       { src: "/images/gallery/mangrove-1.webp", alt: "Mangrove river route in Bintan" },
-      { src: "/images/gallery/mangrove-2.webp", alt: "Mangrove exploration scenery" },
-      { src: "/images/gallery/mangrove-5.webp", alt: "Mangrove kayaking and nature atmosphere" },
+      { src: "/images/gallery/mangrove-discory-tour/mangrove-2.webp", alt: "Mangrove exploration scenery" },
+      { src: "/images/gallery/mangrove-discory-tour/mangrove-5.webp", alt: "Mangrove kayaking and nature atmosphere" },
     ],
     intro:
       "A mangrove tour is a good choice for guests who want nature, slower pacing, and a quieter itinerary between beach days. It works well as a half-day plan or as one stop inside a private island route.",
@@ -247,9 +247,9 @@ export const blogArticles: BlogArticle[] = [
     favorite: true,
     popularRank: 5,
     gallery: [
-      { src: "/images/gallery/snorkeling-1.webp", alt: "Snorkeling activity in Bintan" },
-      { src: "/images/gallery/snorkeling-2.webp", alt: "Clear water snorkeling tour moment" },
-      { src: "/images/gallery/snorkeling-3.webp", alt: "Private snorkeling island experience" },
+      { src: "/images/gallery/snorkeling-adventure/snorkeling-1.webp", alt: "Snorkeling activity in Bintan" },
+      { src: "/images/gallery/snorkeling-adventure/snorkeling-2.webp", alt: "Clear water snorkeling tour moment" },
+      { src: "/images/gallery/snorkeling-adventure/snorkeling-3.webp", alt: "Private snorkeling island experience" },
     ],
     intro:
       "Snorkeling adds a memorable ocean moment to a Bintan itinerary. The best experience is planned with realistic timing, weather flexibility, and transport that does not leave guests waiting after the activity.",
@@ -296,9 +296,9 @@ export const blogArticles: BlogArticle[] = [
     heroAlt: "Blue Lake Bintan scenic destination",
     popularRank: 6,
     gallery: [
-      { src: "/images/gallery/blue-lake.webp", alt: "Blue Lake Bintan destination view" },
-      { src: "/images/gallery/blue-lake-2.webp", alt: "Blue Lake and desert-style scenery" },
-      { src: "/images/gallery/blue-lake-3.webp", alt: "Private photo stop at Blue Lake Bintan" },
+      { src: "/images/gallery/blue-lake/blue-lake.webp", alt: "Blue Lake Bintan destination view" },
+      { src: "/images/gallery/blue-lake/blue-lake-2.webp", alt: "Blue Lake and desert-style scenery" },
+      { src: "/images/gallery/blue-lake/blue-lake-3.webp", alt: "Private photo stop at Blue Lake Bintan" },
     ],
     intro:
       "Blue Lake and the desert-style landscape are popular because they are visually striking and easy to understand as a photo stop. The visit works best when folded into a private route instead of treated as a rushed standalone stop.",

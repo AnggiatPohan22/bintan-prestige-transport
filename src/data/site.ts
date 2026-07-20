@@ -8,7 +8,7 @@ const normalizeSiteUrl = (value: string) => {
   try {
     return new URL(value).origin;
   } catch {
-    return "https://bintanprestige.com";
+    return "https://bintanprestigetransport.com";
   }
 };
 

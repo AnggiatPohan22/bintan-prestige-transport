@@ -1,0 +1,846 @@
+# Website Performance and SEO Audit
+
+Tanggal audit: 2026-07-20
+
+Branch saat audit: `develop`
+
+Scope audit: build output, asset size, image delivery, client bundle, metadata SEO, schema, sitemap, robots, dan kesiapan hosting static.
+
+## Optimization Progress
+
+### Step A - SEO Foundation P0
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 9/10
+
+Perbaikan yang sudah dilakukan:
+
+- Fallback canonical domain disamakan ke `https://bintanprestigetransport.com`.
+- `.env.example` diperbarui agar environment production baru lebih jelas.
+- Homepage meta description diganti dari wording development menjadi copy production untuk private taxi, airport/ferry transfer, island tour, dan Bintan activities.
+- About page SEO description di `src/data/seo.ts` diganti agar tidak memakai wording "foundation".
+- `SEO.astro` ditambah `og:site_name` dan `og:locale`.
+
+File yang berubah:
+
+- `astro.config.mjs`
+- `.env.example`
+- `src/data/site.ts`
+- `src/data/seo.ts`
+- `src/components/site/SEO.astro`
+- `src/pages/index.astro`
+
+Verifikasi:
+
+- `npm.cmd run build`: pass, 44 pages built.
+- Build dengan override `PUBLIC_SITE_URL=https://bintanprestigetransport.com`: pass, 44 pages built.
+- `dist/index.html` sudah memuat homepage meta description baru.
+- `dist/index.html` sudah memuat `og:site_name` dan `og:locale`.
+- Dengan env production override, `dist/index.html` dan `dist/sitemap.xml` memakai `https://bintanprestigetransport.com`.
+
+Catatan aman:
+
+- Tidak ada perubahan layout visual.
+- Risiko rendah karena perubahan hanya metadata, domain fallback, dan SEO copy.
+- `.env` lokal belum diubah karena file itu tidak tracked dan termasuk environment personal. Jika ingin build lokal default langsung memakai domain baru, update manual atau approve perubahan baris `PUBLIC_SITE_URL` di `.env`.
+
+### Step B - Image Optimization Audit Gate
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 9/10
+
+Perbaikan yang sudah dilakukan:
+
+- Menambahkan script audit ukuran build output tanpa dependency baru.
+- Menambahkan command `npm run audit:dist` untuk audit normal yang hanya memberi warning.
+- Menambahkan command `npm run audit:dist:strict` untuk quality gate ketat yang akan fail jika budget terlewati.
+- Script membaca folder `dist`, menghitung total file, total size, size per extension, gzip estimate untuk text assets, file terbesar, image di atas threshold, dan duplicate image names.
+
+File yang berubah:
+
+- `scripts/audit-dist-size.mjs`
+- `package.json`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run audit:dist`: pass, script berjalan dan exit code 0.
+- `npm.cmd run build`: pass, 44 pages built.
+
+Baseline dari audit gate:
+
+- Total `dist`: 40.55 MB, warning karena budget target 25 MB.
+- Largest image: 1.10 MB, warning karena budget target 500 KB.
+- JS gzip total: 61.9 KB, pass dari budget 80 KB.
+- CSS gzip total: 30.8 KB, pass dari budget 50 KB.
+- Image masih menjadi bottleneck utama, sedangkan JS/CSS masih dalam batas aman.
+
+Catatan aman:
+
+- Tidak ada perubahan visual.
+- Tidak ada perubahan behavior website.
+- Script default dibuat non-blocking agar bisa dipakai untuk evaluasi sekarang.
+- Mode strict disiapkan untuk tahap CI/deploy gate setelah optimasi gambar selesai.
+
+### Step C1 - Brand Logo and Icon Optimization
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 8.5/10
+
+Perbaikan yang sudah dilakukan:
+
+- Mengoptimasi `bintan-prestige-gold-logo.png` dari 247,949 bytes menjadi 71,950 bytes.
+- Mengoptimasi `bintan-prestige-white-logo.png` dari 1,152,861 bytes menjadi 202,558 bytes.
+- Menambahkan icon brand dedicated untuk favicon, apple touch icon, dan manifest icon:
+  - `public/images/brand/icons/bintan-prestige-icon-32.png`
+  - `public/images/brand/icons/bintan-prestige-icon-180.png`
+  - `public/images/brand/icons/bintan-prestige-icon-192.png`
+  - `public/images/brand/icons/bintan-prestige-icon-512.png`
+- Mengarahkan `BaseLayout` agar favicon dan apple touch icon memakai icon dedicated, bukan wordmark logo besar.
+- Mengarahkan `site.webmanifest` agar memakai icon 192x192 dan 512x512 dedicated.
+- Menambahkan path icon ke `src/data/assets.ts` agar asset brand lebih mudah dikelola.
+
+File yang berubah:
+
+- `public/images/brand/bintan-prestige-gold-logo.png`
+- `public/images/brand/bintan-prestige-white-logo.png`
+- `public/images/brand/icons/bintan-prestige-icon-32.png`
+- `public/images/brand/icons/bintan-prestige-icon-180.png`
+- `public/images/brand/icons/bintan-prestige-icon-192.png`
+- `public/images/brand/icons/bintan-prestige-icon-512.png`
+- `public/site.webmanifest`
+- `src/data/assets.ts`
+- `src/layouts/BaseLayout.astro`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run build`: pass, 44 pages built.
+- `npm.cmd run audit:dist`: pass, script berjalan dan exit code 0.
+- `dist/index.html` sudah memakai favicon `bintan-prestige-icon-32.png`.
+- `dist/index.html` sudah memakai apple touch icon `bintan-prestige-icon-180.png`.
+- `dist/site.webmanifest` sudah memakai icon 192x192 dan 512x512 dedicated.
+
+Hasil ukuran setelah C1:
+
+- Total `dist`: turun dari 40.55 MB menjadi 39.50 MB.
+- Total PNG di `dist`: turun dari 1.34 MB menjadi 294.4 KB.
+- Largest image sekarang `dist/images/tours/trikora-beach.webp` 947.3 KB, bukan logo brand lagi.
+- JS gzip tetap 61.9 KB, pass.
+- CSS gzip tetap 30.8 KB, pass.
+
+Catatan aman:
+
+- Perubahan visual utama hanya pada favicon/app icon browser.
+- Header/footer tetap memakai wordmark logo yang sama, hanya lebih ringan.
+- Risiko medium-low karena file image binary berubah dan perlu visual review di browser/device.
+- Belum ada perubahan ke hero/tour/gallery image lain.
+
+### Step C2 - Responsive Hero Pipeline Optimization
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 8/10
+
+Perbaikan yang sudah dilakukan:
+
+- Mengoptimasi konfigurasi `scripts/generate-hero-responsive.mjs`.
+- Variant responsive hero dibuat lebih ringan:
+  - mobile: dari 1080x1920 quality 84 menjadi 960x1706 quality 78.
+  - tablet: dari 1440x1080 quality 84 menjadi 1280x960 quality 78.
+  - desktop: dari 1920x1080 quality 86 menjadi 1760x990 quality 80.
+- Sharpen dibuat lebih halus agar hasil kompresi tidak terlalu harsh.
+- WebP effort dinaikkan dari 5 ke 6 untuk mengejar ukuran lebih kecil tanpa dependency baru.
+- Regenerate 75 responsive hero images di `public/images/hero/*/responsive`.
+
+File yang berubah:
+
+- `scripts/generate-hero-responsive.mjs`
+- `public/images/hero/about/responsive/*.webp`
+- `public/images/hero/activity/responsive/*.webp`
+- `public/images/hero/blog/responsive/*.webp`
+- `public/images/hero/contact/responsive/*.webp`
+- `public/images/hero/home/responsive/*.webp`
+- `public/images/hero/taxy/responsive/*.webp`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run images:hero`: pass, generated 75 responsive hero images.
+- `npm.cmd run build`: pass, 44 pages built.
+- `npm.cmd run audit:dist`: pass, script berjalan dan exit code 0.
+
+Hasil ukuran setelah C2:
+
+- Total responsive hero images: turun dari 13.60 MB menjadi 8.67 MB.
+- Total `dist`: turun dari 39.50 MB menjadi 34.57 MB.
+- Total WebP di `dist`: turun dari 36.39 MB baseline awal menjadi 31.45 MB.
+- Contoh responsive hero berat:
+  - `mangrove-desktop.webp`: turun dari 808,516 bytes menjadi 485,114 bytes.
+  - `snorkeling-desktop.webp`: turun dari 623,958 bytes menjadi 354,140 bytes.
+  - `mangrove-tablet.webp`: turun dari 616,198 bytes menjadi 348,600 bytes.
+- Largest image sekarang masih `dist/images/tours/trikora-beach.webp` 947.3 KB, karena source/original dan duplicate images belum disentuh di C2.
+
+Catatan aman:
+
+- Tidak ada perubahan animasi hero, CSS hero, layout, atau component behavior.
+- Perubahan visual hanya kualitas dan dimensi output responsive hero image.
+- Risiko medium karena 75 binary image berubah dan tetap perlu visual review pada mobile/tablet/desktop.
+- Fokus berikutnya sebaiknya C3 untuk original image dan duplikasi path karena itu sekarang penyumbang terbesar ukuran `dist`.
+
+### Step C3 - Source Image Optimization and Safe Deduplication
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-20
+
+Rating aman: 7.5/10
+
+Perbaikan yang sudah dilakukan:
+
+- Menambahkan script `scripts/optimize-large-images.mjs` untuk optimasi source/original images besar.
+- Menambahkan npm command `npm run images:optimize-large`.
+- Mengoptimasi 22 gambar besar non-brand dan non-responsive dengan target web-friendly:
+  - max long edge 1800px.
+  - WebP quality 72.
+  - mild sharpen.
+  - exclude `public/images/brand`.
+  - exclude `public/images/**/responsive`.
+- Menurunkan dua file mangrove terbesar ke 1700px long-edge agar largest image masuk budget 500 KB.
+- Mengalihkan path lama di `src/data/gallery.ts` dan sebagian gallery blog di `src/data/blog.ts` ke folder canonical per package.
+- Menghapus duplicate/legacy root images yang sudah tidak direferensikan:
+  - duplicate root `public/images/gallery/*.webp` yang sudah punya copy folder package.
+  - legacy root `public/images/hero/*.webp` yang tidak dipakai source.
+- Menambahkan image reference check ke `scripts/audit-dist-size.mjs` agar audit bisa fail jika HTML menunjuk `/images/...` yang hilang.
+
+File yang berubah:
+
+- `scripts/optimize-large-images.mjs`
+- `scripts/audit-dist-size.mjs`
+- `package.json`
+- `src/data/gallery.ts`
+- `src/data/blog.ts`
+- selected source images in `public/images/tours`
+- selected source images in `public/images/gallery`
+- selected source images in `public/images/hero/home`
+- removed duplicate/legacy images in root `public/images/gallery`
+- removed duplicate/legacy images in root `public/images/hero`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `node scripts/optimize-large-images.mjs`: pass, 22 large images optimized, saved 6.85 MB before dedupe.
+- `npm.cmd run build`: pass, 44 pages built.
+- `npm.cmd run audit:dist`: pass, exit code 0.
+- Image reference check: pass, 163 HTML image references, 0 missing.
+
+Hasil ukuran setelah C3:
+
+- Total `dist`: turun dari 34.57 MB menjadi 23.09 MB.
+- Total WebP di `dist`: turun dari 31.45 MB menjadi 19.98 MB.
+- File count di `dist`: turun dari 293 menjadi 258.
+- Largest image: turun dari warning menjadi pass, 491.0 KB dari budget 500 KB.
+- Semua budget audit sekarang pass:
+  - Total dist: 23.09 MB / 25 MB.
+  - Largest image: 491.0 KB / 500 KB.
+  - JS gzip total: 61.9 KB / 80 KB.
+  - CSS gzip total: 30.8 KB / 50 KB.
+
+Catatan aman:
+
+- Risiko lebih tinggi dari Step A/B/C1/C2 karena source/original images dan beberapa path data berubah.
+- Build dan image reference check sudah memastikan tidak ada path gambar HTML yang hilang.
+- Visual review tetap wajib untuk halaman Home, Activities, Blog, route detail, dan activity gallery karena banyak image binary berubah.
+- Masih ada duplicate image names yang tersisa, tetapi sebagian digunakan oleh konteks berbeda seperti hero responsive, page hero, tours, cars, dan gallery. Sisa dedupe sebaiknya dilakukan di tahap asset registry yang lebih hati-hati, bukan dipaksa dalam C3.
+
+## Executive Summary
+
+Website sudah punya fondasi yang cukup baik untuk static hosting: Astro build sukses, halaman sudah memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap dan robots tersedia, dan JavaScript/CSS bukan bottleneck utama.
+
+Masalah terbesar saat ini adalah bobot asset gambar. Output `dist` sekitar 40.54 MB, dan 36.39 MB berasal dari file `.webp`. Beberapa gambar utama masih 700 KB sampai 970 KB, dan logo PNG putih mencapai sekitar 1.1 MB. Karena folder `public/images` ikut tersalin apa adanya ke `dist`, duplikasi gambar antar folder juga ikut menaikkan ukuran deploy.
+
+Untuk SEO, struktur dasarnya sudah benar, tetapi ada beberapa hal yang perlu dirapikan sebelum dianggap production-grade: fallback domain canonical berbeda antara `astro.config.mjs` dan `src/data/site.ts`, homepage meta description masih memakai wording "frontend foundation", sitemap memakai `lastmod` tanggal build untuk semua URL, dan schema harga masih perlu dibuat lebih machine-readable.
+
+## Audit Commands
+
+Perintah yang dijalankan:
+
+```bash
+npm.cmd run build
+```
+
+Hasil:
+
+- Build sukses.
+- 44 page berhasil digenerate.
+- Output mode: static.
+- Build selesai sekitar 5.75 detik pada mesin lokal.
+
+Pemeriksaan tambahan dilakukan ke:
+
+- `dist`
+- `public/images`
+- `src/layouts/BaseLayout.astro`
+- `src/components/site/SEO.astro`
+- `src/data/seo.ts`
+- `src/data/schema.ts`
+- `src/data/site.ts`
+- `src/pages/sitemap.xml.ts`
+- `src/pages/robots.txt.ts`
+- `astro.config.mjs`
+- `package.json`
+
+## Build Output Health
+
+Ringkasan ukuran `dist`:
+
+| Jenis file | Jumlah | Total size | Gzip estimate |
+| --- | ---: | ---: | ---: |
+| `.webp` | 225 | 36.39 MB | 36.37 MB |
+| `.html` | 44 | 2.45 MB | 0.46 MB |
+| `.png` | 2 | 1.34 MB | 1.32 MB |
+| `.js` | 6 | 0.19 MB | 0.06 MB |
+| `.css` | 1 | 0.17 MB | 0.03 MB |
+| `.xml` | 1 | 0.01 MB | 0.00 MB |
+
+Kesimpulan:
+
+- HTML, CSS, dan JS masih relatif aman.
+- Gambar adalah faktor paling besar untuk load time, deployment size, dan bandwidth.
+- Gzip/Brotli hampir tidak membantu gambar, jadi solusi utama adalah optimasi file gambar dan struktur asset.
+
+## Performance Audit
+
+### 1. Image Size
+
+Prioritas: High
+
+Temuan:
+
+- `public/images/brand/bintan-prestige-white-logo.png`: sekitar 1.1 MB.
+- `public/images/tours/trikora-beach.webp`: sekitar 970 KB.
+- `public/images/hero/mangrove.webp`: sekitar 927 KB.
+- `public/images/tours/mangrove.webp`: sekitar 927 KB.
+- `public/images/hero/home/mangrove.webp`: sekitar 927 KB.
+- `public/images/tours/atv.webp`: sekitar 786 KB.
+- `public/images/hero/snorkeling.webp`: sekitar 756 KB.
+- `public/images/tours/snorkeling.webp`: sekitar 756 KB.
+
+Dampak:
+
+- First load terasa berat di mobile network.
+- Deploy ke static hosting membawa banyak file besar.
+- Halaman dengan banyak card/gallery akan lebih lambat, terutama saat koneksi visitor tidak stabil.
+
+Rekomendasi:
+
+- Compress semua gambar besar di atas 300 KB.
+- Target hero desktop: maksimal 300 sampai 400 KB.
+- Target hero mobile: maksimal 120 sampai 180 KB.
+- Target card image: maksimal 120 sampai 220 KB.
+- Target logo PNG/SVG: maksimal 50 sampai 100 KB.
+- Pertimbangkan AVIF untuk hero dan gallery apabila kualitas tetap baik.
+- Tetap sediakan WebP fallback jika diperlukan.
+
+### 2. Image Duplication
+
+Prioritas: High
+
+Temuan:
+
+Beberapa gambar muncul di banyak lokasi dengan konten yang sama atau sangat mirip:
+
+- `mangrove.webp` muncul di `hero`, `hero/home`, dan `tours`.
+- `snorkeling.webp` muncul di `hero`, `hero/home`, dan `tours`.
+- `blue-lake-3.webp`, `atv-5.webp`, dan beberapa file gallery muncul di beberapa folder.
+- Karena semua isi `public` dicopy ke `dist`, duplikasi ini langsung menambah ukuran deploy.
+
+Dampak:
+
+- Ukuran hosting membesar tanpa manfaat visual tambahan.
+- Maintenance asset jadi lebih sulit karena satu gambar bisa punya banyak copy.
+
+Rekomendasi:
+
+- Gunakan satu file canonical untuk setiap gambar.
+- Data file seperti `src/data/assets.ts` atau data existing yang mengatur image path sebaiknya menjadi satu sumber utama.
+- Hindari menaruh copy gambar yang sama di `hero`, `tours`, dan `gallery` jika hanya dipakai sebagai referensi.
+- Jika ingin folder tetap rapi per halaman/package, gunakan konvensi folder yang jelas, tetapi hindari copy ganda untuk gambar identik.
+
+### 3. Hero Images
+
+Prioritas: High
+
+Status progress: improved in Step C2, waiting user review.
+
+Temuan:
+
+- Struktur hero sudah mendukung responsive image melalui `<picture>` di `HeroBackdrop.astro`.
+- Hero pertama sudah memakai eager loading dan fetch priority.
+- Sebelum Step C2, beberapa file responsive hasil generate masih cukup besar, misalnya `mangrove-desktop.webp` sekitar 809 KB dan `snorkeling-desktop.webp` sekitar 624 KB.
+- Setelah Step C2, responsive hero total turun dari 13.60 MB menjadi 8.67 MB.
+
+Rekomendasi:
+
+- Update pipeline `scripts/generate-hero-responsive.mjs` agar output lebih ringan.
+- Gunakan target lebar dan kualitas berbeda per viewport.
+- Jangan generate responsive image dari source yang sudah terlalu berat tanpa recompress.
+- Tetapkan budget hero:
+  - mobile: lebar 720 sampai 900 px, 120 sampai 180 KB.
+  - tablet: lebar 1200 sampai 1400 px, 180 sampai 280 KB.
+  - desktop: lebar 1600 sampai 1920 px, 300 sampai 400 KB.
+
+### 4. Lazy Loading and Layout Stability
+
+Prioritas: Medium
+
+Temuan:
+
+- Banyak image sudah memakai `loading="lazy"`.
+- `HeroBackdrop.astro` sudah membedakan hero pertama dan hero berikutnya.
+- Beberapa image belum terlihat punya `width` dan `height` eksplisit, misalnya logo navbar dan sebagian card/gallery image.
+
+Dampak:
+
+- Tanpa dimensi eksplisit, potensi layout shift lebih besar saat gambar selesai dimuat.
+
+Rekomendasi:
+
+- Tambahkan `width` dan `height` pada image yang stabil ukurannya.
+- Untuk gambar responsive, pastikan parent punya `aspect-ratio` yang konsisten.
+- Tambahkan `decoding="async"` pada image non-kritis.
+- Logo navbar sebaiknya punya ukuran file kecil dan dimensi jelas.
+
+### 5. JavaScript Bundle
+
+Prioritas: Medium
+
+Temuan:
+
+File terbesar di `dist/_astro`:
+
+- `client.CpZbMCvk.js`: sekitar 192 KB raw.
+- `BaseLayout.DzXGWJUF.css`: sekitar 178 KB raw.
+- Script interaktif lain kecil, sekitar 0.8 KB sampai 3 KB.
+
+Search `client:` tidak menemukan island hydration eksplisit, tetapi dependency React, Motion, dan Lucide React masih dipakai di beberapa komponen Astro/TSX.
+
+Dampak:
+
+- JS gzip sekitar 60 KB masih aman.
+- Tetapi React/Motion dapat menjadi beban yang tidak perlu jika animasi bisa diganti ke CSS atau script kecil.
+
+Rekomendasi:
+
+- Audit ulang komponen React/TSX:
+  - `src/components/features/animations/Reveal.tsx`
+  - `src/components/features/animations/MotionButton.tsx`
+  - `src/components/sections/home/PremiumCarSelector.tsx`
+- Jika komponen tidak dihydrate, pertimbangkan pindah ke Astro/CSS animation.
+- Untuk icons, pertimbangkan strategi yang tidak membawa runtime React jika icon hanya static.
+- Pertahankan React hanya untuk interaksi yang benar-benar butuh state kompleks.
+
+### 6. CSS Bundle
+
+Prioritas: Low to Medium
+
+Temuan:
+
+- CSS raw sekitar 178 KB.
+- Gzip sekitar 30 KB, masih cukup baik.
+- Style sudah dipisah berdasarkan tokens, typography, utilities, components, sections, dan themes sesuai struktur project.
+
+Rekomendasi:
+
+- Jaga `global.css` tetap sebagai manifest import.
+- Hindari menambah style page-specific terlalu banyak ke file global jika hanya dipakai satu section.
+- Untuk animasi, tetap gunakan opacity, transform, dan scale sesuai rules project.
+- Pastikan semua animasi menghormati `prefers-reduced-motion`.
+
+## SEO Audit
+
+### 1. Base SEO Foundation
+
+Prioritas: Good
+
+Temuan positif:
+
+- Semua halaman utama memakai `BaseLayout`.
+- `BaseLayout` sudah memanggil:
+  - `SEO.astro`
+  - `JsonLd.astro`
+  - `Navbar`
+  - `Footer`
+  - `FloatingWhatsApp`
+- `SEO.astro` sudah mengatur:
+  - title
+  - meta description
+  - canonical
+  - Open Graph title, description, image, url
+  - Twitter card
+  - noindex jika diperlukan
+
+Rekomendasi:
+
+- Tambahkan `og:site_name`.
+- Tambahkan `og:locale` dengan nilai seperti `en_ID` atau sesuai target bahasa.
+- Tambahkan `twitter:site` jika akun resmi tersedia.
+- Pastikan default OG image ringan dan resolusi sesuai, idealnya 1200x630.
+
+### 2. Canonical Domain
+
+Prioritas: High
+
+Status progress: improved in Step A, waiting user review.
+
+Temuan:
+
+- Sebelum Step A, `astro.config.mjs` fallback domain memakai `https://bintanprestige.com`, sedangkan `src/data/site.ts` fallback domain memakai `https://bintanprestigetransport.com`.
+- Setelah Step A, fallback source sudah disamakan ke `https://bintanprestigetransport.com`.
+- `.env.example` sudah diarahkan ke `https://bintanprestigetransport.com`.
+- `.env` lokal masih perlu disesuaikan manual atau dengan approval karena file tersebut tidak tracked.
+
+Dampak:
+
+- Jika `PUBLIC_SITE_URL` tidak diset di hosting, canonical, sitemap, schema URL, dan OG URL bisa memakai domain yang berbeda dari domain production.
+- Ini bisa membingungkan Google dan social preview.
+
+Rekomendasi:
+
+- Tentukan satu domain production final.
+- Samakan fallback domain di `astro.config.mjs` dan `src/data/site.ts`.
+- Pastikan Cloudflare environment variable `PUBLIC_SITE_URL` memakai domain final.
+
+### 3. Homepage Meta Copy
+
+Prioritas: High
+
+Status progress: improved in Step A, waiting user review.
+
+Temuan:
+
+Homepage meta description sebelum Step A:
+
+```text
+Modern dark luxury taxi and island tour frontend foundation for premium transfers, VIP driver service, and WhatsApp booking.
+```
+
+Masalah:
+
+- Frasa "frontend foundation" cocok untuk development, tetapi tidak cocok untuk visitor dan SEO production.
+- Google sebaiknya melihat intent service dan location, bukan wording template.
+
+Rekomendasi copy:
+Sudah diterapkan di `src/pages/index.astro` dan `src/data/seo.ts`:
+
+```text
+Bintan Prestige Transport provides private taxi, airport and ferry transfers, island tours, and curated Bintan activities with WhatsApp-first booking.
+```
+
+Title homepage sudah cukup baik, tetapi bisa dipadatkan jika ingin lebih fokus:
+
+```text
+Bintan Prestige Transport | Private Taxi, Transfers & Bintan Tours
+```
+
+### 4. Sitemap
+
+Prioritas: Medium
+
+Temuan:
+
+- `dist/sitemap.xml` berisi 25 URL.
+- `src/pages/sitemap.xml.ts` memakai `new Date().toISOString()` untuk semua `lastmod`.
+
+Dampak:
+
+- Setiap build akan terlihat seperti semua halaman baru saja berubah.
+- Google bisa menganggap `lastmod` kurang reliable.
+
+Rekomendasi:
+
+- Gunakan `updatedAt` dari data content jika tersedia.
+- Untuk blog, gunakan tanggal artikel atau tanggal revisi.
+- Untuk halaman statis, gunakan tanggal terakhir update yang manual di data SEO.
+- Jika belum punya data update yang valid, lebih baik omit `lastmod` daripada selalu memakai tanggal build.
+
+### 5. Legacy Activity Routes
+
+Prioritas: Medium
+
+Temuan:
+
+- Route `/packages/island-tour` dan `/packages/island-tour/[slug]` masih digenerate.
+- Canonical diarahkan ke `/packages/activities-packages` dan `/packages/activities-packages/[slug]`.
+- Sitemap tidak memasukkan `island-tour`, jadi ini sudah cukup aman dari sisi discovery.
+
+Risiko:
+
+- Tetap ada duplicate static HTML yang bisa diakses langsung.
+- Jika halaman lama tersebar, Google tetap bisa menemukan URL legacy.
+
+Rekomendasi:
+
+- Jika `island-tour` hanya legacy route, ubah menjadi redirect permanen ke route canonical.
+- Jika Cloudflare Pages mendukung redirect file, gunakan `_redirects`.
+- Ini akan mengurangi duplicate content dan memperjelas canonical authority.
+
+### 6. Structured Data
+
+Prioritas: Medium
+
+Temuan positif:
+
+- Project sudah punya schema terpusat di `src/data/schema.ts`.
+- Ada Organization, LocalBusiness, WebSite, SiteNavigationElement, Service, FAQ, Breadcrumb, BlogPosting, dan TouristTrip.
+- Detail package memakai schema offer.
+
+Temuan yang perlu dirapikan:
+
+- Beberapa `priceSpecification` masih berupa string seperti `IDR 350K` atau `By request`.
+- Untuk Google structured data, harga lebih baik memakai `Offer` dengan `priceCurrency` dan angka numeric jika valid.
+- Jika harga tergantung route/request, lebih aman pakai `priceSpecification` yang jelas atau omit price numeric daripada memakai string bebas.
+
+Rekomendasi:
+
+- Untuk harga pasti:
+
+```json
+{
+  "@type": "Offer",
+  "priceCurrency": "IDR",
+  "price": "350000",
+  "availability": "https://schema.org/InStock"
+}
+```
+
+- Untuk harga by request:
+
+```json
+{
+  "@type": "Offer",
+  "priceCurrency": "IDR",
+  "availability": "https://schema.org/InStock"
+}
+```
+
+### 7. Robots
+
+Prioritas: Good
+
+Temuan:
+
+- `robots.txt` mengizinkan crawling.
+- Sitemap sudah dimasukkan sebagai absolute URL.
+
+Rekomendasi:
+
+- Pastikan robots memakai domain yang sama dengan canonical final.
+- Jika ada preview/staging domain, staging sebaiknya memakai `noindex` atau dibatasi.
+
+### 8. Manifest and Brand Icons
+
+Prioritas: Medium
+
+Temuan:
+
+- `public/site.webmanifest` memakai `/images/brand/bintan-prestige-gold-logo.png` sebagai icon 512x512.
+- Logo/brand PNG masih perlu dicek ulang ukuran aktual dan berat file.
+
+Rekomendasi:
+
+- Buat icon manifest khusus ukuran 192x192 dan 512x512 yang benar-benar square dan ringan.
+- Jangan gunakan logo besar utama sebagai manifest icon jika beratnya besar.
+- Simpan icon PWA/favicons di folder brand/icons agar maintenance mudah.
+
+## Content and UX SEO
+
+### 1. Page Intent
+
+Prioritas: Medium
+
+Halaman utama sudah terbagi dengan baik:
+
+- Home
+- Taxy / private transfer
+- Activities packages
+- Blog
+- About
+- Contact
+- Package detail
+- Blog detail
+
+Rekomendasi:
+
+- Setiap halaman sebaiknya punya satu H1 yang jelas.
+- Title dan description harus menyebut service, location, dan intent user.
+- Hindari copy development seperti "foundation", "template", atau "CMS-driven content later" di halaman production.
+
+### 2. Blog
+
+Prioritas: Medium
+
+Temuan:
+
+- Blog index sudah punya card article, category/topic, favorite reads, dan structured metadata dari data content.
+- Blog page output punya 13 image dan HTML sekitar 76.5 KB, masih aman.
+
+Rekomendasi:
+
+- Pastikan setiap blog detail punya:
+  - title unik
+  - description unik
+  - canonical
+  - publish date atau updated date
+  - OG image yang relevan
+  - internal link ke package/route terkait
+- Tambahkan FAQ ringan pada artikel yang paling penting jika search intent cocok.
+
+### 3. Internal Linking
+
+Prioritas: Medium
+
+Rekomendasi:
+
+- Dari homepage, link langsung ke:
+  - airport transfer
+  - ferry transfer
+  - activities packages
+  - contact/WhatsApp
+- Dari blog, link ke package/service yang relevan.
+- Dari package detail, link ke related activity atau related transfer package.
+- Gunakan anchor text natural, bukan hanya "Read more".
+
+## Hosting Readiness
+
+### Cloudflare / Static Hosting Checklist
+
+Prioritas: High
+
+Pastikan hosting mengaktifkan:
+
+- Brotli atau gzip untuk HTML, CSS, dan JS.
+- Cache immutable untuk hashed Astro assets di `/_astro/*`.
+- Cache panjang untuk gambar yang filename-nya versioned/stable.
+- Cache pendek untuk HTML agar update konten cepat terlihat.
+- Redirect HTTP ke HTTPS.
+- Redirect non-canonical domain ke canonical domain.
+- Custom 404 tetap memakai layout SEO yang noindex.
+
+Jika memakai Cloudflare Pages:
+
+- Set `PUBLIC_SITE_URL` ke domain production final.
+- Set environment variable brand/contact/WA dengan nilai production.
+- Tambahkan `_headers` dan `_redirects` jika perlu kontrol caching dan canonical redirect.
+
+## Recommended Asset Budgets
+
+Target sebelum production:
+
+| Area | Target |
+| --- | ---: |
+| Total `dist` | 20 sampai 25 MB |
+| Largest hero desktop image | 300 sampai 400 KB |
+| Hero mobile image | 120 sampai 180 KB |
+| Card image | 120 sampai 220 KB |
+| Logo/icon | 50 sampai 100 KB |
+| JS gzip | di bawah 80 KB |
+| CSS gzip | di bawah 50 KB |
+
+Current position:
+
+- Total `dist`: 23.09 MB setelah Step C3.
+- Images: 19.98 MB WebP plus 294.4 KB PNG setelah Step C3.
+- JS gzip: sekitar 60 KB, masih aman.
+- CSS gzip: sekitar 30 KB, masih aman.
+
+## Priority Action Plan
+
+### P0 - Harus Dibereskan Sebelum Production
+
+1. Done in Step A: samakan canonical production domain di `astro.config.mjs`, `src/data/site.ts`, dan `.env.example`. Cloudflare env `PUBLIC_SITE_URL` tetap perlu dicek saat deployment.
+2. Done in Step A: ganti homepage meta description agar tidak memakai wording "frontend foundation".
+3. Done through Step C1, C2, and C3: compress logo PNG besar, responsive hero images, dan source/original WebP besar.
+4. Partially done in Step C3: kurangi duplikasi root gallery/legacy hero di `public/images`. Sisa dedupe perlu asset registry/refactor path yang lebih hati-hati.
+
+### P1 - Sangat Disarankan
+
+1. Optimasi `scripts/generate-hero-responsive.mjs` agar output responsive hero lebih kecil.
+2. Tambahkan `width`, `height`, dan `decoding="async"` pada image yang belum stabil.
+3. Ubah route legacy `/packages/island-tour` menjadi redirect jika sudah tidak dipakai sebagai URL utama.
+4. Rapikan structured data harga agar lebih machine-readable.
+5. Tambahkan `og:site_name` dan `og:locale`.
+
+### P2 - Improvement Lanjutan
+
+1. Audit apakah React/Motion masih diperlukan untuk animation island.
+2. Pindahkan icon static ke pendekatan yang lebih ringan jika bundle mulai membesar.
+3. Buat asset registry khusus, misalnya `src/data/assets.ts`, untuk gambar, logo, icon, dan OG image.
+4. Done in Step B: buat script audit size supaya setiap build bisa cek image besar dan total deploy size.
+5. Tambahkan internal linking strategy dari blog ke package dan sebaliknya.
+
+## Suggested Maintenance Files
+
+Jika nanti ingin dibuat lebih mudah dikelola, struktur yang disarankan:
+
+```text
+src/data/assets.ts
+src/data/seo.ts
+src/data/site.ts
+scripts/generate-hero-responsive.mjs
+scripts/audit-dist-size.mjs
+public/images/brand/
+public/images/brand/icons/
+public/images/hero/
+public/images/gallery/
+public/images/tours/
+```
+
+Fungsi masing-masing:
+
+- `src/data/assets.ts`: pusat path gambar, logo, icon, hero, gallery, dan OG image.
+- `src/data/seo.ts`: pusat title, description, canonical path, sitemap priority, dan future updatedAt.
+- `src/data/site.ts`: pusat brand, domain, contact, WA, promo ticker, dan env fallback.
+- `scripts/generate-hero-responsive.mjs`: generator hero responsive.
+- `scripts/audit-dist-size.mjs`: quality gate ukuran build.
+
+## Verification Checklist For Next Optimization
+
+Setelah perubahan optimasi dilakukan, jalankan:
+
+```bash
+npm.cmd run build
+```
+
+Lalu cek:
+
+- Build tetap sukses.
+- Total `dist` turun mendekati 20 sampai 25 MB.
+- Tidak ada gambar utama di atas 500 KB.
+- Canonical dan sitemap memakai domain final yang sama.
+- Homepage meta description sudah production-ready.
+- Semua halaman utama tidak horizontal overflow di mobile.
+- Floating WhatsApp, menu mobile, gallery, dan booking form tetap berjalan.
+
+## Final Verdict
+
+Website sudah punya struktur static dan SEO foundation yang baik, tetapi belum optimal untuk production hosting karena asset gambar masih terlalu berat dan ada ketidakkonsistenan domain canonical fallback.
+
+Urutan terbaik berikutnya adalah:
+
+1. Fix domain canonical dan homepage meta.
+2. Compress dan deduplicate image assets.
+3. Rapikan structured data dan sitemap lastmod.
+4. Tambahkan asset registry agar maintenance gambar/logo/icon lebih mudah.
+5. Baru setelah itu lakukan polishing performance kecil seperti React/Motion audit dan preload strategy.

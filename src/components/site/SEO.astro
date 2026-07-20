@@ -20,6 +20,7 @@ const {
 const pageTitle = title === site.defaultTitle ? title : `${title} | ${site.shortName}`;
 const canonicalUrl = canonical ? new URL(canonical, site.url).toString() : undefined;
 const ogImageUrl = new URL(ogImage, site.url).toString();
+const ogLocale = "en_ID";
 ---
 
 <title>{pageTitle}</title>
@@ -27,6 +28,8 @@ const ogImageUrl = new URL(ogImage, site.url).toString();
 {noindex && <meta name="robots" content="noindex,nofollow" />}
 {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content={ogLocale} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImageUrl} />

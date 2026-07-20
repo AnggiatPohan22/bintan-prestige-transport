@@ -12,7 +12,10 @@
     "preview": "astro preview --host 127.0.0.1",
     "astro": "astro",
     "check": "astro check",
-    "images:hero": "node scripts/generate-hero-responsive.mjs"
+    "audit:dist": "node scripts/audit-dist-size.mjs",
+    "audit:dist:strict": "node scripts/audit-dist-size.mjs --strict",
+    "images:hero": "node scripts/generate-hero-responsive.mjs",
+    "images:optimize-large": "node scripts/optimize-large-images.mjs"
   },
   "dependencies": {
     "@astrojs/react": "latest",

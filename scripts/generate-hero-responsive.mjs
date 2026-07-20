@@ -4,9 +4,9 @@ import sharp from "sharp";
 
 const heroRoot = path.join(process.cwd(), "public", "images", "hero");
 const variants = [
-  { suffix: "mobile", width: 1080, height: 1920, quality: 84 },
-  { suffix: "tablet", width: 1440, height: 1080, quality: 84 },
-  { suffix: "desktop", width: 1920, height: 1080, quality: 86 },
+  { suffix: "mobile", width: 960, height: 1706, quality: 78 },
+  { suffix: "tablet", width: 1280, height: 960, quality: 78 },
+  { suffix: "desktop", width: 1760, height: 990, quality: 80 },
 ];
 
 const supportedImage = /\.(webp|jpe?g|png)$/i;
@@ -42,8 +42,8 @@ for (const page of fs.readdirSync(heroRoot)) {
           position: "attention",
           kernel: "lanczos3",
         })
-        .sharpen({ sigma: 0.5, m1: 0.55, m2: 1.35 })
-        .webp({ quality: variant.quality, smartSubsample: true, effort: 5 })
+        .sharpen({ sigma: 0.45, m1: 0.45, m2: 1.15 })
+        .webp({ quality: variant.quality, smartSubsample: true, effort: 6 })
         .toFile(outputPath);
 
       generated += 1;
