@@ -45,7 +45,7 @@ export const site = {
     import.meta.env.PUBLIC_PROMO_TICKER_TEXT,
     "Limited private transfer slots available today - chat now for route and vehicle confirmation.",
   ),
-  email: envValue(import.meta.env.PUBLIC_CONTACT_EMAIL, "reservation@bintanprestige.com"),
+  email: envValue(import.meta.env.PUBLIC_CONTACT_EMAIL, "reservation@bintanprestigetransport.com"),
   phone: envValue(import.meta.env.PUBLIC_CONTACT_PHONE, "+62 853-8138-9242"),
   address: envValue(import.meta.env.PUBLIC_BUSINESS_ADDRESS, "Bintan, Riau Islands, Indonesia"),
   addressLocality: envValue(import.meta.env.PUBLIC_ADDRESS_LOCALITY, "Bintan"),
