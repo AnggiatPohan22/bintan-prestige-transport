@@ -22,7 +22,6 @@
     "@tailwindcss/vite": "latest",
     "astro": "latest",
     "lucide-react": "latest",
-    "motion": "latest",
     "react": "latest",
     "react-dom": "latest",
     "tailwindcss": "latest"

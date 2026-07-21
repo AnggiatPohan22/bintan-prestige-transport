@@ -579,13 +579,57 @@ Catatan aman:
 - Tidak ada perubahan route, schema, CSS, atau UI interaction.
 - Risiko utama adalah typo path helper, sehingga wajib diverifikasi lewat build dan image reference checker.
 
+### Step J1 - React/Motion Audit And Dead Island Cleanup
+
+Status: Done, waiting user review
+
+Tanggal update: 2026-07-21
+
+Rating aman: 8.5/10
+
+Perbaikan yang sudah dilakukan:
+
+- Audit menemukan tidak ada `client:*` hydration directive di source.
+- Audit menemukan 4 file TSX lama yang tidak lagi diimport oleh halaman aktif:
+  - `src/components/features/animations/Reveal.tsx`
+  - `src/components/features/animations/MotionButton.tsx`
+  - `src/components/features/packages/FAQAccordion.tsx`
+  - `src/components/sections/home/PremiumCarSelector.tsx`
+- Menghapus 4 TSX orphan tersebut agar tidak membingungkan maintenance.
+- Menghapus dependency `motion` dari `package.json` dan `package-lock.json`.
+- Mempertahankan `@astrojs/react`, `react`, `react-dom`, dan `lucide-react` karena banyak komponen Astro masih memakai `lucide-react` untuk icon static render.
+
+File yang berubah:
+
+- `package.json`
+- `package-lock.json`
+- `src/components/features/animations/Reveal.tsx`
+- `src/components/features/animations/MotionButton.tsx`
+- `src/components/features/packages/FAQAccordion.tsx`
+- `src/components/sections/home/PremiumCarSelector.tsx`
+- `ai/reports/website-performance-seo-audit.md`
+
+Verifikasi:
+
+- `npm.cmd run build`: PASS, 33 static pages built.
+- `npm.cmd run audit:dist`: PASS, total `dist` 22.45 MB, largest image 491.0 KB, JS gzip 61.9 KB, CSS gzip 30.7 KB, missing image references 0.
+- `npm.cmd run astro -- check`: PASS, 94 files checked, 0 errors, 0 warnings, 0 hints.
+- Source scan: PASS, no `client:*` directives, no `.tsx` or `.jsx` files left in `src`.
+- Source scan: PASS, no `motion`, `motion/react`, `useReducedMotion`, or `AnimatePresence` references left outside CSS/native reduced-motion text.
+
+Catatan aman:
+
+- Tidak ada UI aktif yang memakai file TSX tersebut berdasarkan source import scan.
+- React belum dihapus karena `lucide-react` masih menjadi sumber icon untuk banyak `.astro` component.
+- Langkah lanjutan yang lebih agresif adalah mengganti `lucide-react` dengan icon Astro/static, tetapi itu scope lebih besar dan tidak perlu selama JS/CSS budget masih aman.
+
 ## Executive Summary
 
-Website sekarang sudah berada di kondisi jauh lebih siap untuk static hosting: Astro build sukses, halaman memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap/robots tersedia, structured data harga sudah lebih machine-readable, asset path utama sudah dipusatkan di registry, dan JavaScript/CSS masih dalam budget aman.
+Website sekarang sudah berada di kondisi jauh lebih siap untuk static hosting: Astro build sukses, halaman memakai `BaseLayout`, metadata SEO sudah terpusat, sitemap/robots tersedia, structured data harga sudah lebih machine-readable, asset path utama sudah dipusatkan di registry, dan dependency animasi lama sudah dibersihkan.
 
 Masalah terbesar dari audit awal adalah bobot asset gambar dan output static yang terlalu besar. Setelah Step C1 sampai C3, total `dist` turun dari 40.55 MB menjadi sekitar 22.45 MB dan largest image sudah masuk budget 500 KB. Masih ada duplicate image names yang tersisa, tetapi sekarang bukan blocker launch karena budget utama sudah PASS dan semua HTML image references valid.
 
-Untuk SEO, temuan P0 seperti canonical fallback mismatch, homepage meta copy development, sitemap `lastmod` build-time, duplicate legacy route, dan schema offer string bebas sudah diperbaiki. Sisa pekerjaan sebelum launch lebih banyak berupa verifikasi manual environment production, domain canonical, Cloudflare redirect/cache/security headers, dan polishing lanjutan seperti React/Motion audit.
+Untuk SEO, temuan P0 seperti canonical fallback mismatch, homepage meta copy development, sitemap `lastmod` build-time, duplicate legacy route, dan schema offer string bebas sudah diperbaiki. Sisa pekerjaan sebelum launch lebih banyak berupa verifikasi manual environment production, domain canonical, Cloudflare redirect/cache/security headers, dan polishing lanjutan seperti icon strategy bila ingin melepas React sepenuhnya.
 
 ## Audit Commands
 
@@ -1146,8 +1190,8 @@ Current position:
 
 ### P2 - Improvement Lanjutan
 
-1. Audit apakah React/Motion masih diperlukan untuk animation island.
-2. Pindahkan icon static ke pendekatan yang lebih ringan jika bundle mulai membesar.
+1. Done in Step J1: audit React/Motion, hapus orphan TSX components, dan remove `motion` dependency.
+2. Optional future: pindahkan icon static dari `lucide-react` ke pendekatan Astro/static jika ingin melepas React sepenuhnya.
 3. Done in Step I1: pusatkan path gambar utama di `src/data/assets.ts` untuk brand, hero, cars, tours, gallery, activity package assets, dan OG fallback.
 4. Done in Step B: buat script audit size supaya setiap build bisa cek image besar dan total deploy size.
 5. Done in Step F1 and F2: tambahkan internal linking strategy dari blog ke package/service dan dari package detail ke related blog/package/contact.
