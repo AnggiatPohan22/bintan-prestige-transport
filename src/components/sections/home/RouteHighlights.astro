@@ -4,10 +4,13 @@ import { routes } from "@data/routes";
 import { tours } from "@data/tours";
 import { site } from "@data/site";
 
-const items = [...routes.slice(0, 2), ...tours.slice(0, 2)];
+const fallbackItems = [...routes.slice(0, 2), ...tours.slice(0, 2)];
+const items = [...routes, ...tours];
+const routeSlugs = new Set(routes.map((route) => route.slug));
+const fallbackSlugs = new Set(fallbackItems.map((item) => item.slug));
 
 const getItemHref = (item: (typeof items)[number]) =>
-  item.category === "taxi-transfer" ? `/packages/pick-up-drop/${item.slug}` : `/packages/activities-packages/${item.slug}`;
+  routeSlugs.has(item.slug) ? `/packages/pick-up-drop/${item.slug}` : `/packages/activities-packages/${item.slug}`;
 
 const getPriceDisplay = (value?: string) => {
   if (!value) {
@@ -46,13 +49,19 @@ const getPriceDisplay = (value?: string) => {
 };
 ---
 
-<div class="home-package-carousel" data-swipe-carousel>
+<div class="home-package-carousel" data-swipe-carousel data-featured-routes>
   <div class="home-scroll-row home-scroll-row-4 lg:grid lg:grid-cols-4" data-swipe-track>
     {items.map((item) => {
       const priceDisplay = getPriceDisplay(item.priceFrom);
+      const isTransferRoute = routeSlugs.has(item.slug);
 
       return (
-        <article class={`package-offer-card package-offer-card--home-route package-offer-card--${item.category} home-scroll-card group`} data-swipe-item>
+        <article
+          class={`package-offer-card package-offer-card--home-route package-offer-card--${item.category} home-scroll-card group`}
+          data-swipe-item
+          data-featured-route-type={isTransferRoute ? "taxy" : "activity"}
+          hidden={!fallbackSlugs.has(item.slug)}
+        >
           <div class="package-offer-card__media route-image-frame">
             <img
               class="package-offer-card__image"
@@ -108,3 +117,42 @@ const getPriceDisplay = (value?: string) => {
   </div>
   <SwipeControls count={items.length} label="Featured routes" className="home-package-dots" />
 </div>
+
+<script>
+  const shuffleFeaturedRoutes = <T,>(items: T[]) => {
+    const shuffled = [...items];
+
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+
+    return shuffled;
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-featured-routes]").forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>("[data-swipe-track]");
+
+    if (!track) {
+      return;
+    }
+
+    const cards = Array.from(track.querySelectorAll<HTMLElement>("[data-swipe-item]"));
+    const selectedCards = shuffleFeaturedRoutes([
+      ...shuffleFeaturedRoutes(cards.filter((card) => card.dataset.featuredRouteType === "taxy")).slice(0, 2),
+      ...shuffleFeaturedRoutes(cards.filter((card) => card.dataset.featuredRouteType === "activity")).slice(0, 2),
+    ]);
+
+    cards.forEach((card) => {
+      card.hidden = true;
+      card.style.order = "";
+    });
+
+    selectedCards.forEach((card, index) => {
+      card.hidden = false;
+      card.style.order = String(index);
+    });
+
+    track.dispatchEvent(new CustomEvent("swipe-carousel:update"));
+  });
+</script>
